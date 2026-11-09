@@ -1,0 +1,2304 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html,body{margin:0;height:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>تعلّم الفرنسية والألمانية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: welcome picker -> app shell (bottom tab bar on phones, side rail on desktop); soft white surfaces, one blue→violet gradient reserved for progress and primary actions */
+:root{
+ color-scheme:light;
+ --bg:#FFFFFF;--panel:#F5F6FB;--surface:#FFFFFF;--ink:#151833;--muted:#6C7192;--faint:#A3A8C3;--line:#E8EAF3;
+ --blue:#5470F5;--violet:#8C6CF0;--soft:#EEF1FE;--vsoft:#F3EFFE;
+ --grad:linear-gradient(120deg,#5B7BFA 0%,#8C6CF0 100%);
+ --ok:#1C9C68;--ok-soft:#E5F6EE;--bad:#E04A55;--bad-soft:#FDECEE;--warm:#F59E0B;
+ --gm:#2F6BFF;--gf:#E0458B;--gn:#16A066;
+ --f:"Plus Jakarta Sans","IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
+ --r:20px;--r-sm:14px;
+ --shadow:0 1px 2px rgba(21,24,51,.04),0 8px 24px rgba(21,24,51,.06);
+ --shadow-lg:0 2px 4px rgba(21,24,51,.04),0 18px 40px rgba(84,112,245,.14);
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent;background:none;border:0;padding:0}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:10px}
+h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
+p{margin:0}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+.fw{direction:ltr;unicode-bidi:isolate;font-weight:700;letter-spacing:-.01em}
+.art{font-weight:800}
+.g-m{color:var(--gm)}.g-f{color:var(--gf)}.g-n{color:var(--gn)}
+mark{background:none;font-weight:700;color:var(--blue)}
+mark.g-m{color:var(--gm)}mark.g-f{color:var(--gf)}mark.g-n{color:var(--gn)}
+.ico{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.screen{animation:fade .35s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.enter{animation:rise .32s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- flags ---------- */
+.flag{width:46px;height:46px;border-radius:50%;flex:none;box-shadow:inset 0 0 0 1px rgba(21,24,51,.08)}
+.flag.fr{background:linear-gradient(90deg,#2050D6 0 33.4%,#fff 33.4% 66.6%,#E5384A 66.6%)}
+.flag.de{background:linear-gradient(180deg,#1B1B1F 0 33.4%,#DD2C2C 33.4% 66.6%,#F5C232 66.6%)}
+.flag.sm{width:26px;height:26px}
+.flag.lg{width:64px;height:64px}
+
+/* ---------- welcome ---------- */
+#welcome{min-height:100%;position:relative;overflow:hidden}
+#welcome::before{content:"";position:absolute;inset:-180px -120px auto auto;width:460px;height:460px;border-radius:50%;background:radial-gradient(closest-side,rgba(140,108,240,.16),transparent);pointer-events:none}
+#welcome::after{content:"";position:absolute;inset:auto auto -200px -140px;width:520px;height:520px;border-radius:50%;background:radial-gradient(closest-side,rgba(84,112,245,.12),transparent);pointer-events:none}
+.wel{position:relative;max-width:980px;margin:0 auto;padding-block:40px 56px;display:flex;flex-direction:column;gap:28px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.brand .dot{width:34px;height:34px;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#fff}
+.brand .dot .ico{width:18px;height:18px}
+.wel-hero{display:flex;flex-direction:column;gap:10px;max-width:560px}
+.wel-hero h1{font-size:clamp(2rem,6.5vw,3rem);font-weight:700;letter-spacing:-.02em}
+.wel-hero p{font-size:1.05rem;color:var(--muted)}
+.langs{display:grid;gap:16px}
+@media (min-width:720px){.langs{grid-template-columns:1fr 1fr}}
+.lang{position:relative;text-align:start;background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:24px;display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow);transition:transform .25s ease,box-shadow .25s ease,border-color .25s}
+.lang:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:#D6DBF6}
+.lang-top{display:flex;align-items:center;gap:14px}
+.lang-top h2{font-size:1.5rem;font-weight:700}
+.lang-top .fw{display:block;font-size:.95rem;font-weight:500;color:var(--muted)}
+.lvl-pill{margin-inline-start:auto;font-size:.78rem;font-weight:700;color:var(--blue);background:var(--soft);padding:4px 10px;border-radius:99px;direction:ltr}
+.feat{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;font-size:.92rem}
+.feat li{display:flex;align-items:center;gap:8px;color:#3B4064}
+.feat .ico{width:16px;height:16px;color:var(--violet);stroke-width:2.4}
+.lang-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid var(--line)}
+.lang-stats{display:flex;flex-wrap:wrap;gap:14px;font-size:.88rem;color:var(--muted)}
+.lang-stats b{color:var(--ink);font-weight:700}
+.go{width:44px;height:44px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff;flex:none;transition:transform .25s}
+.lang:hover .go{transform:translateX(-4px)}
+.wel-note{font-size:.85rem;color:var(--faint)}
+
+/* ---------- app shell ---------- */
+#app{min-height:100%}
+.nav{position:fixed;inset:auto 0 0 0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);
+ padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+.nav-brand{display:none}
+.nav-items{display:grid;grid-template-columns:repeat(5,1fr);max-width:560px;margin:0 auto}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:12px;font-size:.72rem;font-weight:600;color:var(--faint);transition:color .2s}
+.nav-btn .ico{width:22px;height:22px}
+.nav-btn[aria-current="page"]{color:var(--blue)}
+.main{max-width:1080px;margin:0 auto;padding-block:14px 110px}
+.topbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.switch{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 6px;border:1px solid var(--line);border-radius:99px;background:var(--surface);font-weight:600;font-size:.9rem;transition:border-color .2s,box-shadow .2s}
+.switch:hover{border-color:#D3D8F4;box-shadow:var(--shadow)}
+.switch .ico{width:16px;height:16px;color:var(--muted)}
+.pills{margin-inline-start:auto;display:flex;gap:8px}
+.pill{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;background:var(--panel);font-weight:700;font-size:.88rem}
+.pill.xp{color:var(--violet);background:var(--vsoft);direction:ltr}
+.pill.bump{animation:bump .5s ease}
+@keyframes bump{40%{transform:scale(1.12)}}
+@media (min-width:900px){
+ #app{display:grid;grid-template-columns:240px 1fr}
+ .nav{position:sticky;top:0;inset:auto;height:100vh;border-top:0;border-inline-end:1px solid var(--line);padding:24px 14px;display:flex;flex-direction:column;gap:24px;background:var(--bg)}
+ .nav-brand{display:flex}
+ .nav-items{display:flex;flex-direction:column;gap:4px;max-width:none;margin:0}
+ .nav-btn{flex-direction:row;gap:12px;padding:11px 14px;font-size:.95rem;color:var(--muted)}
+ .nav-btn:hover{background:var(--panel);color:var(--ink)}
+ .nav-btn[aria-current="page"]{background:var(--soft);color:var(--blue)}
+ .main{padding-block:28px 64px;padding-left:40px;padding-right:40px;width:100%}
+}
+
+/* ---------- shared bits ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.view-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.view-head h1{font-size:1.7rem;font-weight:700;letter-spacing:-.02em}
+.sec{font-size:.8rem;font-weight:700;color:var(--muted);letter-spacing:.02em;margin:22px 0 10px}
+.bar{height:10px;background:var(--panel);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--grad);border-radius:99px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:var(--r-sm);font-weight:700;border:1px solid var(--line);background:var(--surface);transition:transform .15s,box-shadow .2s,background .2s,border-color .2s}
+.btn:hover{border-color:#D3D8F4;box-shadow:var(--shadow)}
+.btn:active{transform:scale(.98)}
+.btn.pri{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 8px 20px rgba(110,100,240,.25)}
+.btn.pri:hover{box-shadow:0 10px 26px rgba(110,100,240,.34)}
+.btn.ghost{border-color:transparent;background:var(--panel)}
+.btn.done,.btn:disabled{cursor:default;background:var(--ok-soft);border-color:transparent;color:var(--ok);box-shadow:none}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.sm{padding:7px 14px;font-size:.88rem}
+.btn.block{width:100%}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px;margin-inline:-2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.86rem;font-weight:600;color:var(--muted);white-space:nowrap;transition:all .2s}
+.chip:hover{color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.gtag{font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:99px;background:var(--panel)}
+.gtag.g-m{background:#EAF0FF}.gtag.g-f{background:#FDEAF3}.gtag.g-n{background:#E4F6EE}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.8rem;color:var(--muted);margin-top:10px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:8px;height:8px;border-radius:50%}
+.legend b{font-weight:800;direction:ltr}
+.empty{text-align:center;padding:40px 16px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:12px}
+.empty .ico{width:34px;height:34px;color:var(--faint)}
+
+/* ---------- home ---------- */
+.home{display:grid;gap:16px}
+@media (min-width:900px){.home{grid-template-columns:1.1fr 1fr;align-items:start;gap:24px}.home-l,.home-r{display:flex;flex-direction:column;gap:16px}}
+.home-l,.home-r{display:contents}
+@media (min-width:900px){.home-l,.home-r{display:flex}}
+.hello p{font-size:1rem;font-weight:500}
+.hello h1{font-size:clamp(2rem,8vw,2.7rem);font-weight:800;letter-spacing:-.03em;margin-top:4px}
+.hello h1 .fw{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.plan{padding:20px;display:flex;flex-direction:column;gap:14px}
+.plan-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.plan-top h2{font-size:1.15rem;font-weight:700}
+.plan-top p{margin-top:2px}
+.plan-top p b{color:var(--ink);font-size:1.05rem}
+.flame{display:flex;flex-direction:column;align-items:center;line-height:1.1;padding:8px 12px;border-radius:16px;background:#FFF5E6}
+.flame b{font-size:1.25rem}
+.flame span{font-size:.72rem;color:#9A6512;font-weight:600}
+.plan-msg{font-size:.9rem;color:var(--muted)}
+.plan.won{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;border-color:transparent}
+.plan.won .plan-msg{color:var(--ok);font-weight:600}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{text-align:start;padding:16px;display:flex;flex-direction:column;gap:14px;transition:transform .2s,box-shadow .2s}
+.tile:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.tile-top{display:flex;justify-content:space-between;align-items:flex-start}
+.tile-ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center}
+.tile-ic .ico{width:22px;height:22px}
+.ic-b{background:var(--soft);color:var(--blue)}.ic-v{background:var(--vsoft);color:var(--violet)}.ic-g{background:#E7F6EF;color:var(--gn)}.ic-o{background:#FFF3E2;color:#D9850B}
+.tile .arrow{color:var(--faint)}
+.tile h3{font-size:1.02rem;font-weight:700}
+.tile p{font-size:.84rem;color:var(--muted)}
+.cta{width:100%;padding:16px;font-size:1.02rem}
+.word-day{padding:18px;display:flex;flex-direction:column;gap:8px}
+.word-day .w{font-size:1.6rem}
+.word-day .ex{font-size:.92rem}
+
+/* ---------- words ---------- */
+.search{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid transparent;border-radius:var(--r-sm);padding:0 14px;margin-bottom:12px;transition:border-color .2s,background .2s}
+.search:focus-within{border-color:#CBD3FA;background:var(--surface)}
+.search .ico{color:var(--faint)}
+.search input{flex:1;min-width:0;border:0;background:transparent;padding:12px 0;outline:none}
+.seg{display:inline-grid;grid-auto-flow:column;background:var(--panel);border-radius:12px;padding:3px;gap:3px}
+.seg button{padding:7px 14px;border-radius:9px;font-weight:600;font-size:.86rem;color:var(--muted);transition:all .2s}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(21,24,51,.1)}
+.study{display:grid;gap:14px;margin-top:16px;max-width:620px}
+.fcard{position:relative;width:100%;min-height:300px;padding:30px 20px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border-radius:26px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);transition:box-shadow .25s,transform .25s}
+.fcard:hover{box-shadow:var(--shadow-lg)}
+.fcard.flip{animation:flip .35s ease}
+@keyframes flip{0%{transform:rotateY(0)}50%{transform:rotateY(90deg)}100%{transform:rotateY(0)}}
+.fcard .tl{position:absolute;top:14px;inset-inline-start:16px;display:flex;gap:6px;align-items:center}
+.fcard .tr{position:absolute;top:14px;inset-inline-end:16px}
+.tag{font-size:.75rem;color:var(--muted);background:var(--panel);padding:2px 10px;border-radius:99px}
+.ok-tag{font-size:.75rem;font-weight:700;color:var(--ok);background:var(--ok-soft);padding:2px 10px;border-radius:99px}
+.fcard .big{font-size:clamp(2.2rem,10vw,3.2rem);line-height:1.15}
+.fcard .pron{font-size:.95rem;color:var(--muted)}
+.fcard .hint{font-size:.8rem;color:var(--faint);margin-top:6px}
+.fcard .da{font-size:clamp(1.8rem,8vw,2.4rem);font-weight:700}
+.fcard .msa{font-size:.92rem;color:var(--muted)}
+.exbox{width:100%;margin-top:8px;padding:14px;border-radius:16px;background:var(--panel);text-align:start;display:flex;flex-direction:column;gap:4px}
+.exbox .lbl{font-size:.72rem;font-weight:700;color:var(--faint)}
+.exbox .exf{direction:ltr;text-align:left;font-weight:500}
+.exbox .exd{color:var(--muted);font-size:.92rem}
+.stnav{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.round{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;transition:all .2s}
+.round:hover{box-shadow:var(--shadow);border-color:#D3D8F4}
+.stact{display:grid;grid-template-columns:auto auto 1fr;gap:10px}
+.list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+@media (min-width:900px){.list{grid-template-columns:1fr 1fr}}
+.wrow{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:4px 6px 4px 4px;transition:border-color .2s,box-shadow .2s}
+.wrow:hover{border-color:#D3D8F4;box-shadow:var(--shadow)}
+.wrow .open{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:8px 10px;text-align:start}
+.gdot{width:8px;height:8px;border-radius:50%;background:var(--line);flex:none}
+.gdot.g-m{background:var(--gm)}.gdot.g-f{background:var(--gf)}.gdot.g-n{background:var(--gn)}
+.wrow .t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.35}
+.wrow .t .fw{text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wrow .t small{color:var(--muted);font-size:.86rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wrow .chk{color:var(--ok)}
+.wrow .spk{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:var(--muted)}
+.wrow .spk:hover{background:var(--panel);color:var(--blue)}
+
+/* ---------- quiz ---------- */
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (min-width:900px){.modes{grid-template-columns:repeat(4,1fr)}}
+.mode{text-align:start;padding:14px;border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:10px;transition:all .2s}
+.mode:hover{border-color:#CBD3FA}
+.mode[aria-pressed="true"]{border-color:var(--blue);background:var(--soft);box-shadow:0 0 0 3px rgba(84,112,245,.12)}
+.mode:disabled{opacity:.5;cursor:not-allowed}
+.mode b{font-size:.95rem}
+.mode small{color:var(--muted);font-size:.8rem;line-height:1.4}
+.qset{display:flex;flex-direction:column;max-width:760px}
+.sel{width:100%;padding:11px 14px;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface)}
+.lvl-d{font-size:.84rem;color:var(--muted);margin-top:8px}
+.hist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.hist li{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--r-sm);background:var(--panel);font-size:.9rem}
+.hist li .s{margin-inline-start:auto;font-weight:700}
+.play{max-width:640px;display:flex;flex-direction:column;gap:16px}
+.qtop{display:flex;align-items:center;gap:12px}
+.qtop .bar{flex:1}
+.x{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
+.x:hover{background:var(--panel)}
+.qcard{padding:28px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.qcard .big{font-size:clamp(2rem,9vw,2.8rem);line-height:1.15}
+.qcard .da{font-size:clamp(1.7rem,7vw,2.2rem);font-weight:700}
+.qcard .ask{color:var(--muted);font-size:.92rem}
+.qcard .hintw{direction:ltr;letter-spacing:.3em;color:var(--faint);font-weight:700;margin-top:4px}
+.listen{width:96px;height:96px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;box-shadow:0 12px 28px rgba(110,100,240,.32);position:relative;transition:transform .15s}
+.listen:active{transform:scale(.95)}
+.listen .ico{width:36px;height:36px}
+.listen::before,.listen::after{content:"";position:absolute;inset:-10px;border-radius:50%;border:1.5px solid rgba(140,108,240,.28)}
+.listen::after{inset:-20px;border-color:rgba(140,108,240,.14)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opts.c3{grid-template-columns:1fr}
+@media (min-width:520px){.opts.c3{grid-template-columns:repeat(3,1fr)}}
+.opt{padding:15px 12px;border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--surface);font-weight:600;min-width:0;text-align:center;transition:all .15s}
+.opt:hover:not(:disabled){border-color:var(--blue);background:var(--soft)}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft);color:var(--ok)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.opt.dim{opacity:.55}
+.wbox{display:flex;gap:10px}
+.wbox input{flex:1;min-width:0;direction:ltr;text-align:left;padding:14px 16px;border-radius:var(--r-sm);border:1.5px solid var(--line);font-size:1.1rem;font-weight:600;outline:none;background:var(--surface)}
+.wbox input:focus{border-color:var(--blue)}
+.wbox input.ok{border-color:var(--ok);background:var(--ok-soft)}
+.wbox input.bad{border-color:var(--bad);background:var(--bad-soft)}
+.fb{padding:16px;border-radius:16px;display:flex;flex-direction:column;gap:6px;animation:rise .25s ease}
+.fb.ok{background:var(--ok-soft)}.fb.bad{background:var(--bad-soft)}
+.fb h3{font-size:1rem}
+.fb.ok h3{color:var(--ok)}.fb.bad h3{color:var(--bad)}
+.fb .line{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.fb .ex{font-size:.88rem;color:var(--muted)}
+.fb .ex .fw{font-weight:500}
+.qfoot{display:flex;gap:10px}
+.qfoot .btn{flex:1}
+.res{max-width:560px;display:flex;flex-direction:column;gap:16px;align-items:stretch}
+.res-top{padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.ring{--p:0;width:150px;height:150px;border-radius:50%;background:conic-gradient(var(--violet) calc(var(--p)*1%),var(--panel) 0);display:grid;place-items:center;position:relative}
+.ring::before{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--surface)}
+.ring div{position:relative;display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.ring b{font-size:2.2rem;font-weight:800;letter-spacing:-.03em}
+.ring span{font-size:.8rem;color:var(--muted)}
+.res-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.mist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.mist li{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:var(--r-sm);background:var(--panel)}
+.mist small{color:var(--bad);font-size:.82rem;direction:ltr}
+
+/* ---------- progress ---------- */
+.prog{display:grid;gap:16px}
+@media (min-width:900px){.prog{grid-template-columns:1fr 1fr;align-items:start}}
+.pcol{display:flex;flex-direction:column;gap:16px;min-width:0}
+.overview{padding:22px;display:flex;align-items:center;gap:20px}
+.overview .ring{width:120px;height:120px}
+.overview .ring b{font-size:1.7rem}
+.ov-t{display:flex;flex-direction:column;gap:6px;min-width:0}
+.ov-t h2{font-size:1.15rem}
+.ov-t .bar{height:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{padding:14px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
+.stat .e{font-size:1.4rem;line-height:1.2}
+.stat b{font-size:1.4rem;font-weight:800;letter-spacing:-.02em}
+.stat span{font-size:.78rem;color:var(--muted)}
+.box{padding:18px}
+.box h2{font-size:1.02rem;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.week{display:flex;flex-direction:column;gap:8px;padding-top:22px}
+.plot{position:relative;height:100px;display:flex;align-items:flex-end;gap:8px;border-bottom:1px solid var(--line)}
+.plot .goal{position:absolute;inset-inline:0;border-top:1.5px dashed #D4D8EC;z-index:0}
+.plot .goal span{position:absolute;top:-18px;inset-inline-start:0;font-size:.7rem;color:var(--faint)}
+.col{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%}
+.col i{width:100%;max-width:34px;border-radius:8px 8px 3px 3px;background:var(--panel)}
+.col i.hit{background:var(--grad)}
+.col i.some{background:#C9D2FB}
+.col b{font-size:.72rem;font-weight:700}
+.labels{display:flex;gap:8px}
+.labels span{flex:1;text-align:center;font-size:.72rem;color:var(--muted)}
+.labels span.today{color:var(--blue);font-weight:700}
+.cal-h{display:flex;align-items:center;gap:6px}
+.cal-h button{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:var(--muted)}
+.cal-h button:hover{background:var(--panel)}
+.cal-h button:disabled{opacity:.3;cursor:default}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.cal .dn{font-size:.72rem;color:var(--faint);font-weight:700}
+.cal .d{aspect-ratio:1;max-width:100%;border-radius:10px;display:grid;place-items:center;font-size:.82rem;font-weight:600;color:var(--muted)}
+.cal .d.some{background:var(--soft);color:var(--blue)}
+.cal .d.hit{background:var(--grad);color:#fff}
+.cal .d.today{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.cal-l{display:flex;gap:14px;font-size:.76rem;color:var(--muted);margin-top:12px}
+.cal-l span{display:flex;align-items:center;gap:6px}
+.cal-l i{width:12px;height:12px;border-radius:4px}
+.topics{display:grid;gap:12px}
+.trow{display:grid;grid-template-columns:7.5rem 1fr auto;gap:12px;align-items:center;font-size:.88rem}
+.trow .bar{height:7px}
+.trow b{font-weight:600;font-size:.8rem;color:var(--muted)}
+.danger-zone{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding-top:6px}
+.link{color:var(--muted);font-size:.86rem;text-decoration:underline;text-underline-offset:3px}
+.link:hover{color:var(--ink)}
+
+/* ---------- grammar ---------- */
+.lessons{display:grid;gap:10px}
+@media (min-width:900px){.lessons{grid-template-columns:1fr 1fr}}
+.lesson{text-align:start;padding:16px;display:flex;align-items:center;gap:14px;transition:transform .2s,box-shadow .2s}
+.lesson:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.lesson .n{width:38px;height:38px;border-radius:12px;background:var(--vsoft);color:var(--violet);display:grid;place-items:center;font-weight:800;flex:none}
+.lesson.done .n{background:var(--ok-soft);color:var(--ok)}
+.lesson .t{flex:1;min-width:0}
+.lesson .t b{display:block}
+.lesson .t small{color:var(--muted)}
+.lview{max-width:640px;display:flex;flex-direction:column;gap:16px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-weight:600;font-size:.9rem}
+.back:hover{color:var(--ink)}
+.lview h1{font-size:1.6rem}
+.lview .d{font-size:1rem;color:#3B4064;line-height:1.8}
+.ltable{border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.ltable div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line)}
+.ltable div:first-child{border-top:0}
+.ltable .fw{font-size:1.05rem}
+.ltable button{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--muted);flex:none}
+.ltable button:hover{background:var(--panel);color:var(--blue)}
+.ltable .r{display:flex;align-items:center;gap:6px}
+
+/* ---------- friends ---------- */
+.fr-wrap{max-width:620px;display:flex;flex-direction:column;gap:14px}
+.nick{display:flex;gap:8px}
+.nick input{flex:1;min-width:0;padding:12px 14px;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--surface);outline:none}
+.nick input:focus{border-color:var(--blue)}
+.board{list-style:none;margin:0;padding:0}
+.board li{display:grid;grid-template-columns:2.2rem 1fr auto;gap:12px;align-items:center;padding:13px 18px;border-top:1px solid var(--line)}
+.board li:first-child{border-top:0}
+.board li.me{background:var(--soft)}
+.board .r{font-weight:800;color:var(--faint)}
+.board li:nth-child(1) .r{color:#D9A10B}.board li:nth-child(2) .r{color:#8F97AE}.board li:nth-child(3) .r{color:#C47A3E}
+.board .n{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.board .n small{color:var(--muted);font-weight:400;margin-inline-start:6px}
+.board .s{font-weight:700}
+.note{font-size:.88rem;color:var(--muted)}
+
+/* ---------- levels & account ---------- */
+.lvrow{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.lvb{min-width:52px;padding:6px 12px;border-radius:10px;border:1.5px solid var(--line);font-weight:700;font-size:.85rem;color:var(--muted);background:var(--surface);transition:all .2s}
+.lvb:hover{color:var(--ink);border-color:#CBD3FA}
+.lvb[aria-pressed="true"]{border-color:var(--blue);background:var(--soft);color:var(--blue)}
+.tag.lv{background:var(--soft);color:var(--blue);font-weight:700;direction:ltr}
+.lvls{display:grid;gap:6px}
+.lvl-row{display:grid;grid-template-columns:2.6rem 1fr auto;gap:12px;align-items:center;padding:8px 10px;border-radius:12px;text-align:start;transition:background .2s}
+.lvl-row:hover{background:var(--panel)}
+.lvl-row.cur{background:var(--soft)}
+.lvl-row b{direction:ltr;font-weight:800}
+.lvl-row .bar{height:8px}
+.tlv{display:flex;justify-content:space-between;font-weight:800;font-size:.85rem;color:var(--blue);margin-top:6px;padding-top:12px;border-top:1px solid var(--line)}
+.tlv:first-child{border-top:0;padding-top:0;margin-top:0}
+.tlv span{direction:ltr}
+.avatar{position:relative;width:38px;height:38px;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;display:grid;place-items:center;flex:none}
+.avatar .ico{width:18px;height:18px}
+.avatar .st{position:absolute;bottom:-1px;inset-inline-end:-1px;width:12px;height:12px;border-radius:50%;border:2px solid var(--bg);background:var(--faint)}
+.avatar .st.ok{background:var(--ok)}.avatar .st.warn{background:var(--warm)}
+.topbar .pills{margin-inline-start:0}
+.topbar .switch{margin-inline-end:auto}
+.wel-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.accchip{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:99px;background:var(--panel);font-size:.85rem;font-weight:600;color:var(--muted)}
+.accchip.on{background:var(--ok-soft);color:var(--ok)}
+.av{border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:800;flex:none}
+.av.sm{width:22px;height:22px;font-size:.75rem}.av.sm .ico{width:13px;height:13px}
+.av.lg{width:64px;height:64px;font-size:1.6rem}.av.lg .ico{width:28px;height:28px}
+.acc-head{padding:20px;display:flex;align-items:center;gap:16px}
+.acc-head h2{font-size:1.25rem}
+.sync{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:14px;font-size:.9rem;background:var(--panel)}
+.sync i{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:none;background:var(--faint)}
+.sync.ok{background:var(--ok-soft);color:#14764F}.sync.ok i{background:var(--ok)}
+.sync.warn{background:#FFF6E6;color:#8A5A0B}.sync.warn i{background:var(--warm)}
+.sync.bad{background:var(--bad-soft);color:#A3303A}.sync.bad i{background:var(--bad)}
+.acc-ls{display:grid;gap:12px}
+.acc-l{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:.9rem}
+.howto{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:.92rem}
+.howto li{display:flex;gap:10px;align-items:flex-start}
+.howto .ico{width:18px;height:18px;color:var(--violet);margin-top:3px;stroke-width:2.4}
+
+/* ---------- vocabulary progress ---------- */
+.vrow{grid-template-columns:2.6rem 1fr auto}
+.vlist{display:grid;gap:16px}
+.vitem{display:grid;gap:6px}
+.vtop{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.92rem}
+.vtop b{direction:ltr;font-weight:800;color:var(--blue)}
+.vp{color:var(--muted)}
+.vitem .bar{height:9px}
+.vmeta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8rem;color:var(--muted)}
+.vmeta b{color:var(--ink);font-weight:700}
+
+/* ---------- toast ---------- */
+#toast{position:fixed;z-index:50;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;font-weight:600;font-size:.92rem;box-shadow:0 12px 30px rgba(21,24,51,.25);transition:all .3s;max-width:calc(100% - 32px);text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast.win{background:var(--grad)}
+@media (min-width:900px){#toast{bottom:32px}}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<!-- Firebase (login + database) — only used on your own website, not on claude.ai -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>window.LINGO_SITE=true</script>
+<script src="config.js"></script>
+<script>
+/* Turns Firebase into the same small interface the app already uses (claude.use("user") / claude.use("db")). */
+(function(){
+ if(!window.FIREBASE_CONFIG||typeof firebase==="undefined"||window.claude)return;
+ try{firebase.initializeApp(window.FIREBASE_CONFIG)}catch(e){console.error("Firebase config error",e);return}
+ var auth=firebase.auth(),fs=firebase.firestore();
+ var ready=new Promise(function(res){var un=auth.onAuthStateChanged(function(u){un();res(u)})});
+ var user={me:function(){return ready.then(function(u){return u?{id:u.uid,name:u.displayName||""}:{id:null,name:""}})},can:function(){return true}};
+ window.claude={use:function(n){return ready.then(function(u){return n==="user"?user:n==="db"?(u?fs:null):null})}};
+ var provider=new firebase.auth.GoogleAuthProvider();
+ window.LINGO_AUTH={
+  signIn:function(){return auth.signInWithPopup(provider).catch(function(e){if(e&&(e.code==="auth/popup-blocked"||e.code==="auth/operation-not-supported-in-this-environment"))return auth.signInWithRedirect(provider);throw e}).then(function(){location.reload()})},
+  signOut:function(){return auth.signOut().then(function(){location.reload()})}
+ };
+})();
+</script>
+
+</head>
+<body>
+<div id="root" dir="rtl" lang="ar">
+ <section id="welcome" class="screen wrap" hidden></section>
+ <div id="app" class="screen" hidden>
+  <nav class="nav" aria-label="القائمة">
+   <div class="nav-brand brand"><span class="dot" id="navflag"></span><span id="navname"></span></div>
+   <div class="nav-items" id="navitems"></div>
+  </nav>
+  <div class="main wrap">
+   <div class="topbar">
+    <button class="switch" data-act="switch" id="switchbtn"></button>
+    <button class="avatar" data-act="account" id="avbtn" aria-label="الحساب ديالي"></button>
+    <div class="pills">
+     <span class="pill" id="pstreak" title="السلسلة"></span>
+     <span class="pill xp" id="pxp" title="XP"></span>
+    </div>
+   </div>
+   <div id="view"></div>
+  </div>
+ </div>
+ <div id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* =========================================================
+   1. CONTENT  — كل لغة عندها قاعدة الكلمات ديالها بوحدها
+   Headers: #LEVEL|topic (A1 when no level). Format: word | gender(m/f/n) | Arabic | pronunciation | example (*noun*) | example in Arabic
+   ========================================================= */
+var RAW={
+fr:`#التحيات
+Bonjour||صباح الخير|بونجور|Bonjour, Sara !|صباح الخير يا سارة!
+Bonsoir||مساء الخير|بونسوار|Bonsoir, monsieur.|مساء الخير يا سيدي.
+Merci||شكرا|ميرسي|Merci beaucoup !|شكرًا جزيلًا!
+S’il vous plaît||من فضلك|سيل ڤو پليه|Un thé, s’il vous plaît.|شاي من فضلك.
+Au revoir||إلى اللقاء|أو روڤوار|Au revoir, à demain !|إلى اللقاء، إلى الغد!
+Excusez-moi||عفوا / اعذرني|إكسكيزي موا|Excusez-moi, où est la gare ?|عفوًا، أين المحطة؟
+Oui||نعم|وي|Oui, je comprends.|نعم، فهمت.
+Non||لا|نون|Non, merci.|لا، شكرًا.
+#الأكل
+Le pain|m|الخبز|لو پان|Je mange du *pain*.|آكل الخبز.
+L’eau|f|الماء|لو|Je bois de l’*eau*.|أشرب الماء.
+Le thé|m|الشاي|لو تي|Le *thé* est chaud.|الشاي ساخن.
+Le lait|m|الحليب|لو ليه|J’aime le *lait*.|أحب الحليب.
+Le poulet|m|الدجاج|لو پولي|Le *poulet* est bon.|الدجاج لذيذ.
+La pomme|f|التفاحة|لا پوم|La *pomme* est rouge.|التفاحة حمراء.
+L’œuf|m|البيضة|لوف|Je mange un *œuf*.|آكل بيضة.
+Le fromage|m|الجبن|لو فروماج|Le *fromage* est bon.|الجبن لذيذ.
+#العائلة
+La mère|f|الأم|لا مير|Ma *mère* est à la maison.|أمي في البيت.
+Le père|m|الأب|لو پير|Mon *père* travaille.|أبي يعمل.
+Le frère|m|الأخ|لو فرير|Mon *frère* est grand.|أخي طويل.
+La sœur|f|الأخت|لا سور|Ma *sœur* lit un livre.|أختي تقرأ كتابًا.
+L’ami|m|الصديق|لامي|C’est mon *ami*.|هذا صديقي.
+La maison|f|البيت|لا ميزون|La *maison* est grande.|البيت كبير.
+La grand-mère|f|الجدة|لا گرون مير|Ma *grand-mère* fait du thé.|جدتي تُعدّ الشاي.
+L’enfant|m|الطفل|لونفون|L’*enfant* dort.|الطفل نائم.
+#السفر
+Où est… ?||أين يوجد…؟|و إي|Où est l’hôtel ?|أين الفندق؟
+Combien ça coûte ?||كم الثمن؟|كومبيان سا كوت|Combien ça coûte, ce livre ?|كم ثمن هذا الكتاب؟
+La gare|f|محطة القطار|لا گار|La *gare* est loin.|المحطة بعيدة.
+La rue|f|الشارع|لا رو|La *rue* est petite.|الشارع صغير.
+À droite||إلى اليمين|آ دروات|Tournez à droite.|انعطف إلى اليمين.
+À gauche||إلى اليسار|آ گوش|La gare est à gauche.|المحطة على اليسار.
+L’aéroport|m|المطار|لاييروپور|L’*aéroport* est grand.|المطار كبير.
+L’hôtel|m|الفندق|لوتيل|L’*hôtel* est près d’ici.|الفندق قريب من هنا.
+#جمل
+Je m’appelle…||اسمي…|جوماپيل|Je m’appelle Youssef.|اسمي يوسف.
+Comment ça va ?||كيف حالك؟|كومون سا ڤا|Salut ! Comment ça va ?|مرحبًا! كيف حالك؟
+Je ne comprends pas||لا أفهم|جو نو كومپرون پا|Pardon, je ne comprends pas.|عفوًا، لا أفهم.
+Parlez plus lentement||تكلّم ببطء|پارلي پلو لونتمون|Parlez plus lentement, s’il vous plaît.|تكلّم ببطء من فضلك.
+Je voudrais un café||أريد قهوة|جو ڤودري أن كافي|Je voudrais un café, merci.|أريد قهوة، شكرًا.
+Où sont les toilettes ?||أين المرحاض؟|و سون لي توالت|Excusez-moi, où sont les toilettes ?|عفوًا، أين المرحاض؟
+Je suis fatigué||أنا متعب|جو سوي فاتيگي|Ce soir, je suis fatigué.|أنا متعب هذا المساء.
+Je t’aime bien||أحبّك / أنت عزيز عليّ|جو تيم بيان|Tu es mon ami, je t’aime bien.|أنت صديقي، أنا أحبك.
+#الأرقام
+Un||واحد|أن|J’ai un frère.|لدي أخ واحد.
+Deux||اثنان|دو|J’ai deux sœurs.|لدي أختان.
+Trois||ثلاثة|تروا|Trois cafés, s’il vous plaît.|ثلاث قهوات من فضلك.
+Quatre||أربعة|كاتر|La table a quatre pieds.|للطاولة أربعة أرجل.
+Cinq||خمسة|سانك|J’ai cinq livres.|لدي خمسة كتب.
+Six||ستة|سيس|Il est six heures.|الساعة السادسة.
+Sept||سبعة|سيت|Une semaine a sept jours.|في الأسبوع سبعة أيام.
+Huit||ثمانية|ويت|Je travaille huit heures.|أعمل ثماني ساعات.
+Neuf||تسعة|نوف|Mon frère a neuf ans.|عمر أخي تسع سنوات.
+Dix||عشرة|ديس|J’ai dix euros.|لدي عشرة يوروهات.
+#الألوان
+Rouge||أحمر|روج|La pomme est rouge.|التفاحة حمراء.
+Bleu||أزرق|بلو|La mer est bleue.|البحر أزرق.
+Vert||أخضر|ڤير|Le thé vert est bon.|الشاي الأخضر لذيذ.
+Jaune||أصفر|جون|Le soleil est jaune.|الشمس صفراء.
+Noir||أسود|نوار|Le chat est noir.|القط أسود.
+Blanc||أبيض|بلون|Le lait est blanc.|الحليب أبيض.
+Orange||برتقالي|أورونج|La voiture est orange.|السيارة برتقالية.
+Rose||وردي|روز|La fleur est rose.|الوردة وردية.
+#الوقت
+Aujourd’hui||اليوم|أوجوردوي|Aujourd’hui, il fait beau.|الطقس جميل اليوم.
+Demain||غدا|دومان|À demain !|إلى الغد!
+Hier||أمس|ييير|Hier, j’étais fatigué.|كنت متعبًا أمس.
+Maintenant||الآن|مانتونون|Je mange maintenant.|آكل الآن.
+Le matin|m|الصباح|لو ماتان|Le *matin*, je bois du thé.|في الصباح أشرب الشاي.
+Le soir|m|المساء|لو سوار|Le *soir*, je lis.|في المساء أقرأ.
+La nuit|f|الليل|لا نوي|La *nuit* est calme.|الليل هادئ.
+La semaine|f|الأسبوع|لا سومين|La *semaine* prochaine, je voyage.|سأسافر الأسبوع القادم.
+#الجسم
+La tête|f|الرأس|لا تيت|J’ai mal à la *tête*.|رأسي يؤلمني.
+La main|f|اليد|لا مان|Lave ta *main*.|اغسل يدك.
+Le pied|m|القدم|لو پيي|J’ai mal au *pied*.|قدمي تؤلمني.
+L’œil|m|العين|لوي|Ferme ton *œil*.|أغمض عينك.
+La bouche|f|الفم|لا بوش|Ouvre la *bouche*.|افتح فمك.
+Le cœur|m|القلب|لو كور|Il a bon *cœur*.|قلبه طيب.
+Le nez|m|الأنف|لو ني|Mon *nez* est froid.|أنفي بارد.
+L’oreille|f|الأذن|لوريي|J’ai mal à l’*oreille*.|أذني تؤلمني.
+#الأفعال
+Manger||أكل|مونجي|Je veux manger.|أريد أن آكل.
+Boire||شرب|بوار|Je bois du thé.|أشرب الشاي.
+Dormir||نام|دورمير|Je dors à dix heures.|أنام في الساعة العاشرة.
+Aller||ذهب|آلي|Je vais à l’école.|أذهب إلى المدرسة.
+Venir||جاء|ڤونير|Viens ici !|تعال إلى هنا!
+Parler||تكلّم|پارلي|Je parle français.|أتكلم الفرنسية.
+Voir||رأى|ڤوار|Je vois la mer.|أرى البحر.
+Vouloir||أراد|ڤولوار|Je veux un café.|أريد قهوة.
+Avoir||ملك|آڤوار|J’ai une voiture.|لدي سيارة.
+Faire||فعل|فير|Je fais du sport.|أمارس الرياضة.
+Donner||أعطى|دوني|Donne-moi le livre.|أعطني الكتاب.
+Prendre||أخذ|پروندر|Je prends le bus.|آخذ الحافلة.
+Acheter||اشترى|آشتي|J’achète du pain.|أشتري الخبز.
+Travailler||عمل|ترافايي|Je travaille à Casablanca.|أعمل في الدار البيضاء.
+Aimer||أحبّ|إيمي|J’aime la mer.|أحب البحر.
+Comprendre||فهم|كومپروندر|Je comprends un peu.|أفهم قليلًا.
+Savoir||عرف|ساڤوار|Je ne sais pas.|لا أعرف.
+Attendre||انتظر|آتوندر|J’attends le bus.|أنتظر الحافلة.
+Écrire||كتب|إيكرير|J’écris une lettre.|أكتب رسالة.
+Lire||قرأ|لير|Je lis un livre.|أقرأ كتابًا.
+#الصفات
+Grand||كبير|گرون|La maison est grande.|البيت كبير.
+Petit||صغير|پوتي|Le chat est petit.|القط صغير.
+Beau||جميل|بو|Il fait beau.|الطقس جميل.
+Bon||جيّد|بون|Le pain est bon.|الخبز لذيذ.
+Mauvais||سيّئ|موڤي|Le café est mauvais.|القهوة سيئة.
+Chaud||ساخن|شو|Le thé est chaud.|الشاي ساخن.
+Froid||بارد|فروا|L’eau est froide.|الماء بارد.
+Nouveau||جديد|نوڤو|J’ai un nouveau téléphone.|لدي هاتف جديد.
+Vieux||قديم|ڤيو|La maison est vieille.|البيت قديم.
+Facile||سهل|فاسيل|Le français est facile.|الفرنسية سهلة.
+Difficile||صعب|ديفيسيل|C’est difficile.|هذا صعب.
+Content||مسرور|كونتون|Je suis content.|أنا مسرور.
+#الأماكن
+L’école|f|المدرسة|ليكول|L’*école* est fermée.|المدرسة مغلقة.
+Le marché|m|السوق|لو مارشي|Je vais au *marché*.|أذهب إلى السوق.
+L’hôpital|m|المستشفى|لوپيتال|L’*hôpital* est loin.|المستشفى بعيد.
+La plage|f|الشاطئ|لا پلاج|On va à la *plage*.|نذهب إلى الشاطئ.
+La mosquée|f|المسجد|لا موسكي|La *mosquée* est grande.|المسجد كبير.
+Le travail|m|العمل|لو ترافاي|Je vais au *travail*.|أذهب إلى العمل.
+La ville|f|المدينة|لا ڤيل|La *ville* est belle.|المدينة جميلة.
+#الأشياء
+La voiture|f|السيارة|لا ڤواتور|La *voiture* est rouge.|السيارة حمراء.
+Le téléphone|m|الهاتف|لو تيليفون|Le *téléphone* sonne.|الهاتف يرنّ.
+Le livre|m|الكتاب|لو ليڤر|Le *livre* est sur la table.|الكتاب على الطاولة.
+La porte|f|الباب|لا پورت|Ferme la *porte*.|أغلق الباب.
+La fenêtre|f|النافذة|لا فونيتر|Ouvre la *fenêtre*.|افتح النافذة.
+La table|f|الطاولة|لا تابل|La *table* est petite.|الطاولة صغيرة.
+La chaise|f|الكرسي|لا شيز|La *chaise* est cassée.|الكرسي مكسور.
+Le stylo|m|القلم|لو ستيلو|J’ai un *stylo* bleu.|لدي قلم أزرق.
+L’argent|m|المال|لارجون|Je n’ai pas d’*argent*.|ليس لدي مال.
+La clé|f|المفتاح|لا كلي|Où est la *clé* ?|أين المفتاح؟
+#الطبيعة
+Le soleil|m|الشمس|لو سولاي|Le *soleil* est chaud.|الشمس حارة.
+La pluie|f|المطر|لا پلوي|J’aime la *pluie*.|أحب المطر.
+Le vent|m|الريح|لو ڤون|Le *vent* est fort.|الريح قوية.
+La mer|f|البحر|لا مير|La *mer* est bleue.|البحر أزرق.
+La lune|f|القمر|لا لون|La *lune* est belle.|القمر جميل.
+Le ciel|m|السماء|لو سييل|Le *ciel* est bleu.|السماء زرقاء.
+#الضمائر
+Je||أنا|جو|Je suis marocain.|أنا مغربي.
+Tu||أنتَ / أنتِ|تو|Tu parles français ?|هل تتكلم الفرنسية؟
+Il||هو|إيل|Il est grand.|هو طويل.
+Elle||هي|إيل|Elle est contente.|هي مسرورة.
+Nous||نحن|نو|Nous sommes amis.|نحن أصدقاء.
+Vous||أنتم / حضرتك|ڤو|Vous êtes marocains ?|هل أنتم مغاربة؟
+Ils||هم|إيل|Ils travaillent.|هم يعملون.
+#الأسئلة
+Quoi||ماذا|كوا|Tu fais quoi ?|ماذا تفعل؟
+Qui||من|كي|Qui est-ce ?|من هذا؟
+Quand||متى|كون|Tu viens quand ?|متى تأتي؟
+Pourquoi||لماذا|پوركوا|Pourquoi tu ris ?|لماذا تضحك؟
+#A2|الطقس والفصول
+Le temps|m|الطقس|لو تون|Quel *temps* fait-il ?|كيف هو الطقس؟
+La neige|f|الثلج|لا نيج|La *neige* tombe.|الثلج يتساقط.
+Le nuage|m|السحابة|لو نواج|Le ciel est plein de *nuages*.|السماء مليئة بالغيوم.
+L’été|m|الصيف|ليتي|En *été*, il fait chaud.|في الصيف يكون الجو حارًّا.
+L’hiver|m|الشتاء|ليڤير|En *hiver*, il fait froid.|في الشتاء يكون الجو باردًا.
+Le printemps|m|الربيع|لو پرانتون|Au *printemps*, les fleurs poussent.|في الربيع تنمو الأزهار.
+L’automne|m|الخريف|لوتون|En *automne*, il pleut souvent.|في الخريف تمطر كثيرًا.
+La chaleur|f|الحرارة|لا شالور|La *chaleur* est forte aujourd’hui.|الحرارة شديدة اليوم.
+#A2|الحوايج
+La chemise|f|القميص|لا شوميز|Cette *chemise* est blanche.|هذا القميص أبيض.
+Le pantalon|m|السروال|لو پانتالون|Mon *pantalon* est noir.|سروالي أسود.
+La chaussure|f|الحذاء|لا شوسور|J’achète des *chaussures*.|أشتري أحذية.
+La veste|f|السترة|لا ڤيست|Prends ta *veste*, il fait froid.|خذ سترتك، الجو بارد.
+La robe|f|الفستان|لا روب|Elle porte une belle *robe*.|ترتدي فستانًا جميلًا.
+Le chapeau|m|القبعة|لو شاپو|Il porte un *chapeau*.|يرتدي قبعة.
+Le sac|m|الحقيبة|لو ساك|Mon *sac* est lourd.|حقيبتي ثقيلة.
+La taille|f|المقاس|لا تاي|Quelle est votre *taille* ?|ما هو مقاسك؟
+#A2|المدينة والتنقل
+Le train|m|القطار|لو تران|Le *train* part à huit heures.|ينطلق القطار في الساعة الثامنة.
+Le billet|m|التذكرة|لو بيي|J’ai acheté un *billet*.|اشتريت تذكرة.
+La pharmacie|f|الصيدلية|لا فارماسي|La *pharmacie* est ouverte.|الصيدلية مفتوحة.
+La banque|f|البنك|لا بانك|Je vais à la *banque*.|أذهب إلى البنك.
+Le restaurant|m|المطعم|لو ريستورون|Ce *restaurant* est bon.|هذا المطعم جيد.
+Le pont|m|الجسر|لو پون|Le *pont* est long.|الجسر طويل.
+Le quartier|m|الحي|لو كارتيي|J’habite dans ce *quartier*.|أسكن في هذا الحي.
+Le voyage|m|السفر|لو ڤوياج|Le *voyage* était long.|كان السفر طويلًا.
+#A2|الصحة
+Le médecin|m|الطبيب|لو ميدسان|Je dois voir le *médecin*.|يجب أن أرى الطبيب.
+Le médicament|m|الدواء|لو ميديكامون|Prends ce *médicament*.|خذ هذا الدواء.
+La fièvre|f|الحمى|لا فيييڤر|J’ai de la *fièvre*.|لدي حمّى.
+Malade||مريض|مالاد|Je suis malade aujourd’hui.|أنا مريض اليوم.
+La douleur|f|الألم|لا دولور|J’ai une *douleur* au dos.|أشعر بألم في ظهري.
+Le rendez-vous|m|الموعد|لو رونديڤو|J’ai un *rendez-vous* demain.|لدي موعد غدًا.
+Se reposer||استراح|سو روپوزي|Tu dois te reposer.|يجب أن ترتاح.
+Le dentiste|m|طبيب الأسنان|لو دونتيست|Le *dentiste* est gentil.|طبيب الأسنان لطيف.
+#A2|الخدمة والقراية
+Le bureau|m|المكتب|لو بيرو|Je suis au *bureau*.|أنا في المكتب.
+Le patron|m|المدير|لو پاترون|Le *patron* est content.|المدير راضٍ.
+Le salaire|m|الراتب|لو سالير|Le *salaire* arrive à la fin du mois.|يصل الراتب في نهاية الشهر.
+L’étudiant|m|الطالب|ليتوديون|L’*étudiant* travaille beaucoup.|الطالب يعمل كثيرًا.
+Le professeur|m|الأستاذ|لو پروفيسور|Le *professeur* explique la leçon.|يشرح الأستاذ الدرس.
+La réunion|f|الاجتماع|لا رييونيون|La *réunion* commence à dix heures.|يبدأ الاجتماع في الساعة العاشرة.
+L’examen|m|الامتحان|ليگزامان|J’ai un *examen* demain.|لدي امتحان غدًا.
+Le métier|m|المهنة|لو ميتيي|Quel est ton *métier* ?|ما هي مهنتك؟
+#A2|أفعال مهمة
+Ouvrir||فتح|أوڤرير|Tu peux ouvrir la porte ?|هل يمكنك فتح الباب؟
+Fermer||أغلق|فيرمي|Ferme la fenêtre, s’il te plaît.|أغلق النافذة من فضلك.
+Chercher||بحث|شيرشي|Je cherche mes clés.|أبحث عن مفاتيحي.
+Trouver||وجد|تروڤي|J’ai trouvé un bon travail.|وجدت عملًا جيدًا.
+Payer||دفع|پيي|Je paie en espèces.|أدفع نقدًا.
+Envoyer||أرسل|أونڤوايي|J’envoie un message.|أرسل رسالة.
+Commencer||بدأ|كومونسي|Le film commence à huit heures.|يبدأ الفيلم في الساعة الثامنة.
+Finir||أنهى|فينير|J’ai fini mon travail.|أنهيت عملي.
+Apprendre||تعلّم|آپروندر|J’apprends le français.|أتعلّم الفرنسية.
+Habiter||سكن|آبيتي|J’habite à Rabat.|أسكن في الرباط.
+Oublier||نسي|أوبلييي|J’ai oublié mon téléphone.|نسيت هاتفي.
+Aider||ساعد|إيدي|Tu peux m’aider ?|هل يمكنك مساعدتي؟
+#A2|صفات يومية
+Cher||غالٍ|شير|Ce sac est cher.|هذه الحقيبة غالية.
+Bon marché||رخيص|بون مارشي|Ce restaurant est bon marché.|هذا المطعم رخيص.
+Rapide||سريع|راپيد|Le train est rapide.|القطار سريع.
+Lent||بطيء|لون|Le bus est lent.|الحافلة بطيئة.
+Fatigant||متعب|فاتيگون|Ce travail est fatigant.|هذا العمل متعب.
+Propre||نظيف|پروپر|La chambre est propre.|الغرفة نظيفة.
+Sale||متّسخ|سال|Mes chaussures sont sales.|حذائي متّسخ.
+Libre||فارغ / حر|ليبر|Cette place est libre ?|هل هذا المكان فارغ؟
+#B1|المشاعر
+La joie|f|الفرح|لا جوا|Je ressens une grande *joie*.|أشعر بفرح كبير.
+La peur|f|الخوف|لا پور|J’ai *peur* du noir.|أخاف من الظلام.
+La colère|f|الغضب|لا كولير|Il est en *colère*.|هو غاضب.
+La tristesse|f|الحزن|لا تريستيس|Sa *tristesse* est profonde.|حزنه عميق.
+L’espoir|m|الأمل|ليسپوار|Il ne faut pas perdre *espoir*.|لا يجب أن نفقد الأمل.
+Inquiet||قلق|أنكيي|Ma mère est inquiète.|أمي قلقة.
+Fier||فخور|فيير|Je suis fier de toi.|أنا فخور بك.
+Déçu||خائب الأمل|ديسو|Je suis déçu du résultat.|أنا خائب الأمل من النتيجة.
+#B1|الخدمة والمسار
+L’entreprise|f|الشركة|لونتروپريز|Je travaille dans une grande *entreprise*.|أعمل في شركة كبيرة.
+L’entretien|m|مقابلة العمل|لونتروتيان|J’ai un *entretien* d’embauche lundi.|لدي مقابلة عمل يوم الاثنين.
+Le diplôme|m|الشهادة|لو ديپلوم|J’ai eu mon *diplôme*.|حصلت على شهادتي.
+L’expérience|f|الخبرة|ليكسپيريونس|Il a beaucoup d’*expérience*.|لديه خبرة كبيرة.
+Le collègue|m|الزميل|لو كوليگ|Mon *collègue* est sympa.|زميلي لطيف.
+Le contrat|m|العقد|لو كونترا|J’ai signé le *contrat*.|وقّعت العقد.
+Le chômage|m|البطالة|لو شوماج|Le *chômage* augmente.|البطالة تزداد.
+La formation|f|التكوين|لا فورماسيون|Je fais une *formation* en informatique.|أتابع تكوينًا في المعلوميات.
+#B1|التكنولوجيا والإعلام
+L’ordinateur|m|الحاسوب|لورديناتور|Mon *ordinateur* est lent.|حاسوبي بطيء.
+L’écran|m|الشاشة|ليكرون|L’*écran* est cassé.|الشاشة مكسورة.
+Le mot de passe|m|كلمة السر|لو مو دو پاس|J’ai oublié mon *mot de passe*.|نسيت كلمة السر.
+Le réseau|m|الشبكة|لو ريزو|Il n’y a pas de *réseau* ici.|لا توجد شبكة هنا.
+Le journal|m|الجريدة|لو جورنال|Je lis le *journal* le matin.|أقرأ الجريدة في الصباح.
+La nouvelle|f|الخبر|لا نوڤيل|C’est une bonne *nouvelle* !|إنه خبر سار!
+Télécharger||حمّل|تيليشارجي|Je télécharge l’application.|أحمّل التطبيق.
+L’application|f|التطبيق|لاپليكاسيون|Cette *application* est utile.|هذا التطبيق مفيد.
+#B1|الحياة اليومية
+Le loyer|m|الإيجار|لو لواييه|Le *loyer* est trop cher.|الإيجار غالٍ جدًا.
+Le voisin|m|الجار|لو ڤوازان|Mon *voisin* est gentil.|جاري لطيف.
+Le supermarché|m|المتجر الكبير|لو سوپيرمارشي|Je fais les courses au *supermarché*.|أتسوّق في المتجر الكبير.
+La facture|f|الفاتورة|لا فاكتور|Je dois payer la *facture*.|يجب أن أدفع الفاتورة.
+Le permis|m|رخصة السياقة|لو پيرمي|J’ai eu mon *permis* hier.|حصلت على رخصة السياقة أمس.
+Le mariage|m|الزواج|لو مارياج|Le *mariage* est samedi.|العرس يوم السبت.
+L’anniversaire|m|عيد الميلاد|لانيڤيرسير|Joyeux *anniversaire* !|عيد ميلاد سعيد!
+Le quotidien|m|الحياة اليومية|لو كوتيديان|Le *quotidien* est parfois difficile.|الحياة اليومية صعبة أحيانًا.
+#B1|أفعال للتعبير
+Réussir||نجح|رييوسير|J’ai réussi mon examen.|نجحت في امتحاني.
+Expliquer||شرح|إكسپليكي|Tu peux m’expliquer ?|هل يمكنك أن تشرح لي؟
+Décider||قرّر|ديسيدي|J’ai décidé de partir.|قررت أن أرحل.
+Essayer||حاول|إسيي|Essaie encore une fois.|حاول مرة أخرى.
+Rencontrer||التقى|رونكونتري|J’ai rencontré un ami.|التقيت بصديق.
+Partager||شارك|پارتاجي|On partage le repas.|نتقاسم الطعام.
+Choisir||اختار|شوازير|Choisis une couleur.|اختر لونًا.
+Se souvenir||تذكّر|سو سوڤونير|Je me souviens de toi.|أتذكّرك.
+Proposer||اقترح|پروپوزي|Je propose une solution.|أقترح حلًّا.
+Accepter||قبل|أكسيپتي|J’accepte ton offre.|أقبل عرضك.
+Refuser||رفض|روفيزي|Il a refusé l’invitation.|رفض الدعوة.
+Améliorer||حسّن|أميليوري|Je veux améliorer mon français.|أريد تحسين فرنسيتي.
+Organiser||نظّم|أورگانيزي|On organise une fête.|ننظّم حفلة.
+Économiser||ادّخر|إيكونوميزي|J’économise pour un voyage.|أدّخر المال من أجل رحلة.
+Se plaindre||اشتكى|سو پلاندر|Il se plaint tout le temps.|يشتكي طوال الوقت.
+Remercier||شكر|رومرسيي|Je te remercie pour ton aide.|أشكرك على مساعدتك.
+#B1|صفات للوصف
+Important||مهم|أمپورتون|C’est très important.|هذا مهم جدًا.
+Possible||ممكن|پوسيبل|C’est possible demain ?|هل هذا ممكن غدًا؟
+Dangereux||خطير|دونجورو|Cette route est dangereuse.|هذه الطريق خطيرة.
+Sûr||متأكد|سور|Tu es sûr ?|هل أنت متأكد؟
+Pressé||مستعجل|پريسي|Je suis pressé.|أنا مستعجل.
+Célèbre||مشهور|سيليبر|C’est un acteur célèbre.|إنه ممثل مشهور.
+#B1|تعابير
+D’habitude||عادةً|دابيتود|D’habitude, je me lève tôt.|عادةً أستيقظ باكرًا.
+Par contre||أمّا (بالمقابل)|پار كونتر|J’aime le thé, par contre je n’aime pas le café.|أحب الشاي، في المقابل لا أحب القهوة.
+À mon avis||في رأيي|آ مون آڤي|À mon avis, c’est une bonne idée.|في رأيي، هذه فكرة جيدة.
+Tout à coup||فجأة|تو تا كو|Tout à coup, il a commencé à pleuvoir.|فجأة بدأ المطر يهطل.
+Enfin||أخيرا|أونفان|Enfin, tu es là !|أخيرًا وصلت!
+Peut-être||ربما|پوتيتر|Peut-être demain.|ربما غدًا.
+#B2|المجتمع
+La société|f|المجتمع|لا سوسيتي|La *société* change vite.|المجتمع يتغيّر بسرعة.
+Le gouvernement|m|الحكومة|لو گوڤيرنومون|Le *gouvernement* a pris une décision.|اتخذت الحكومة قرارًا.
+La loi|f|القانون|لا لوا|La *loi* est la même pour tous.|القانون واحد للجميع.
+Le droit|m|الحق|لو دروا|C’est ton *droit*.|هذا حقك.
+L’égalité|f|المساواة|ليگاليتي|Nous défendons l’*égalité*.|ندافع عن المساواة.
+La pauvreté|f|الفقر|لا پوڤروتي|La *pauvreté* touche beaucoup de familles.|الفقر يمسّ عائلات كثيرة.
+L’élection|f|الانتخاب|ليليكسيون|L’*élection* aura lieu en septembre.|ستُجرى الانتخابات في شتنبر.
+Le citoyen|m|المواطن|لو سيتواييان|Chaque *citoyen* a des devoirs.|لكل مواطن واجبات.
+La santé|f|الصحة|لا سونتي|La *santé* est très importante.|الصحة مهمة جدًا.
+La culture|f|الثقافة|لا كولتور|La *culture* marocaine est riche.|الثقافة المغربية غنية.
+#B2|البيئة
+L’environnement|m|البيئة|لونڤيرونمون|Il faut protéger l’*environnement*.|يجب أن نحمي البيئة.
+Le climat|m|المناخ|لو كليما|Le *climat* change.|المناخ يتغيّر.
+La pollution|f|التلوث|لا پوليسيون|La *pollution* est un grand problème.|التلوث مشكلة كبيرة.
+Le déchet|m|النفاية|لو ديشي|Triez vos *déchets*.|افرزوا نفاياتكم.
+L’énergie|f|الطاقة|لينيرجي|L’*énergie* solaire est propre.|الطاقة الشمسية نظيفة.
+La sécheresse|f|الجفاف|لا سيشريس|La *sécheresse* frappe le pays.|الجفاف يضرب البلاد.
+Recycler||أعاد التدوير|روسيكلي|Il faut recycler le plastique.|يجب إعادة تدوير البلاستيك.
+Durable||مستدام|دوراپل|C’est une solution durable.|إنه حل مستدام.
+#B2|أفكار ومفاهيم
+Le développement|m|التنمية|لو ديڤلوپمون|Le *développement* du pays est rapide.|تنمية البلاد سريعة.
+La connaissance|f|المعرفة|لا كونيسونس|La *connaissance* est une richesse.|المعرفة ثروة.
+Le défi|m|التحدي|لو ديفي|C’est un grand *défi*.|إنه تحدٍّ كبير.
+L’avantage|m|الميزة|لاڤونتاج|Quel est l’*avantage* ?|ما هي الميزة؟
+L’inconvénient|m|العيب|لانكونڤينيون|Le seul *inconvénient*, c’est le prix.|العيب الوحيد هو السعر.
+La responsabilité|f|المسؤولية|لا ريسپونسابيليتي|C’est ma *responsabilité*.|هذه مسؤوليتي.
+Le but|m|الهدف|لو بوت|Mon *but* est d’apprendre.|هدفي هو التعلّم.
+Le progrès|m|التقدّم|لو پروگري|Tu fais des *progrès*.|أنت تتقدّم.
+La confiance|f|الثقة|لا كونفيونس|J’ai *confiance* en toi.|أثق بك.
+L’esprit|m|العقل|ليسپري|Il a l’*esprit* ouvert.|لديه عقل منفتح.
+La conséquence|f|العاقبة|لا كونسيكونس|Chaque action a une *conséquence*.|لكل فعل نتيجة.
+Le point de vue|m|وجهة النظر|لو پوان دو ڤو|Je comprends ton *point de vue*.|أفهم وجهة نظرك.
+#B2|أفعال متقدمة
+Développer||طوّر|ديڤلوپي|Nous développons un projet.|نطوّر مشروعًا.
+Considérer||اعتبر|كونسيديري|Je considère cette idée.|أتأمّل هذه الفكرة.
+Convaincre||أقنع|كونڤانكر|Il m’a convaincu.|أقنعني.
+Exiger||طالب بـ|إگزيجي|Le patron exige des résultats.|يطالب المدير بالنتائج.
+Éviter||تجنّب|إيڤيتي|Évite le sucre.|تجنّب السكر.
+Atteindre||بلغ|أتاندر|J’ai atteint mon objectif.|بلغت هدفي.
+Soutenir||دعم|سوتونير|Ma famille me soutient.|عائلتي تدعمني.
+Influencer||أثّر|أنفلوونسي|Les réseaux sociaux influencent les jeunes.|وسائل التواصل الاجتماعي تؤثّر في الشباب.
+Négocier||تفاوض|نيگوسيي|On négocie le prix.|نتفاوض على السعر.
+Analyser||حلّل|آناليزي|Il faut analyser les données.|يجب تحليل المعطيات.
+S’adapter||تكيّف|سادابتي|Il faut s’adapter au changement.|يجب التكيّف مع التغيير.
+Prévoir||توقّع|پريڤوار|On prévoit de la pluie demain.|يُتوقّع المطر غدًا.
+Remplacer||عوّض|رومپلاسي|Il faut remplacer la batterie.|يجب استبدال البطارية.
+Réfléchir||فكّر|ريفليشير|Laisse-moi réfléchir.|دعني أفكّر.
+Se rendre compte||أدرك|سو روندر كونت|Je me suis rendu compte de mon erreur.|أدركت خطئي.
+Mériter||استحق|ميريتي|Tu mérites ce succès.|أنت تستحق هذا النجاح.
+#B2|صفات متقدمة
+Efficace||فعّال|إيفيكاس|Cette méthode est efficace.|هذه الطريقة فعّالة.
+Indispensable||ضروري|أنديسپونسابل|L’eau est indispensable.|الماء ضروري.
+Évident||واضح|إيڤيدون|C’est évident.|هذا واضح.
+Complexe||معقّد|كومپليكس|Le problème est complexe.|المشكلة معقّدة.
+Actuel||حالي|أكتويل|La situation actuelle est difficile.|الوضع الحالي صعب.
+Fiable||موثوق|فيابل|C’est une source fiable.|إنه مصدر موثوق.
+Remarquable||لافت|روماركابل|C’est un travail remarquable.|إنه عمل لافت.
+Inévitable||حتمي|إنيڤيتابل|Le changement est inévitable.|التغيير حتمي.
+#B2|روابط
+Cependant||لكن|سوپوندون|C’est cher, cependant la qualité est bonne.|إنه غالٍ، لكن جودته جيدة.
+Pourtant||ومع ذلك|پورتون|Il est riche, pourtant il n’est pas heureux.|هو غني، ومع ذلك ليس سعيدًا.
+Grâce à||بفضل|گراس آ|J’ai réussi grâce à toi.|نجحت بفضلك.
+À cause de||بسبب|آ كوز دو|Je suis en retard à cause du bus.|تأخرت بسبب الحافلة.
+Bien que||رغم أن|بيان كو|Bien qu’il pleuve, je sors.|رغم أنها تمطر، سأخرج.
+Par conséquent||وبالتالي|پار كونسيكون|Il est malade, par conséquent il reste chez lui.|هو مريض، وبالتالي يبقى في بيته.
+#A2|البيت
+La cuisine|f|المطبخ|لا كويزين|Ma mère est dans la *cuisine*.|أمي في المطبخ.
+La chambre|f|غرفة النوم|لا شومبر|Ma *chambre* est petite.|غرفتي صغيرة.
+Le lit|m|السرير|لو لي|Le *lit* est confortable.|السرير مريح.
+La salle de bain|f|الحمّام|لا سال دو بان|La *salle de bain* est propre.|الحمّام نظيف.
+Le salon|m|غرفة الجلوس|لو سالون|On regarde la télé au *salon*.|نشاهد التلفاز في غرفة الجلوس.
+Le frigo|m|الثلاجة|لو فريگو|Le lait est dans le *frigo*.|الحليب في الثلاجة.
+L’escalier|m|الدرج|ليسكالیي|Je monte l’*escalier*.|أصعد الدرج.
+Le toit|m|السطح|لو توا|Le chat est sur le *toit*.|القط فوق السطح.
+Le jardin|m|الحديقة|لو جاردان|Les enfants jouent dans le *jardin*.|يلعب الأطفال في الحديقة.
+La lampe|f|المصباح|لا لومپ|Allume la *lampe*.|أشعل المصباح.
+#A2|الطعام والشراب
+Le riz|m|الأرز|لو ري|Je mange du *riz* avec du poulet.|آكل الأرز مع الدجاج.
+La viande|f|اللحم|لا ڤيوند|La *viande* est chère.|اللحم غالٍ.
+Le poisson|m|السمك|لو پواسون|J’aime le *poisson* grillé.|أحب السمك المشوي.
+Le sucre|m|السكر|لو سوكر|Pas de *sucre*, merci.|بدون سكر، شكرًا.
+Le sel|m|الملح|لو سيل|Ajoute un peu de *sel*.|أضف قليلًا من الملح.
+L’huile|f|الزيت|لويل|L’*huile* d’olive est bonne.|زيت الزيتون جيد.
+Le jus|m|العصير|لو جو|Un *jus* d’orange, s’il vous plaît.|عصير برتقال من فضلك.
+La soupe|f|الحساء|لا سوپ|La *soupe* est chaude.|الحساء ساخن.
+Le légume|m|الخضار|لو ليگوم|Mange tes *légumes* !|كُل خضارك!
+Le petit-déjeuner|m|الفطور|لو پوتي ديجوني|Le *petit-déjeuner* est prêt.|الفطور جاهز.
+#A2|الوقت والأيام
+Lundi||الاثنين|لوندي|Je travaille lundi.|أعمل يوم الاثنين.
+Mardi||الثلاثاء|ماردي|On se voit mardi ?|هل نلتقي يوم الثلاثاء؟
+Mercredi||الأربعاء|ميركرودي|Mercredi, j’ai un cours.|لدي درس يوم الأربعاء.
+Jeudi||الخميس|جودي|Jeudi, je vais au marché.|يوم الخميس أذهب إلى السوق.
+Vendredi||الجمعة|ڤوندرودي|Vendredi, on mange du couscous.|يوم الجمعة نأكل الكسكس.
+Samedi||السبت|سامدي|Samedi, je me repose.|يوم السبت أرتاح.
+Dimanche||الأحد|ديمونش|Dimanche, on va à la plage.|يوم الأحد نذهب إلى الشاطئ.
+Le mois|m|الشهر|لو موا|Le *mois* prochain, je voyage.|سأسافر الشهر القادم.
+L’année|f|السنة|لاني|Bonne *année* !|سنة سعيدة!
+L’heure|f|الساعة|لور|Quelle *heure* est-il ?|كم الساعة؟
+#A2|الناس والعلاقات
+Le mari|m|الزوج|لو ماري|Son *mari* est médecin.|زوجها طبيب.
+La femme|f|الزوجة|لا فام|Sa *femme* est professeur.|زوجته أستاذة.
+Le fils|m|الابن|لو فيس|Mon *fils* a dix ans.|عمر ابني عشر سنوات.
+La fille|f|البنت|لا فيي|Ma *fille* aime lire.|ابنتي تحب القراءة.
+Le cousin|m|ابن العم|لو كوزان|Mon *cousin* habite à Fès.|ابن عمي يسكن في فاس.
+L’oncle|m|العم / الخال|لونكل|Mon *oncle* a un magasin.|عمي يملك متجرًا.
+La tante|f|العمة / الخالة|لا تونت|Ma *tante* fait des gâteaux.|خالتي تصنع الحلويات.
+Le bébé|m|الرضيع|لو بيبي|Le *bébé* dort.|الرضيع نائم.
+La personne|f|الشخص|لا پيرسون|C’est une *personne* gentille.|إنه شخص لطيف.
+L’invité|m|الضيف|لانڤيتي|L’*invité* arrive ce soir.|يصل الضيف هذا المساء.
+#A2|التسوق
+Le prix|m|السعر|لو پري|Le *prix* est bon.|السعر مناسب.
+La caisse|f|الصندوق (المحاسبة)|لا كيس|Payez à la *caisse*.|ادفع عند الصندوق.
+La boutique|f|المتجر|لا بوتيك|La *boutique* ferme à huit heures.|يُغلق المتجر في الساعة الثامنة.
+Le client|m|الزبون|لو كليون|Le *client* est content.|الزبون راضٍ.
+La réduction|f|التخفيض|لا ريدوكسيون|Il y a une *réduction* de 20 %.|يوجد تخفيض بنسبة 20 بالمئة.
+Le kilo|m|الكيلوغرام|لو كيلو|Un *kilo* de tomates, s’il vous plaît.|كيلوغرام من الطماطم من فضلك.
+La monnaie|f|الصرف (النقود الصغيرة)|لا مونيه|Tu as de la *monnaie* ?|هل لديك صرف؟
+Vendre||باع|ڤوندر|Il vend des fruits.|يبيع الفواكه.
+#A2|أفعال الحياة
+Se lever||استيقظ (نهض)|سو لوڤي|Je me lève à sept heures.|أستيقظ في الساعة السابعة.
+Se laver||اغتسل|سو لاڤي|Je me lave les mains.|أغسل يديّ.
+Cuisiner||طبخ|كويزيني|Ma mère cuisine bien.|أمي تطبخ جيدًا.
+Nettoyer||نظّف|نيتواييه|Je nettoie la maison.|أنظّف البيت.
+Marcher||مشى|مارشي|Je marche tous les jours.|أمشي كل يوم.
+Courir||ركض|كورير|Il court vite.|يركض بسرعة.
+Jouer||لعب|جوي|Les enfants jouent au foot.|يلعب الأطفال كرة القدم.
+Chanter||غنّى|شونتي|Elle chante bien.|تغني جيدًا.
+Danser||رقص|دونسي|On danse au mariage.|نرقص في العرس.
+Conduire||قاد (السيارة)|كوندوير|Je conduis la voiture.|أقود السيارة.
+Arriver||وصل|آريڤي|Le train arrive à midi.|يصل القطار عند الظهر.
+Partir||غادر|پارتير|Je pars demain matin.|سأغادر غدًا صباحًا.
+Rentrer||عاد إلى البيت|رونتري|Je rentre à six heures.|أعود إلى البيت في الساعة السادسة.
+Porter||حمل|پورتي|Je porte un sac lourd.|أحمل حقيبة ثقيلة.
+Montrer||أظهر (أرى)|مونتري|Montre-moi la photo.|أرني الصورة.
+Appeler||اتصل|آپلي|Je t’appelle ce soir.|سأتصل بك هذا المساء.
+#A2|صفات الناس
+Fort||قوي|فور|Il est très fort.|هو قوي جدًا.
+Faible||ضعيف|فيبل|Je me sens faible.|أشعر بالضعف.
+Jeune||شاب|جون|Mon père est encore jeune.|ما زال أبي شابًا.
+Gentil||لطيف|جونتي|Ton ami est gentil.|صديقك لطيف.
+Drôle||مضحك|درول|Ce film est drôle.|هذا الفيلم مضحك.
+Calme||هادئ|كالم|Le quartier est calme.|الحي هادئ.
+Fermé||مغلق|فيرمي|Le magasin est fermé.|المتجر مغلق.
+Ouvert||مفتوح|أوڤير|La banque est ouverte.|البنك مفتوح.
+#A2|الاتجاهات
+Tout droit||إلى الأمام مباشرة|تو دروا|Allez tout droit.|امشِ إلى الأمام مباشرة.
+Près||قريب|پري|La gare est près d’ici.|المحطة قريبة من هنا.
+Loin||بعيد|لوان|L’aéroport est loin.|المطار بعيد.
+Ici||هنا|إيسي|Attends-moi ici.|انتظرني هنا.
+Là-bas||هناك|لا با|Le café est là-bas.|المقهى هناك.
+Devant||أمام|دوڤون|Je t’attends devant l’école.|أنتظرك أمام المدرسة.
+Derrière||خلف|ديرييير|Le jardin est derrière la maison.|الحديقة خلف البيت.
+Entre||بين|أونتر|La banque est entre la poste et le café.|البنك بين البريد والمقهى.
+#B1|السفر والعطلة
+Le congé|m|العطلة|لو كونجي|Je suis en *congé* cette semaine.|أنا في عطلة هذا الأسبوع.
+La valise|f|الحقيبة (حقيبة السفر)|لا ڤاليز|Ma *valise* est lourde.|حقيبتي ثقيلة.
+Le passeport|m|جواز السفر|لو پاسپور|N’oublie pas ton *passeport*.|لا تنسَ جواز سفرك.
+La réservation|f|الحجز|لا ريزيرڤاسيون|J’ai une *réservation* à l’hôtel.|لدي حجز في الفندق.
+Le vol|m|الرحلة الجوية|لو ڤول|Le *vol* dure trois heures.|تستغرق الرحلة ثلاث ساعات.
+La frontière|f|الحدود|لا فرونتيير|On a passé la *frontière*.|عبرنا الحدود.
+Le guide|m|المرشد|لو گيد|Le *guide* parle arabe.|المرشد يتكلم العربية.
+Le paysage|m|المنظر الطبيعي|لو پيیزاج|Le *paysage* est magnifique.|المنظر رائع.
+Le séjour|m|الإقامة|لو سيجور|Bon *séjour* à Marrakech !|إقامة طيبة في مراكش!
+Visiter||زار|ڤيزيتي|Je veux visiter Chefchaouen.|أريد زيارة شفشاون.
+#B1|الصحة والجسم
+Le dos|m|الظهر|لو دو|J’ai mal au *dos*.|أشعر بألم في ظهري.
+Le ventre|m|البطن|لو ڤونتر|J’ai mal au *ventre*.|أشعر بألم في بطني.
+La jambe|f|الساق|لا جومب|Je me suis cassé la *jambe*.|كُسرت ساقي.
+Le bras|m|الذراع|لو برا|Il a mal au *bras*.|يشعر بألم في ذراعه.
+Le sang|m|الدم|لو سون|Il a perdu du *sang*.|فقد بعض الدم.
+L’ordonnance|f|الوصفة الطبية|لوردونونس|Le médecin m’a donné une *ordonnance*.|أعطاني الطبيب وصفة طبية.
+La blessure|f|الجرح|لا بليسور|La *blessure* n’est pas grave.|الجرح ليس خطيرًا.
+Guérir||شُفي|گيرير|Tu vas vite guérir.|ستُشفى بسرعة.
+#B1|الدراسة واللغة
+L’université|f|الجامعة|ليونيڤيرسيتي|J’étudie à l’*université*.|أدرس في الجامعة.
+La note|f|العلامة (النقطة)|لا نوت|J’ai eu une bonne *note*.|حصلت على علامة جيدة.
+Le cours|m|الحصة الدراسية|لو كور|Le *cours* commence à neuf heures.|تبدأ الحصة في الساعة التاسعة.
+La bibliothèque|f|المكتبة|لا بيبليوتيك|Je lis à la *bibliothèque*.|أقرأ في المكتبة.
+Le devoir|m|الواجب المنزلي|لو دوڤوار|J’ai fini mes *devoirs*.|أنهيت واجباتي.
+La langue|f|اللغة|لا لونگ|Le français est une belle *langue*.|الفرنسية لغة جميلة.
+Le mot|m|الكلمة|لو مو|Je ne connais pas ce *mot*.|لا أعرف هذه الكلمة.
+La phrase|f|الجملة|لا فراز|Répète la *phrase*.|كرّر الجملة.
+#B1|الطباع والشخصية
+Timide||خجول|تيميد|Mon frère est timide.|أخي خجول.
+Courageux||شجاع|كوراجو|Elle est très courageuse.|هي شجاعة جدًا.
+Paresseux||كسول|پاريسو|Ne sois pas paresseux !|لا تكن كسولًا!
+Honnête||صادق (نزيه)|أونيت|C’est un homme honnête.|إنه رجل نزيه.
+Jaloux||غيور|جالو|Il est jaloux de son frère.|يغار من أخيه.
+Patient||صبور|پاسيون|Sois patient, s’il te plaît.|كن صبورًا من فضلك.
+Sérieux||جادّ|سيريو|C’est un étudiant sérieux.|إنه طالب جادّ.
+Curieux||فضولي|كوريو|Les enfants sont curieux.|الأطفال فضوليون.
+#B1|المدينة والمجتمع
+La mairie|f|البلدية|لا ميري|Je vais à la *mairie* pour un papier.|أذهب إلى البلدية من أجل وثيقة.
+La police|f|الشرطة|لا پوليس|Appelle la *police* !|اتصل بالشرطة!
+Le bruit|m|الضجيج|لو بروي|Il y a trop de *bruit* ici.|يوجد ضجيج كثير هنا.
+La circulation|f|حركة المرور|لا سيركولاسيون|La *circulation* est difficile le matin.|حركة المرور صعبة في الصباح.
+L’embouteillage|m|الازدحام المروري|لومبوتيياج|Je suis dans un *embouteillage*.|أنا عالق في ازدحام مروري.
+Le trottoir|m|الرصيف|لو تروتوار|Marche sur le *trottoir*.|امشِ على الرصيف.
+Le feu rouge|m|الإشارة الحمراء|لو فو روج|Arrête-toi au *feu rouge*.|توقّف عند الإشارة الحمراء.
+L’association|f|الجمعية|لاسوسياسيون|Je suis membre d’une *association*.|أنا عضو في جمعية.
+#B1|أفعال التواصل
+Raconter||حكى (روى)|راكونتي|Raconte-moi ton voyage.|احكِ لي عن رحلتك.
+Répondre||أجاب|ريپوندر|Réponds à ma question.|أجب عن سؤالي.
+Demander||سأل (طلب)|دومندي|Je demande le chemin.|أسأل عن الطريق.
+Recevoir||تلقّى|روسوڤوار|J’ai reçu ton message.|تلقّيت رسالتك.
+Perdre||أضاع (خسر)|پيردر|J’ai perdu mes clés.|أضعت مفاتيحي.
+Gagner||فاز (ربح)|گانيي|Notre équipe a gagné.|فاز فريقنا.
+Changer||غيّر|شونجي|Je veux changer de travail.|أريد أن أغيّر عملي.
+Préparer||حضّر|پريپاري|Je prépare le dîner.|أحضّر العشاء.
+Continuer||واصل|كونتينوي|Continue, c’est bien !|واصل، هذا جيد!
+Arrêter||أوقف (توقّف)|آريتي|Arrête la voiture ici.|أوقف السيارة هنا.
+Croire||صدّق (اعتقد)|كروار|Je te crois.|أصدّقك.
+Penser||ظنّ (فكّر)|پونسي|Je pense que c’est vrai.|أظن أن هذا صحيح.
+Inviter||دعا|أنڤيتي|Je t’invite à dîner.|أدعوك إلى العشاء.
+Rêver||حلم|ريڤي|Je rêve de voyager.|أحلم بالسفر.
+Sentir||شعر (أحسّ)|سونتير|Je sens que tu es triste.|أشعر أنك حزين.
+Se marier||تزوّج|سو مارييي|Ils se marient en été.|سيتزوجان في الصيف.
+#B1|تعابير الحوار
+Bien sûr||طبعًا|بيان سور|Bien sûr, je viens !|طبعًا، سآتي!
+D’accord||موافق|داكور|D’accord, à demain.|موافق، إلى الغد.
+Pas encore||ليس بعد|پا زونكور|Je n’ai pas encore mangé.|لم آكل بعد.
+Déjà||سبق أن (بالفعل)|ديجا|J’ai déjà vu ce film.|سبق أن شاهدت هذا الفيلم.
+Souvent||غالبًا|سوڤون|Je vais souvent à la plage.|أذهب غالبًا إلى الشاطئ.
+Parfois||أحيانًا|پارفوا|Parfois, je cuisine.|أحيانًا أطبخ.
+Toujours||دائمًا|توجور|Il est toujours en retard.|هو متأخر دائمًا.
+Jamais||أبدًا|جامي|Je ne fume jamais.|لا أدخّن أبدًا.
+Ensemble||معًا|أونسومبل|On travaille ensemble.|نعمل معًا.
+Seulement||فقط|سولمون|J’ai seulement dix dirhams.|لدي عشرة دراهم فقط.
+Assez||كافٍ (بما يكفي)|آسي|J’ai assez mangé.|أكلت بما يكفي.
+Trop||أكثر من اللازم|ترو|C’est trop cher.|إنه غالٍ أكثر من اللازم.
+#B2|الاقتصاد والمال
+L’économie|f|الاقتصاد|ليكونومي|L’*économie* du pays progresse.|اقتصاد البلاد يتقدّم.
+L’entrepreneur|m|رائد الأعمال|لونتروپرونور|Cet *entrepreneur* a créé une start-up.|أسّس رائد الأعمال هذا شركة ناشئة.
+L’investissement|m|الاستثمار|لانڤيستيسمون|C’est un bon *investissement*.|إنه استثمار جيد.
+La croissance|f|النمو|لا كرواسونس|La *croissance* est faible cette année.|النمو ضعيف هذه السنة.
+La dette|f|الدَّين|لا ديت|Il a remboursé sa *dette*.|سدّد دَينه.
+Le revenu|m|الدخل|لو روڤونو|Son *revenu* a augmenté.|ارتفع دخله.
+L’impôt|m|الضريبة|لامپو|Il faut payer l’*impôt*.|يجب دفع الضريبة.
+La concurrence|f|المنافسة|لا كونكورونس|La *concurrence* est forte.|المنافسة قوية.
+Le bénéfice|m|الربح|لو بينيفيس|L’entreprise a fait un *bénéfice*.|حققت الشركة ربحًا.
+La crise|f|الأزمة|لا كريز|La *crise* touche tout le monde.|الأزمة تمسّ الجميع.
+#B2|الإعلام والنقاش
+Le débat|m|النقاش|لو ديبا|Le *débat* était intéressant.|كان النقاش مثيرًا للاهتمام.
+L’opinion|f|الرأي|لوپينيون|Chacun a son *opinion*.|لكل شخص رأيه.
+L’argument|m|الحجّة|لارگومون|Ton *argument* est solide.|حجّتك قوية.
+La preuve|f|الدليل|لا پروڤ|Tu as une *preuve* ?|هل لديك دليل؟
+La rumeur|f|الإشاعة|لا رومور|Ce n’est qu’une *rumeur*.|إنها مجرد إشاعة.
+La source|f|المصدر|لا سورس|Vérifie la *source*.|تحقّق من المصدر.
+L’enquête|f|التحقيق|لونكيت|La police mène une *enquête*.|تُجري الشرطة تحقيقًا.
+Le journaliste|m|الصحفي|لو جورناليست|Le *journaliste* pose des questions.|يطرح الصحفي أسئلة.
+Critiquer||انتقد|كريتيكي|Il critique tout.|ينتقد كل شيء.
+Prétendre||ادّعى|پريتوندر|Il prétend qu’il est malade.|يدّعي أنه مريض.
+#B2|العلوم والمستقبل
+La recherche|f|البحث العلمي|لا روشيرش|La *recherche* médicale avance.|البحث الطبي يتقدّم.
+La découverte|f|الاكتشاف|لا ديكوڤيرت|C’est une grande *découverte*.|إنه اكتشاف كبير.
+La technologie|f|التكنولوجيا|لا تيكنولوجي|La *technologie* change nos vies.|التكنولوجيا تغيّر حياتنا.
+L’avenir|m|المستقبل|لاڤونير|Je pense à mon *avenir*.|أفكّر في مستقبلي.
+Le risque|m|المخاطرة|لو ريسك|Il y a un *risque*.|هناك مخاطرة.
+La solution|f|الحل|لا سوليسيون|On a trouvé une *solution*.|وجدنا حلًّا.
+Le résultat|m|النتيجة|لو ريزولتا|Le *résultat* est positif.|النتيجة إيجابية.
+L’innovation|f|الابتكار|لينوڤاسيون|L’*innovation* est importante.|الابتكار مهم.
+Le changement|m|التغيير|لو شونجمون|Le *changement* fait peur.|التغيير مخيف.
+La population|f|السكان|لا پوپولاسيون|La *population* augmente.|عدد السكان يزداد.
+#B2|أفعال متقدمة 2
+Confirmer||أكّد|كونفيرمي|Je confirme ma réservation.|أؤكّد حجزي.
+Supposer||افترض|سوپوزي|Je suppose qu’il est parti.|أفترض أنه غادر.
+Souligner||شدّد على|سوليني|Il souligne un point important.|يشدّد على نقطة مهمة.
+Contribuer||ساهم|كونتريبوي|Chacun peut contribuer.|يمكن لكل شخص أن يساهم.
+Dépendre||توقّف على|ديپوندر|Ça dépend du temps.|ذلك يتوقّف على الطقس.
+Garantir||ضمن|گارونتير|Je te garantis le résultat.|أضمن لك النتيجة.
+Interdire||منع|أنتيردير|Il est interdit de fumer ici.|التدخين ممنوع هنا.
+Autoriser||سمح|أوتوريزي|Mes parents m’autorisent à sortir.|يسمح لي والداي بالخروج.
+Diminuer||انخفض|ديمينوي|Les prix diminuent.|الأسعار تنخفض.
+Augmenter||ارتفع (زاد)|أوگمونتي|Le loyer augmente chaque année.|يرتفع الإيجار كل سنة.
+Résoudre||حلّ (مشكلة)|ريزودر|On doit résoudre ce problème.|يجب أن نحلّ هذه المشكلة.
+Exprimer||عبّر|إكسپريمي|Exprime ton avis.|عبّر عن رأيك.
+#B2|روابط متقدمة
+En revanche||في المقابل|أون روڤونش|Il est riche, en revanche il est seul.|هو غني، لكنه في المقابل وحيد.
+De plus||علاوة على ذلك|دو پلوس|De plus, c’est gratuit.|علاوة على ذلك، إنه مجاني.
+Afin de||من أجل|آفان دو|Je travaille afin de voyager.|أعمل من أجل السفر.
+Malgré||رغم|مالگري|Il sort malgré la pluie.|يخرج رغم المطر.
+Au lieu de||بدلًا من|أو ليو دو|Bois de l’eau au lieu du soda.|اشرب الماء بدلًا من المشروب الغازي.
+En effet||فعلًا|أون إيفي|En effet, tu as raison.|فعلًا، أنت محق.
+Par ailleurs||من جهة أخرى|پار آيور|Par ailleurs, il parle trois langues.|من جهة أخرى، يتكلم ثلاث لغات.
+Néanmoins||رغم ذلك|نيونموان|C’est difficile, néanmoins possible.|إنه صعب، ومع ذلك ممكن.`,
+de:`#التحيات
+Guten Tag||مرحبا / نهارك سعيد|گوتن تاگ|Guten Tag, Sara!|مرحبًا يا سارة!
+Guten Abend||مساء الخير|گوتن آبنت|Guten Abend, Herr Ali.|مساء الخير يا سيد علي.
+Danke||شكرا|دانكه|Danke schön!|شكرًا جزيلًا!
+Bitte||من فضلك|بيته|Einen Tee, bitte.|شاي من فضلك.
+Auf Wiedersehen||إلى اللقاء|آوف ڤيدرزيين|Auf Wiedersehen, bis morgen!|إلى اللقاء، إلى الغد!
+Entschuldigung||عفوا / اعذرني|إنتشولديگونگ|Entschuldigung, wo ist der Bahnhof?|عفوًا، أين المحطة؟
+Ja||نعم|يا|Ja, ich verstehe.|نعم، فهمت.
+Nein||لا|ناين|Nein, danke.|لا، شكرًا.
+#الأكل
+Das Brot|n|الخبز|داس بروت|Ich esse *Brot*.|آكل الخبز.
+Das Wasser|n|الماء|داس ڤاسر|Ich trinke *Wasser*.|أشرب الماء.
+Der Tee|m|الشاي|دير تيه|Der *Tee* ist heiß.|الشاي ساخن.
+Die Milch|f|الحليب|دي ميلخ|Ich mag *Milch*.|أحب الحليب.
+Das Hähnchen|n|الدجاج|داس هينشن|Das *Hähnchen* ist gut.|الدجاج لذيذ.
+Der Apfel|m|التفاحة|دير آپفل|Der *Apfel* ist rot.|التفاحة حمراء.
+Das Ei|n|البيضة|داس آي|Ich esse ein *Ei*.|آكل بيضة.
+Der Käse|m|الجبن|دير كيزه|Der *Käse* ist gut.|الجبن لذيذ.
+#العائلة
+Die Mutter|f|الأم|دي موتر|Meine *Mutter* ist zu Hause.|أمي في البيت.
+Der Vater|m|الأب|دير فاتر|Mein *Vater* arbeitet.|أبي يعمل.
+Der Bruder|m|الأخ|دير برودر|Mein *Bruder* ist groß.|أخي طويل.
+Die Schwester|f|الأخت|دي شڤيستر|Meine *Schwester* liest ein Buch.|أختي تقرأ كتابًا.
+Der Freund|m|الصديق|دير فرويند|Das ist mein *Freund*.|هذا صديقي.
+Das Haus|n|البيت|داس هاوس|Das *Haus* ist groß.|البيت كبير.
+Die Großmutter|f|الجدة|دي گروسموتر|Meine *Großmutter* macht Tee.|جدتي تُعدّ الشاي.
+Das Kind|n|الطفل|داس كيند|Das *Kind* schläft.|الطفل نائم.
+#السفر
+Wo ist …?||أين يوجد…؟|ڤو إيست|Wo ist das Hotel?|أين الفندق؟
+Wie viel kostet das?||كم الثمن؟|ڤي فيل كوستت داس|Wie viel kostet das Buch?|كم ثمن هذا الكتاب؟
+Der Bahnhof|m|محطة القطار|دير بانهوف|Der *Bahnhof* ist weit.|المحطة بعيدة.
+Die Straße|f|الشارع|دي شتراسه|Die *Straße* ist klein.|الشارع صغير.
+Rechts||إلى اليمين|ريشتس|Gehen Sie nach rechts.|اذهب إلى اليمين.
+Links||إلى اليسار|لينكس|Der Bahnhof ist links.|المحطة على اليسار.
+Der Flughafen|m|المطار|دير فلوگهافن|Der *Flughafen* ist groß.|المطار كبير.
+Das Hotel|n|الفندق|داس هوتيل|Das *Hotel* ist in der Nähe.|الفندق قريب.
+#جمل
+Ich heiße …||اسمي…|إيش هايسه|Ich heiße Youssef.|اسمي يوسف.
+Wie geht’s?||كيف حالك؟|ڤي گيتس|Hallo! Wie geht’s?|مرحبًا! كيف حالك؟
+Ich verstehe nicht||لا أفهم|إيش فيرشتيه نيشت|Entschuldigung, ich verstehe nicht.|عفوًا، لا أفهم.
+Bitte langsamer||ببطء من فضلك|بيته لانگزامر|Sprechen Sie bitte langsamer.|تكلّم ببطء من فضلك.
+Ich möchte einen Kaffee||أريد قهوة|إيش موشته آينن كافيه|Ich möchte einen Kaffee, bitte.|أريد قهوة من فضلك.
+Wo ist die Toilette?||أين المرحاض؟|ڤو إيست دي توالته|Entschuldigung, wo ist die Toilette?|عفوًا، أين المرحاض؟
+Ich bin müde||أنا متعب|إيش بين مودِه|Heute Abend bin ich müde.|أنا متعب هذا المساء.
+Ich mag dich||أحبّك / أنت عزيز عليّ|إيش ماگ ديش|Du bist mein Freund, ich mag dich.|أنت صديقي، أنا أحبك.
+#الأرقام
+eins||واحد|آينس|Ich habe einen Bruder.|لدي أخ واحد.
+zwei||اثنان|تسڤاي|Ich habe zwei Schwestern.|لدي أختان.
+drei||ثلاثة|دراي|Drei Kaffee, bitte.|ثلاث قهوات من فضلك.
+vier||أربعة|فير|Der Tisch hat vier Beine.|للطاولة أربعة أرجل.
+fünf||خمسة|فونف|Ich habe fünf Bücher.|لدي خمسة كتب.
+sechs||ستة|زيكس|Es ist sechs Uhr.|الساعة السادسة.
+sieben||سبعة|زيبن|Eine Woche hat sieben Tage.|في الأسبوع سبعة أيام.
+acht||ثمانية|آخت|Ich arbeite acht Stunden.|أعمل ثماني ساعات.
+neun||تسعة|نوين|Mein Bruder ist neun Jahre alt.|عمر أخي تسع سنوات.
+zehn||عشرة|تسين|Ich habe zehn Euro.|لدي عشرة يوروهات.
+#الألوان
+rot||أحمر|روت|Der Apfel ist rot.|التفاحة حمراء.
+blau||أزرق|بلاو|Das Meer ist blau.|البحر أزرق.
+grün||أخضر|گرون|Der grüne Tee ist gut.|الشاي الأخضر لذيذ.
+gelb||أصفر|گيلب|Die Sonne ist gelb.|الشمس صفراء.
+schwarz||أسود|شڤارتس|Die Katze ist schwarz.|القطة سوداء.
+weiß||أبيض|ڤايس|Die Milch ist weiß.|الحليب أبيض.
+orange||برتقالي|أورانجه|Das Auto ist orange.|السيارة برتقالية.
+rosa||وردي|روزا|Die Blume ist rosa.|الوردة وردية.
+#الوقت
+heute||اليوم|هويته|Heute ist das Wetter schön.|الطقس جميل اليوم.
+morgen||غدا|مورگن|Bis morgen!|إلى الغد!
+gestern||أمس|گيسترن|Gestern war ich müde.|كنت متعبًا أمس.
+jetzt||الآن|ييتست|Ich esse jetzt.|آكل الآن.
+Der Morgen|m|الصباح|دير مورگن|Am *Morgen* trinke ich Tee.|في الصباح أشرب الشاي.
+Der Abend|m|المساء|دير آبنت|Am *Abend* lese ich.|في المساء أقرأ.
+Die Nacht|f|الليل|دي ناخت|Die *Nacht* ist ruhig.|الليل هادئ.
+Die Woche|f|الأسبوع|دي ڤوخه|Nächste *Woche* reise ich.|سأسافر الأسبوع القادم.
+#الجسم
+Der Kopf|m|الرأس|دير كوپف|Mein *Kopf* tut weh.|رأسي يؤلمني.
+Die Hand|f|اليد|دي هاند|Wasch deine *Hand*.|اغسل يدك.
+Der Fuß|m|القدم|دير فوس|Mein *Fuß* tut weh.|قدمي تؤلمني.
+Das Auge|n|العين|داس آوگه|Mach das *Auge* zu.|أغمض عينك.
+Der Mund|m|الفم|دير موند|Mach den *Mund* auf.|افتح فمك.
+Das Herz|n|القلب|داس هيرتس|Er hat ein gutes *Herz*.|قلبه طيب.
+Die Nase|f|الأنف|دي نازه|Meine *Nase* ist kalt.|أنفي بارد.
+Das Ohr|n|الأذن|داس أور|Mein *Ohr* tut weh.|أذني تؤلمني.
+#الأفعال
+essen||أكل|إيسن|Ich will essen.|أريد أن آكل.
+trinken||شرب|ترينكن|Ich trinke Tee.|أشرب الشاي.
+schlafen||نام|شلافن|Ich schlafe um zehn Uhr.|أنام في الساعة العاشرة.
+gehen||ذهب|گيين|Ich gehe zur Schule.|أذهب إلى المدرسة.
+kommen||جاء|كومن|Komm her!|تعال إلى هنا!
+sprechen||تكلّم|شپريشن|Ich spreche Deutsch.|أتكلم الألمانية.
+sehen||رأى|زيين|Ich sehe das Meer.|أرى البحر.
+wollen||أراد|ڤولن|Ich will einen Kaffee.|أريد قهوة.
+haben||ملك|هابن|Ich habe ein Auto.|لدي سيارة.
+machen||فعل|ماخن|Ich mache Sport.|أمارس الرياضة.
+geben||أعطى|گيبن|Gib mir das Buch.|أعطني الكتاب.
+nehmen||أخذ|نيمن|Ich nehme den Bus.|آخذ الحافلة.
+kaufen||اشترى|كاوفن|Ich kaufe Brot.|أشتري الخبز.
+arbeiten||عمل|آربايتن|Ich arbeite in Casablanca.|أعمل في الدار البيضاء.
+lieben||أحبّ|ليبن|Ich liebe das Meer.|أحب البحر.
+verstehen||فهم|فيرشتيين|Ich verstehe ein bisschen.|أفهم قليلًا.
+wissen||عرف|ڤيسن|Ich weiß nicht.|لا أعرف.
+warten||انتظر|ڤارتن|Ich warte auf den Bus.|أنتظر الحافلة.
+schreiben||كتب|شرايبن|Ich schreibe einen Brief.|أكتب رسالة.
+lesen||قرأ|ليزن|Ich lese ein Buch.|أقرأ كتابًا.
+#الصفات
+groß||كبير|گروس|Das Haus ist groß.|البيت كبير.
+klein||صغير|كلاين|Die Katze ist klein.|القطة صغيرة.
+schön||جميل|شون|Das Wetter ist schön.|الطقس جميل.
+gut||جيّد|گوت|Das Brot ist gut.|الخبز لذيذ.
+schlecht||سيّئ|شليشت|Der Kaffee ist schlecht.|القهوة سيئة.
+heiß||ساخن|هايس|Der Tee ist heiß.|الشاي ساخن.
+kalt||بارد|كالت|Das Wasser ist kalt.|الماء بارد.
+neu||جديد|نوي|Ich habe ein neues Handy.|لدي هاتف جديد.
+alt||قديم|آلت|Das Haus ist alt.|البيت قديم.
+leicht||سهل|لايشت|Deutsch ist leicht.|الألمانية سهلة.
+schwer||صعب|شڤير|Das ist schwer.|هذا صعب.
+froh||مسرور|فرو|Ich bin froh.|أنا مسرور.
+#الأماكن
+Die Schule|f|المدرسة|دي شوله|Die *Schule* ist zu.|المدرسة مغلقة.
+Der Markt|m|السوق|دير ماركت|Ich gehe auf den *Markt*.|أذهب إلى السوق.
+Das Krankenhaus|n|المستشفى|داس كرانكنهاوس|Das *Krankenhaus* ist weit.|المستشفى بعيد.
+Der Strand|m|الشاطئ|دير شتراند|Wir gehen an den *Strand*.|نذهب إلى الشاطئ.
+Die Moschee|f|المسجد|دي موشيه|Die *Moschee* ist groß.|المسجد كبير.
+Die Arbeit|f|العمل|دي آربايت|Ich gehe zur *Arbeit*.|أذهب إلى العمل.
+Die Stadt|f|المدينة|دي شتات|Die *Stadt* ist schön.|المدينة جميلة.
+#الأشياء
+Das Auto|n|السيارة|داس آوتو|Das *Auto* ist rot.|السيارة حمراء.
+Das Telefon|n|الهاتف|داس تيليفون|Das *Telefon* klingelt.|الهاتف يرنّ.
+Das Buch|n|الكتاب|داس بوخ|Das *Buch* ist auf dem Tisch.|الكتاب على الطاولة.
+Die Tür|f|الباب|دي تور|Mach die *Tür* zu.|أغلق الباب.
+Das Fenster|n|النافذة|داس فينستر|Mach das *Fenster* auf.|افتح النافذة.
+Der Tisch|m|الطاولة|دير تيش|Der *Tisch* ist klein.|الطاولة صغيرة.
+Der Stuhl|m|الكرسي|دير شتول|Der *Stuhl* ist kaputt.|الكرسي مكسور.
+Der Stift|m|القلم|دير شتيفت|Ich habe einen blauen *Stift*.|لدي قلم أزرق.
+Das Geld|n|المال|داس گيلت|Ich habe kein *Geld*.|ليس لدي مال.
+Der Schlüssel|m|المفتاح|دير شلوسل|Wo ist der *Schlüssel*?|أين المفتاح؟
+#الطبيعة
+Die Sonne|f|الشمس|دي زونه|Die *Sonne* ist heiß.|الشمس حارة.
+Der Regen|m|المطر|دير ريگن|Ich mag den *Regen*.|أحب المطر.
+Der Wind|m|الريح|دير ڤيند|Der *Wind* ist stark.|الريح قوية.
+Das Meer|n|البحر|داس مير|Das *Meer* ist blau.|البحر أزرق.
+Der Mond|m|القمر|دير مونت|Der *Mond* ist schön.|القمر جميل.
+Der Himmel|m|السماء|دير هيمل|Der *Himmel* ist blau.|السماء زرقاء.
+#الضمائر
+ich||أنا|إيش|Ich bin Marokkaner.|أنا مغربي.
+du||أنتَ / أنتِ|دو|Sprichst du Deutsch?|هل تتكلم الألمانية؟
+er||هو|إير|Er ist groß.|هو طويل.
+sie||هي|زي|Sie ist froh.|هي مسرورة.
+wir||نحن|ڤير|Wir sind Freunde.|نحن أصدقاء.
+ihr||أنتم|إير|Seid ihr Marokkaner?|هل أنتم مغاربة؟
+Sie||حضرتك (للاحترام)|زي|Sprechen Sie Arabisch?|هل تتكلم العربية؟ (بصيغة الاحترام)
+#الأسئلة
+was||ماذا|ڤاس|Was machst du?|ماذا تفعل؟
+wer||من|ڤير|Wer ist das?|من هذا؟
+wann||متى|ڤان|Wann kommst du?|متى تأتي؟
+warum||لماذا|ڤاروم|Warum lachst du?|لماذا تضحك؟
+#A2|الطقس والفصول
+Das Wetter|n|الطقس|داس ڤيتر|Wie ist das *Wetter*?|كيف هو الطقس؟
+Der Schnee|m|الثلج|دير شنيه|Der *Schnee* fällt.|الثلج يتساقط.
+Die Wolke|f|السحابة|دي ڤولكه|Am Himmel sind viele *Wolken*.|في السماء غيوم كثيرة.
+Der Sommer|m|الصيف|دير زومر|Im *Sommer* ist es heiß.|في الصيف يكون الجو حارًّا.
+Der Winter|m|الشتاء|دير ڤينتر|Im *Winter* ist es kalt.|في الشتاء يكون الجو باردًا.
+Der Frühling|m|الربيع|دير فرولينگ|Im *Frühling* blühen die Blumen.|في الربيع تتفتّح الأزهار.
+Der Herbst|m|الخريف|دير هيربست|Im *Herbst* regnet es oft.|في الخريف تمطر كثيرًا.
+Die Hitze|f|الحرارة|دي هيتسه|Die *Hitze* ist heute stark.|الحرارة شديدة اليوم.
+#A2|الحوايج
+Das Hemd|n|القميص|داس هيمت|Das *Hemd* ist weiß.|القميص أبيض.
+Die Hose|f|السروال|دي هوزه|Meine *Hose* ist schwarz.|سروالي أسود.
+Der Schuh|m|الحذاء|دير شو|Ich kaufe neue *Schuhe*.|أشتري حذاءً جديدًا.
+Die Jacke|f|السترة|دي ياكه|Nimm deine *Jacke*, es ist kalt.|خذ سترتك، الجو بارد.
+Das Kleid|n|الفستان|داس كلايت|Sie trägt ein schönes *Kleid*.|ترتدي فستانًا جميلًا.
+Der Hut|m|القبعة|دير هوت|Er trägt einen *Hut*.|يرتدي قبعة.
+Die Tasche|f|الحقيبة|دي تاشه|Meine *Tasche* ist schwer.|حقيبتي ثقيلة.
+Die Größe|f|المقاس|دي گروسه|Welche *Größe* haben Sie?|ما هو مقاسك؟
+#A2|المدينة والتنقل
+Der Zug|m|القطار|دير تسوگ|Der *Zug* fährt um acht Uhr.|ينطلق القطار في الساعة الثامنة.
+Die Fahrkarte|f|التذكرة|دي فاركارته|Ich habe eine *Fahrkarte* gekauft.|اشتريت تذكرة.
+Die Apotheke|f|الصيدلية|دي آپوتيكه|Die *Apotheke* ist offen.|الصيدلية مفتوحة.
+Die Bank|f|البنك|دي بانك|Ich gehe zur *Bank*.|أذهب إلى البنك.
+Das Restaurant|n|المطعم|داس ريستوران|Das *Restaurant* ist gut.|المطعم جيد.
+Die Brücke|f|الجسر|دي بروكه|Die *Brücke* ist lang.|الجسر طويل.
+Das Viertel|n|الحي|داس فيرتل|Ich wohne in diesem *Viertel*.|أسكن في هذا الحي.
+Die Reise|f|السفر|دي رايزه|Die *Reise* war lang.|كان السفر طويلًا.
+#A2|الصحة
+Der Arzt|m|الطبيب|دير آرتست|Ich muss zum *Arzt*.|يجب أن أذهب إلى الطبيب.
+Das Medikament|n|الدواء|داس ميديكامنت|Nimm dieses *Medikament*.|خذ هذا الدواء.
+Das Fieber|n|الحمى|داس فيبر|Ich habe *Fieber*.|لدي حمّى.
+krank||مريض|كرانك|Ich bin heute krank.|أنا مريض اليوم.
+Der Schmerz|m|الألم|دير شميرتس|Ich habe *Schmerzen* im Rücken.|أشعر بآلام في ظهري.
+Der Termin|m|الموعد|دير تيرمين|Ich habe morgen einen *Termin*.|لدي موعد غدًا.
+sich ausruhen||استراح|زيش آوسروين|Du musst dich ausruhen.|يجب أن ترتاح.
+Der Zahnarzt|m|طبيب الأسنان|دير تسانآرتست|Der *Zahnarzt* ist nett.|طبيب الأسنان لطيف.
+#A2|الخدمة والقراية
+Das Büro|n|المكتب|داس بورو|Ich bin im *Büro*.|أنا في المكتب.
+Der Chef|m|المدير|دير شيف|Der *Chef* ist zufrieden.|المدير راضٍ.
+Das Gehalt|n|الراتب|داس گيهالت|Das *Gehalt* kommt am Monatsende.|يصل الراتب في نهاية الشهر.
+Der Student|m|الطالب|دير شتودنت|Der *Student* lernt viel.|الطالب يدرس كثيرًا.
+Der Lehrer|m|الأستاذ|دير ليرر|Der *Lehrer* erklärt die Lektion.|يشرح الأستاذ الدرس.
+Die Besprechung|f|الاجتماع|دي بيشپريشونگ|Die *Besprechung* beginnt um zehn Uhr.|يبدأ الاجتماع في الساعة العاشرة.
+Die Prüfung|f|الامتحان|دي پروفونگ|Ich habe morgen eine *Prüfung*.|لدي امتحان غدًا.
+Der Beruf|m|المهنة|دير بيروف|Was ist dein *Beruf*?|ما هي مهنتك؟
+#A2|أفعال مهمة
+öffnen||فتح|أوفنن|Kannst du die Tür öffnen?|هل يمكنك فتح الباب؟
+schließen||أغلق|شليسن|Schließ bitte das Fenster.|أغلق النافذة من فضلك.
+suchen||بحث|زوخن|Ich suche meine Schlüssel.|أبحث عن مفاتيحي.
+finden||وجد|فيندن|Ich habe eine gute Arbeit gefunden.|وجدت عملًا جيدًا.
+bezahlen||دفع|بيتسالن|Ich bezahle bar.|أدفع نقدًا.
+schicken||أرسل|شيكن|Ich schicke eine Nachricht.|أرسل رسالة.
+anfangen||بدأ|آنفانگن|Der Film fängt um acht Uhr an.|يبدأ الفيلم في الساعة الثامنة.
+beenden||أنهى|بيإندن|Ich habe meine Arbeit beendet.|أنهيت عملي.
+lernen||تعلّم|ليرنن|Ich lerne Deutsch.|أتعلّم الألمانية.
+wohnen||سكن|ڤونن|Ich wohne in Rabat.|أسكن في الرباط.
+vergessen||نسي|فيرگيسن|Ich habe mein Handy vergessen.|نسيت هاتفي.
+helfen||ساعد|هيلفن|Kannst du mir helfen?|هل يمكنك مساعدتي؟
+#A2|صفات يومية
+teuer||غالٍ|تويَر|Die Tasche ist teuer.|الحقيبة غالية.
+billig||رخيص|بيليش|Das Restaurant ist billig.|المطعم رخيص.
+schnell||سريع|شنيل|Der Zug ist schnell.|القطار سريع.
+langsam||بطيء|لانگزام|Der Bus ist langsam.|الحافلة بطيئة.
+anstrengend||متعب|آنشترينگنت|Die Arbeit ist anstrengend.|العمل متعب.
+sauber||نظيف|زاوبر|Das Zimmer ist sauber.|الغرفة نظيفة.
+schmutzig||متّسخ|شموتسيش|Meine Schuhe sind schmutzig.|حذائي متّسخ.
+frei||فارغ / حر|فراي|Ist dieser Platz frei?|هل هذا المكان فارغ؟
+#B1|المشاعر
+Die Freude|f|الفرح|دي فرويده|Ich spüre große *Freude*.|أشعر بفرح كبير.
+Die Angst|f|الخوف|دي آنگست|Ich habe *Angst* vor der Dunkelheit.|أخاف من الظلام.
+Die Wut|f|الغضب|دي ڤوت|Er ist voller *Wut*.|هو مليء بالغضب.
+Die Traurigkeit|f|الحزن|دي تراوريشكايت|Seine *Traurigkeit* ist groß.|حزنه كبير.
+Die Hoffnung|f|الأمل|دي هوفنونگ|Wir dürfen die *Hoffnung* nicht verlieren.|لا يجب أن نفقد الأمل.
+besorgt||قلق|بيزورگت|Meine Mutter ist besorgt.|أمي قلقة.
+stolz||فخور|شتولتس|Ich bin stolz auf dich.|أنا فخور بك.
+enttäuscht||خائب الأمل|إنتويشت|Ich bin vom Ergebnis enttäuscht.|أنا خائب الأمل من النتيجة.
+#B1|الخدمة والمسار
+Die Firma|f|الشركة|دي فيرما|Ich arbeite in einer großen *Firma*.|أعمل في شركة كبيرة.
+Das Vorstellungsgespräch|n|مقابلة العمل|داس فورشتيلونگسگيشپريش|Ich habe am Montag ein *Vorstellungsgespräch*.|لدي مقابلة عمل يوم الاثنين.
+Der Abschluss|m|الشهادة|دير آپشلوس|Ich habe meinen *Abschluss* gemacht.|حصلت على شهادتي.
+Die Erfahrung|f|الخبرة|دي إيرفارونگ|Er hat viel *Erfahrung*.|لديه خبرة كبيرة.
+Der Kollege|m|الزميل|دير كوليگه|Mein *Kollege* ist nett.|زميلي لطيف.
+Der Vertrag|m|العقد|دير فيرتراگ|Ich habe den *Vertrag* unterschrieben.|وقّعت العقد.
+Die Arbeitslosigkeit|f|البطالة|دي آربايتسلوزيشكايت|Die *Arbeitslosigkeit* steigt.|البطالة تزداد.
+Die Ausbildung|f|التكوين|دي آوسبيلدونگ|Ich mache eine *Ausbildung* in Informatik.|أتابع تكوينًا في المعلوميات.
+#B1|التكنولوجيا والإعلام
+Der Computer|m|الحاسوب|دير كومپيوتر|Mein *Computer* ist langsam.|حاسوبي بطيء.
+Der Bildschirm|m|الشاشة|دير بيلدشيرم|Der *Bildschirm* ist kaputt.|الشاشة مكسورة.
+Das Passwort|n|كلمة السر|داس پاسڤورت|Ich habe mein *Passwort* vergessen.|نسيت كلمة السر.
+Das Netz|n|الشبكة|داس نيتس|Hier gibt es kein *Netz*.|لا توجد شبكة هنا.
+Die Zeitung|f|الجريدة|دي تسايتونگ|Ich lese morgens die *Zeitung*.|أقرأ الجريدة في الصباح.
+Die Nachricht|f|الخبر|دي ناخريشت|Das ist eine gute *Nachricht*!|إنه خبر سار!
+herunterladen||حمّل|هيرونترلادن|Ich lade die App herunter.|أحمّل التطبيق.
+Die App|f|التطبيق|دي إيپ|Diese *App* ist nützlich.|هذا التطبيق مفيد.
+#B1|الحياة اليومية
+Die Miete|f|الإيجار|دي ميته|Die *Miete* ist zu teuer.|الإيجار غالٍ جدًا.
+Der Nachbar|m|الجار|دير ناخبار|Mein *Nachbar* ist nett.|جاري لطيف.
+Der Supermarkt|m|المتجر الكبير|دير زوپرماركت|Ich kaufe im *Supermarkt* ein.|أتسوّق في المتجر الكبير.
+Die Rechnung|f|الفاتورة|دي ريشنونگ|Ich muss die *Rechnung* bezahlen.|يجب أن أدفع الفاتورة.
+Der Führerschein|m|رخصة السياقة|دير فورِرشاين|Ich habe gestern meinen *Führerschein* bekommen.|حصلت على رخصة السياقة أمس.
+Die Hochzeit|f|الزواج|دي هوختسايت|Die *Hochzeit* ist am Samstag.|العرس يوم السبت.
+Der Geburtstag|m|عيد الميلاد|دير گيبورتستاگ|Alles Gute zum *Geburtstag*!|عيد ميلاد سعيد!
+Der Alltag|m|الحياة اليومية|دير آلتاگ|Der *Alltag* ist manchmal schwer.|الحياة اليومية صعبة أحيانًا.
+#B1|أفعال للتعبير
+schaffen||نجح|شافن|Ich habe die Prüfung geschafft.|نجحت في الامتحان.
+erklären||شرح|إيركليرن|Kannst du mir das erklären?|هل يمكنك أن تشرح لي ذلك؟
+entscheiden||قرّر|إنتشايدن|Ich habe entschieden zu gehen.|قررت أن أرحل.
+versuchen||حاول|فيرزوخن|Versuch es noch einmal.|حاول مرة أخرى.
+treffen||التقى|تريفن|Ich habe einen Freund getroffen.|التقيت بصديق.
+teilen||شارك|تايلن|Wir teilen das Essen.|نتقاسم الطعام.
+wählen||اختار|ڤيلن|Wähl eine Farbe.|اختر لونًا.
+sich erinnern||تذكّر|زيش إيرينرن|Ich erinnere mich an dich.|أتذكّرك.
+vorschlagen||اقترح|فورشلاگن|Ich schlage eine Lösung vor.|أقترح حلًّا.
+akzeptieren||قبل|آكتسيپتيرن|Ich akzeptiere dein Angebot.|أقبل عرضك.
+ablehnen||رفض|آپلينن|Er hat die Einladung abgelehnt.|رفض الدعوة.
+verbessern||حسّن|فيربيسرن|Ich will mein Deutsch verbessern.|أريد تحسين ألمانيتي.
+organisieren||نظّم|أورگانيزيرن|Wir organisieren eine Party.|ننظّم حفلة.
+sparen||ادّخر|شپارن|Ich spare für eine Reise.|أدّخر المال من أجل رحلة.
+sich beschweren||اشتكى|زيش بيشڤيرن|Er beschwert sich immer.|يشتكي دائمًا.
+danken||شكر|دانكن|Ich danke dir für deine Hilfe.|أشكرك على مساعدتك.
+#B1|صفات للوصف
+wichtig||مهم|ڤيشتيش|Das ist sehr wichtig.|هذا مهم جدًا.
+möglich||ممكن|موگليش|Ist das morgen möglich?|هل هذا ممكن غدًا؟
+gefährlich||خطير|گيفيرليش|Diese Straße ist gefährlich.|هذا الشارع خطير.
+sicher||متأكد|زيشر|Bist du sicher?|هل أنت متأكد؟
+eilig||مستعجل|آيليش|Ich habe es eilig.|أنا مستعجل.
+berühmt||مشهور|بيرومت|Er ist ein berühmter Schauspieler.|إنه ممثل مشهور.
+#B1|تعابير
+normalerweise||عادةً|نورمالرڤايزه|Normalerweise stehe ich früh auf.|عادةً أستيقظ باكرًا.
+dagegen||أمّا (بالمقابل)|داگيگن|Ich mag Tee, Kaffee dagegen nicht.|أحب الشاي، أما القهوة فلا.
+meiner Meinung nach||في رأيي|ماينر ماينونگ ناخ|Meiner Meinung nach ist das eine gute Idee.|في رأيي، هذه فكرة جيدة.
+plötzlich||فجأة|پلوتسليش|Plötzlich hat es angefangen zu regnen.|فجأة بدأ المطر يهطل.
+endlich||أخيرا|إندليش|Endlich bist du da!|أخيرًا وصلت!
+vielleicht||ربما|فيلايشت|Vielleicht morgen.|ربما غدًا.
+#B2|المجتمع
+Die Gesellschaft|f|المجتمع|دي گيزيلشافت|Die *Gesellschaft* verändert sich schnell.|المجتمع يتغيّر بسرعة.
+Die Regierung|f|الحكومة|دي ريگيرونگ|Die *Regierung* hat eine Entscheidung getroffen.|اتخذت الحكومة قرارًا.
+Das Gesetz|n|القانون|داس گيزيتس|Das *Gesetz* gilt für alle.|القانون يسري على الجميع.
+Das Recht|n|الحق|داس ريشت|Das ist dein *Recht*.|هذا حقك.
+Die Gleichheit|f|المساواة|دي گلايشهايت|Wir verteidigen die *Gleichheit*.|ندافع عن المساواة.
+Die Armut|f|الفقر|دي آرموت|Die *Armut* betrifft viele Familien.|الفقر يمسّ عائلات كثيرة.
+Die Wahl|f|الانتخاب|دي ڤال|Die *Wahl* findet im September statt.|ستُجرى الانتخابات في شتنبر.
+Der Bürger|m|المواطن|دير بورگر|Jeder *Bürger* hat Pflichten.|لكل مواطن واجبات.
+Die Gesundheit|f|الصحة|دي گيزونتهايت|Die *Gesundheit* ist sehr wichtig.|الصحة مهمة جدًا.
+Die Kultur|f|الثقافة|دي كولتور|Die marokkanische *Kultur* ist reich.|الثقافة المغربية غنية.
+#B2|البيئة
+Die Umwelt|f|البيئة|دي أومڤيلت|Wir müssen die *Umwelt* schützen.|يجب أن نحمي البيئة.
+Das Klima|n|المناخ|داس كليما|Das *Klima* verändert sich.|المناخ يتغيّر.
+Die Verschmutzung|f|التلوث|دي فيرشموتسونگ|Die *Verschmutzung* ist ein großes Problem.|التلوث مشكلة كبيرة.
+Der Müll|m|النفايات|دير مول|Trennt euren *Müll*.|افرزوا نفاياتكم.
+Die Energie|f|الطاقة|دي إينيرگي|Die *Energie* der Sonne ist sauber.|طاقة الشمس نظيفة.
+Die Dürre|f|الجفاف|دي دوره|Die *Dürre* trifft das Land.|الجفاف يضرب البلاد.
+recyceln||أعاد التدوير|ريسايكلن|Wir müssen Plastik recyceln.|يجب إعادة تدوير البلاستيك.
+nachhaltig||مستدام|ناخهالتيش|Das ist eine nachhaltige Lösung.|إنه حل مستدام.
+#B2|أفكار ومفاهيم
+Die Entwicklung|f|التنمية|دي إنتڤيكلونگ|Die *Entwicklung* des Landes ist schnell.|تنمية البلاد سريعة.
+Das Wissen|n|المعرفة|داس ڤيسن|*Wissen* ist ein Schatz.|المعرفة كنز.
+Die Herausforderung|f|التحدي|دي هيراوسفوردرونگ|Das ist eine große *Herausforderung*.|إنه تحدٍّ كبير.
+Der Vorteil|m|الميزة|دير فورتايل|Was ist der *Vorteil*?|ما هي الميزة؟
+Der Nachteil|m|العيب|دير ناختايل|Der einzige *Nachteil* ist der Preis.|العيب الوحيد هو السعر.
+Die Verantwortung|f|المسؤولية|دي فيرآنتڤورتونگ|Das ist meine *Verantwortung*.|هذه مسؤوليتي.
+Das Ziel|n|الهدف|داس تسيل|Mein *Ziel* ist es zu lernen.|هدفي هو التعلّم.
+Der Fortschritt|m|التقدّم|دير فورتشريت|Du machst *Fortschritte*.|أنت تتقدّم.
+Das Vertrauen|n|الثقة|داس فيرتراوِن|Ich habe *Vertrauen* zu dir.|أثق بك.
+Der Geist|m|العقل|دير گايست|Er hat einen offenen *Geist*.|لديه عقل منفتح.
+Die Folge|f|العاقبة|دي فولگه|Jede Handlung hat eine *Folge*.|لكل فعل نتيجة.
+Der Standpunkt|m|وجهة النظر|دير شتاندپونكت|Ich verstehe deinen *Standpunkt*.|أفهم وجهة نظرك.
+#B2|أفعال متقدمة
+entwickeln||طوّر|إنتڤيكلن|Wir entwickeln ein Projekt.|نطوّر مشروعًا.
+betrachten||اعتبر|بيتراختن|Ich betrachte diese Idee.|أتأمّل هذه الفكرة.
+überzeugen||أقنع|أوبرتسويگن|Er hat mich überzeugt.|أقنعني.
+verlangen||طالب بـ|فيرلانگن|Der Chef verlangt Ergebnisse.|يطالب المدير بالنتائج.
+vermeiden||تجنّب|فيرمايدن|Vermeide Zucker.|تجنّب السكر.
+erreichen||بلغ|إيرايشن|Ich habe mein Ziel erreicht.|بلغت هدفي.
+unterstützen||دعم|أونترشتوتسن|Meine Familie unterstützt mich.|عائلتي تدعمني.
+beeinflussen||أثّر|بيآينفلوسن|Soziale Medien beeinflussen junge Leute.|وسائل التواصل الاجتماعي تؤثّر في الشباب.
+verhandeln||تفاوض|فيرهاندلن|Wir verhandeln über den Preis.|نتفاوض على السعر.
+analysieren||حلّل|آنالوزيرن|Wir müssen die Daten analysieren.|يجب تحليل المعطيات.
+sich anpassen||تكيّف|زيش آنپاسن|Man muss sich an Veränderungen anpassen.|يجب التكيّف مع التغيرات.
+vorhersagen||توقّع|فورهيرزاگن|Für morgen wird Regen vorhergesagt.|يُتوقّع المطر غدًا.
+ersetzen||عوّض|إيرزيتسن|Man muss den Akku ersetzen.|يجب استبدال البطارية.
+nachdenken||فكّر|ناخدينكن|Lass mich nachdenken.|دعني أفكّر.
+merken||أدرك|ميركن|Ich habe meinen Fehler gemerkt.|لاحظت خطئي.
+verdienen||استحق|فيردينن|Du verdienst diesen Erfolg.|أنت تستحق هذا النجاح.
+#B2|صفات متقدمة
+wirksam||فعّال|ڤيركزام|Diese Methode ist wirksam.|هذه الطريقة فعّالة.
+unverzichtbar||ضروري|أونفيرتسيشتبار|Wasser ist unverzichtbar.|الماء ضروري.
+offensichtlich||واضح|أوفنزيشتليش|Das ist offensichtlich.|هذا واضح.
+kompliziert||معقّد|كومپليتسيرت|Das Problem ist kompliziert.|المشكلة معقّدة.
+aktuell||حالي|آكتويل|Die aktuelle Lage ist schwierig.|الوضع الحالي صعب.
+zuverlässig||موثوق|تسوفيرليسيش|Das ist eine zuverlässige Quelle.|إنه مصدر موثوق.
+bemerkenswert||لافت|بيميركنسڤيرت|Das ist eine bemerkenswerte Arbeit.|إنه عمل لافت.
+unvermeidlich||حتمي|أونفيرمايدليش|Veränderung ist unvermeidlich.|التغيير حتمي.
+#B2|روابط
+jedoch||لكن|يدوخ|Es ist teuer, jedoch ist die Qualität gut.|إنه غالٍ، لكن جودته جيدة.
+trotzdem||ومع ذلك|تروتسديم|Er ist reich, trotzdem ist er nicht glücklich.|هو غني، ومع ذلك ليس سعيدًا.
+dank||بفضل|دانك|Dank dir habe ich es geschafft.|نجحت بفضلك.
+wegen||بسبب|ڤيگن|Ich bin wegen des Busses zu spät.|تأخرت بسبب الحافلة.
+obwohl||رغم أن|أوبڤول|Obwohl es regnet, gehe ich raus.|رغم أنها تمطر، سأخرج.
+deshalb||وبالتالي|ديسهالب|Er ist krank, deshalb bleibt er zu Hause.|هو مريض، لذلك يبقى في البيت.
+#A2|البيت
+Die Küche|f|المطبخ|دي كوشه|Meine Mutter ist in der *Küche*.|أمي في المطبخ.
+Das Schlafzimmer|n|غرفة النوم|داس شلافتسيمر|Mein *Schlafzimmer* ist klein.|غرفة نومي صغيرة.
+Das Bett|n|السرير|داس بيت|Das *Bett* ist bequem.|السرير مريح.
+Das Badezimmer|n|الحمّام|داس بادهتسيمر|Das *Badezimmer* ist sauber.|الحمّام نظيف.
+Das Wohnzimmer|n|غرفة الجلوس|داس ڤونتسيمر|Wir sehen im *Wohnzimmer* fern.|نشاهد التلفاز في غرفة الجلوس.
+Der Kühlschrank|m|الثلاجة|دير كولشرانك|Die Milch ist im *Kühlschrank*.|الحليب في الثلاجة.
+Die Treppe|f|الدرج|دي تريپه|Ich gehe die *Treppe* hoch.|أصعد الدرج.
+Das Dach|n|السطح|داس داخ|Die Katze ist auf dem *Dach*.|القطة فوق السطح.
+Der Garten|m|الحديقة|دير گارتن|Die Kinder spielen im *Garten*.|يلعب الأطفال في الحديقة.
+Die Lampe|f|المصباح|دي لامپه|Mach die *Lampe* an.|أشعل المصباح.
+#A2|الطعام والشراب
+Der Reis|m|الأرز|دير رايس|Ich esse *Reis* mit Hähnchen.|آكل الأرز مع الدجاج.
+Das Fleisch|n|اللحم|داس فلايش|Das *Fleisch* ist teuer.|اللحم غالٍ.
+Der Fisch|m|السمك|دير فيش|Ich mag gegrillten *Fisch*.|أحب السمك المشوي.
+Der Zucker|m|السكر|دير تسوكر|Ohne *Zucker*, bitte.|بدون سكر، من فضلك.
+Das Salz|n|الملح|داس زالتس|Gib ein bisschen *Salz* dazu.|أضف قليلًا من الملح.
+Das Öl|n|الزيت|داس أول|Das *Öl* ist gut.|الزيت جيد.
+Der Saft|m|العصير|دير زافت|Einen Orangen*saft*, bitte.|عصير برتقال من فضلك.
+Die Suppe|f|الحساء|دي زوپه|Die *Suppe* ist heiß.|الحساء ساخن.
+Das Gemüse|n|الخضار|داس گيموزه|Iss dein *Gemüse*!|كُل خضارك!
+Das Frühstück|n|الفطور|داس فروشتوك|Das *Frühstück* ist fertig.|الفطور جاهز.
+#A2|الوقت والأيام
+Montag||الاثنين|مونتاگ|Ich arbeite am Montag.|أعمل يوم الاثنين.
+Dienstag||الثلاثاء|دينستاگ|Sehen wir uns am Dienstag?|هل نلتقي يوم الثلاثاء؟
+Mittwoch||الأربعاء|ميتڤوخ|Am Mittwoch habe ich einen Kurs.|لدي درس يوم الأربعاء.
+Donnerstag||الخميس|دونرستاگ|Am Donnerstag gehe ich auf den Markt.|يوم الخميس أذهب إلى السوق.
+Freitag||الجمعة|فرايتاگ|Am Freitag essen wir Couscous.|يوم الجمعة نأكل الكسكس.
+Samstag||السبت|زامستاگ|Am Samstag ruhe ich mich aus.|يوم السبت أرتاح.
+Sonntag||الأحد|زونتاگ|Am Sonntag gehen wir an den Strand.|يوم الأحد نذهب إلى الشاطئ.
+Der Monat|m|الشهر|دير مونات|Nächsten *Monat* reise ich.|سأسافر الشهر القادم.
+Das Jahr|n|السنة|داس يار|Frohes neues *Jahr*!|سنة جديدة سعيدة!
+Die Stunde|f|الساعة|دي شتونده|Der Kurs dauert eine *Stunde*.|يستغرق الدرس ساعة.
+#A2|الناس والعلاقات
+Der Ehemann|m|الزوج|دير إيهمان|Ihr *Ehemann* ist Arzt.|زوجها طبيب.
+Die Ehefrau|f|الزوجة|دي إيهفراو|Seine *Ehefrau* ist Lehrerin.|زوجته أستاذة.
+Der Sohn|m|الابن|دير زون|Mein *Sohn* ist zehn Jahre alt.|عمر ابني عشر سنوات.
+Die Tochter|f|البنت|دي توختر|Meine *Tochter* liest gern.|ابنتي تحب القراءة.
+Der Cousin|m|ابن العم|دير كوزان|Mein *Cousin* wohnt in Fès.|ابن عمي يسكن في فاس.
+Der Onkel|m|العم / الخال|دير أونكل|Mein *Onkel* hat einen Laden.|عمي يملك متجرًا.
+Die Tante|f|العمة / الخالة|دي تانته|Meine *Tante* backt Kuchen.|خالتي تصنع الحلويات.
+Das Baby|n|الرضيع|داس بيبي|Das *Baby* schläft.|الرضيع نائم.
+Die Person|f|الشخص|دي پيرزون|Sie ist eine nette *Person*.|إنها شخص لطيف.
+Der Gast|m|الضيف|دير گاست|Der *Gast* kommt heute Abend.|يصل الضيف هذا المساء.
+#A2|التسوق
+Der Preis|m|السعر|دير پرايس|Der *Preis* ist gut.|السعر مناسب.
+Die Kasse|f|الصندوق (المحاسبة)|دي كاسه|Bitte zahlen Sie an der *Kasse*.|ادفع عند الصندوق من فضلك.
+Der Laden|m|المتجر|دير لادن|Der *Laden* schließt um acht Uhr.|يُغلق المتجر في الساعة الثامنة.
+Der Kunde|m|الزبون|دير كونده|Der *Kunde* ist zufrieden.|الزبون راضٍ.
+Der Rabatt|m|التخفيض|دير راباط|Es gibt 20 Prozent *Rabatt*.|يوجد تخفيض بنسبة 20 بالمئة.
+Das Kilo|n|الكيلوغرام|داس كيلو|Ein *Kilo* Tomaten, bitte.|كيلوغرام من الطماطم من فضلك.
+Das Kleingeld|n|الصرف (النقود الصغيرة)|داس كلاينگيلت|Hast du *Kleingeld*?|هل لديك صرف؟
+verkaufen||باع|فيركاوفن|Er verkauft Obst.|يبيع الفواكه.
+#A2|أفعال الحياة
+aufstehen||استيقظ (نهض)|آوفشتيين|Ich stehe um sieben Uhr auf.|أستيقظ في الساعة السابعة.
+sich waschen||اغتسل|زيش ڤاشن|Ich wasche mir die Hände.|أغسل يديّ.
+kochen||طبخ|كوخن|Meine Mutter kocht gut.|أمي تطبخ جيدًا.
+putzen||نظّف|پوتسن|Ich putze das Haus.|أنظّف البيت.
+laufen||مشى|لاوفن|Ich laufe jeden Tag.|أمشي كل يوم.
+rennen||ركض|رينن|Er rennt schnell.|يركض بسرعة.
+spielen||لعب|شپيلن|Die Kinder spielen Fußball.|يلعب الأطفال كرة القدم.
+singen||غنّى|زينگن|Sie singt gut.|تغني جيدًا.
+tanzen||رقص|تانتسن|Wir tanzen auf der Hochzeit.|نرقص في العرس.
+fahren||قاد (السيارة)|فارن|Ich fahre das Auto.|أقود السيارة.
+ankommen||وصل|آنكومن|Der Zug kommt um zwölf Uhr an.|يصل القطار عند الظهر.
+abfahren||غادر|آپفارن|Ich fahre morgen früh ab.|سأغادر غدًا صباحًا.
+zurückkommen||عاد إلى البيت|تسوروككومن|Ich komme um sechs Uhr zurück.|أعود في الساعة السادسة.
+tragen||حمل|تراگن|Ich trage eine schwere Tasche.|أحمل حقيبة ثقيلة.
+zeigen||أظهر (أرى)|تسايگن|Zeig mir das Foto.|أرني الصورة.
+anrufen||اتصل|آنروفن|Ich rufe dich heute Abend an.|سأتصل بك هذا المساء.
+#A2|صفات الناس
+stark||قوي|شتارك|Er ist sehr stark.|هو قوي جدًا.
+schwach||ضعيف|شڤاخ|Ich fühle mich schwach.|أشعر بالضعف.
+jung||شاب|يونگ|Mein Vater ist noch jung.|ما زال أبي شابًا.
+nett||لطيف|نيت|Dein Freund ist nett.|صديقك لطيف.
+lustig||مضحك|لوستيش|Der Film ist lustig.|هذا الفيلم مضحك.
+ruhig||هادئ|روهيش|Das Viertel ist ruhig.|الحي هادئ.
+geschlossen||مغلق|گيشلوسن|Der Laden ist geschlossen.|المتجر مغلق.
+offen||مفتوح|أوفن|Die Bank ist offen.|البنك مفتوح.
+#A2|الاتجاهات
+geradeaus||إلى الأمام مباشرة|گيراده آوس|Gehen Sie geradeaus.|امشِ إلى الأمام مباشرة.
+nah||قريب|نا|Der Bahnhof ist nah.|المحطة قريبة.
+weit||بعيد|ڤايت|Der Flughafen ist weit.|المطار بعيد.
+hier||هنا|هير|Warte hier auf mich.|انتظرني هنا.
+dort||هناك|دورت|Das Café ist dort.|المقهى هناك.
+vor||أمام|فور|Ich warte vor der Schule.|أنتظر أمام المدرسة.
+hinter||خلف|هينتر|Der Garten ist hinter dem Haus.|الحديقة خلف البيت.
+zwischen||بين|تسڤيشن|Die Bank ist zwischen der Post und dem Café.|البنك بين البريد والمقهى.
+#B1|السفر والعطلة
+Der Urlaub|m|العطلة|دير أورلاوپ|Ich bin diese Woche im *Urlaub*.|أنا في عطلة هذا الأسبوع.
+Der Koffer|m|الحقيبة (حقيبة السفر)|دير كوفر|Mein *Koffer* ist schwer.|حقيبتي ثقيلة.
+Der Reisepass|m|جواز السفر|دير رايزه پاس|Vergiss deinen *Reisepass* nicht.|لا تنسَ جواز سفرك.
+Die Reservierung|f|الحجز|دي ريزيرڤيرونگ|Ich habe eine *Reservierung* im Hotel.|لدي حجز في الفندق.
+Der Flug|m|الرحلة الجوية|دير فلوگ|Der *Flug* dauert drei Stunden.|تستغرق الرحلة ثلاث ساعات.
+Die Grenze|f|الحدود|دي گرينتسه|Wir haben die *Grenze* überquert.|عبرنا الحدود.
+Der Reiseführer|m|المرشد|دير رايزه فورر|Der *Reiseführer* spricht Arabisch.|المرشد يتكلم العربية.
+Die Landschaft|f|المنظر الطبيعي|دي لاندشافت|Die *Landschaft* ist wunderschön.|المنظر رائع.
+Der Aufenthalt|m|الإقامة|دير آوفنتهالت|Schönen *Aufenthalt* in Marrakesch!|إقامة طيبة في مراكش!
+besichtigen||زار|بيزيشتيگن|Ich will Chefchaouen besichtigen.|أريد زيارة شفشاون.
+#B1|الصحة والجسم
+Der Rücken|m|الظهر|دير روكن|Mein *Rücken* tut weh.|أشعر بألم في ظهري.
+Der Bauch|m|البطن|دير باوخ|Mein *Bauch* tut weh.|أشعر بألم في بطني.
+Das Bein|n|الساق|داس باين|Ich habe mir das *Bein* gebrochen.|كُسرت ساقي.
+Der Arm|m|الذراع|دير آرم|Sein *Arm* tut weh.|يشعر بألم في ذراعه.
+Das Blut|n|الدم|داس بلوت|Er hat *Blut* verloren.|فقد بعض الدم.
+Das Rezept|n|الوصفة الطبية|داس ريتسيپت|Der Arzt hat mir ein *Rezept* gegeben.|أعطاني الطبيب وصفة طبية.
+Die Verletzung|f|الجرح|دي فيرليتسونگ|Die *Verletzung* ist nicht schlimm.|الجرح ليس خطيرًا.
+heilen||شُفي|هايلن|Die Wunde heilt schnell.|الجرح يُشفى بسرعة.
+#B1|الدراسة واللغة
+Die Universität|f|الجامعة|دي أونيڤيرزيتيت|Ich studiere an der *Universität*.|أدرس في الجامعة.
+Die Note|f|العلامة (النقطة)|دي نوته|Ich habe eine gute *Note* bekommen.|حصلت على علامة جيدة.
+Der Kurs|m|الحصة الدراسية|دير كورس|Der *Kurs* beginnt um neun Uhr.|تبدأ الحصة في الساعة التاسعة.
+Die Bibliothek|f|المكتبة|دي بيبليوتيك|Ich lese in der *Bibliothek*.|أقرأ في المكتبة.
+Die Hausaufgabe|f|الواجب المنزلي|دي هاوسآوفگابه|Ich habe meine *Hausaufgaben* gemacht.|أنهيت واجباتي.
+Die Sprache|f|اللغة|دي شپراخه|Deutsch ist eine schöne *Sprache*.|الألمانية لغة جميلة.
+Das Wort|n|الكلمة|داس ڤورت|Ich kenne dieses *Wort* nicht.|لا أعرف هذه الكلمة.
+Der Satz|m|الجملة|دير زاتس|Wiederhole den *Satz*.|كرّر الجملة.
+#B1|الطباع والشخصية
+schüchtern||خجول|شوشترن|Mein Bruder ist schüchtern.|أخي خجول.
+mutig||شجاع|موتيش|Sie ist sehr mutig.|هي شجاعة جدًا.
+faul||كسول|فاول|Sei nicht faul!|لا تكن كسولًا!
+ehrlich||صادق (نزيه)|إيرليش|Er ist ein ehrlicher Mann.|إنه رجل نزيه.
+eifersüchtig||غيور|آيفرزوشتيش|Er ist eifersüchtig auf seinen Bruder.|يغار من أخيه.
+geduldig||صبور|گيدولديش|Sei bitte geduldig.|كن صبورًا من فضلك.
+ernst||جادّ|إيرنست|Er ist ein ernster Student.|إنه طالب جادّ.
+neugierig||فضولي|نويگيريش|Kinder sind neugierig.|الأطفال فضوليون.
+#B1|المدينة والمجتمع
+Das Rathaus|n|البلدية|داس راتهاوس|Ich gehe zum *Rathaus* wegen eines Dokuments.|أذهب إلى البلدية من أجل وثيقة.
+Die Polizei|f|الشرطة|دي پوليتساي|Ruf die *Polizei*!|اتصل بالشرطة!
+Der Lärm|m|الضجيج|دير ليرم|Hier ist zu viel *Lärm*.|يوجد ضجيج كثير هنا.
+Der Verkehr|m|حركة المرور|دير فيركير|Morgens ist der *Verkehr* schwierig.|حركة المرور صعبة في الصباح.
+Der Stau|m|الازدحام المروري|دير شتاو|Ich stehe im *Stau*.|أنا عالق في ازدحام مروري.
+Der Gehweg|m|الرصيف|دير گيهڤيگ|Geh auf dem *Gehweg*.|امشِ على الرصيف.
+Die Ampel|f|إشارة المرور|دي آمپل|Halte an der roten *Ampel*.|توقّف عند الإشارة الحمراء.
+Der Verein|m|الجمعية|دير فيراين|Ich bin Mitglied in einem *Verein*.|أنا عضو في جمعية.
+#B1|أفعال التواصل
+erzählen||حكى (روى)|إيرتسيلن|Erzähl mir von deiner Reise.|احكِ لي عن رحلتك.
+antworten||أجاب|آنتڤورتن|Antworte auf meine Frage.|أجب عن سؤالي.
+fragen||سأل (طلب)|فراگن|Ich frage nach dem Weg.|أسأل عن الطريق.
+bekommen||تلقّى|بيكومن|Ich habe deine Nachricht bekommen.|تلقّيت رسالتك.
+verlieren||أضاع (خسر)|فيرليرن|Ich habe meine Schlüssel verloren.|أضعت مفاتيحي.
+gewinnen||فاز (ربح)|گيڤينن|Unsere Mannschaft hat gewonnen.|فاز فريقنا.
+ändern||غيّر|إندرن|Ich will meinen Plan ändern.|أريد أن أغيّر خطتي.
+vorbereiten||حضّر|فوربيرايتن|Ich bereite das Abendessen vor.|أحضّر العشاء.
+weitermachen||واصل|ڤايترماخن|Mach weiter, das ist gut!|واصل، هذا جيد!
+aufhören||أوقف (توقّف)|آوفهورن|Hör bitte auf!|توقّف من فضلك!
+glauben||صدّق (اعتقد)|گلاوبن|Ich glaube dir.|أصدّقك.
+denken||ظنّ (فكّر)|دينكن|Ich denke, das ist richtig.|أظن أن هذا صحيح.
+einladen||دعا|آينلادن|Ich lade dich zum Essen ein.|أدعوك إلى العشاء.
+träumen||حلم|ترويمن|Ich träume vom Reisen.|أحلم بالسفر.
+fühlen||شعر (أحسّ)|فولن|Ich fühle mich gut.|أشعر أنني بخير.
+heiraten||تزوّج|هايراتن|Sie heiraten im Sommer.|سيتزوجان في الصيف.
+#B1|تعابير الحوار
+natürlich||طبعًا|ناتورليش|Natürlich komme ich!|طبعًا، سآتي!
+einverstanden||موافق|آينفيرشتاندن|Einverstanden, bis morgen.|موافق، إلى الغد.
+noch nicht||ليس بعد|نوخ نيشت|Ich habe noch nicht gegessen.|لم آكل بعد.
+schon||سبق أن (بالفعل)|شون|Ich habe den Film schon gesehen.|سبق أن شاهدت هذا الفيلم.
+oft||غالبًا|أوفت|Ich gehe oft an den Strand.|أذهب غالبًا إلى الشاطئ.
+manchmal||أحيانًا|مانشمال|Manchmal koche ich.|أحيانًا أطبخ.
+immer||دائمًا|إيمر|Er ist immer zu spät.|هو متأخر دائمًا.
+nie||أبدًا|ني|Ich rauche nie.|لا أدخّن أبدًا.
+zusammen||معًا|تسوزامن|Wir arbeiten zusammen.|نعمل معًا.
+nur||فقط|نور|Ich habe nur zehn Dirham.|لدي عشرة دراهم فقط.
+genug||كافٍ (بما يكفي)|گينوگ|Ich habe genug gegessen.|أكلت بما يكفي.
+zu viel||أكثر من اللازم|تسو فيل|Das ist zu viel.|هذا أكثر من اللازم.
+#B2|الاقتصاد والمال
+Die Wirtschaft|f|الاقتصاد|دي ڤيرتشافت|Die *Wirtschaft* des Landes wächst.|اقتصاد البلاد ينمو.
+Der Unternehmer|m|رائد الأعمال|دير أونترنيمر|Der *Unternehmer* hat ein Start-up gegründet.|أسّس رائد الأعمال شركة ناشئة.
+Die Investition|f|الاستثمار|دي إنڤيستيتسيون|Das ist eine gute *Investition*.|إنه استثمار جيد.
+Das Wachstum|n|النمو|داس ڤاكستوم|Das *Wachstum* ist dieses Jahr schwach.|النمو ضعيف هذه السنة.
+Die Schuld|f|الدَّين|دي شولت|Er hat seine *Schulden* bezahlt.|سدّد ديونه.
+Das Einkommen|n|الدخل|داس آينكومن|Sein *Einkommen* ist gestiegen.|ارتفع دخله.
+Die Steuer|f|الضريبة|دي شتوير|Man muss die *Steuer* bezahlen.|يجب دفع الضريبة.
+Die Konkurrenz|f|المنافسة|دي كونكورينتس|Die *Konkurrenz* ist stark.|المنافسة قوية.
+Der Gewinn|m|الربح|دير گيڤين|Die Firma hat *Gewinn* gemacht.|حققت الشركة ربحًا.
+Die Krise|f|الأزمة|دي كريزه|Die *Krise* betrifft alle.|الأزمة تمسّ الجميع.
+#B2|الإعلام والنقاش
+Die Debatte|f|النقاش|دي ديباته|Die *Debatte* war interessant.|كان النقاش مثيرًا للاهتمام.
+Die Meinung|f|الرأي|دي ماينونگ|Jeder hat seine *Meinung*.|لكل شخص رأيه.
+Das Argument|n|الحجّة|داس آرگومنت|Dein *Argument* ist stark.|حجّتك قوية.
+Der Beweis|m|الدليل|دير بيڤايس|Hast du einen *Beweis*?|هل لديك دليل؟
+Das Gerücht|n|الإشاعة|داس گيروشت|Das ist nur ein *Gerücht*.|إنها مجرد إشاعة.
+Die Quelle|f|المصدر|دي كڤيله|Prüf die *Quelle*.|تحقّق من المصدر.
+Die Untersuchung|f|التحقيق|دي أونترزوخونگ|Die Polizei führt eine *Untersuchung* durch.|تُجري الشرطة تحقيقًا.
+Der Journalist|m|الصحفي|دير جورناليست|Der *Journalist* stellt Fragen.|يطرح الصحفي أسئلة.
+kritisieren||انتقد|كريتيزيرن|Er kritisiert alles.|ينتقد كل شيء.
+behaupten||ادّعى|بيهاوپتن|Er behauptet, dass er krank ist.|يدّعي أنه مريض.
+#B2|العلوم والمستقبل
+Die Forschung|f|البحث العلمي|دي فورشونگ|Die medizinische *Forschung* macht Fortschritte.|البحث الطبي يتقدّم.
+Die Entdeckung|f|الاكتشاف|دي إنتديكونگ|Das ist eine große *Entdeckung*.|إنه اكتشاف كبير.
+Die Technologie|f|التكنولوجيا|دي تيشنولوگي|Die *Technologie* verändert unser Leben.|التكنولوجيا تغيّر حياتنا.
+Die Zukunft|f|المستقبل|دي تسوكونفت|Ich denke an meine *Zukunft*.|أفكّر في مستقبلي.
+Das Risiko|n|المخاطرة|داس ريزيكو|Es gibt ein *Risiko*.|هناك مخاطرة.
+Die Lösung|f|الحل|دي لوزونگ|Wir haben eine *Lösung* gefunden.|وجدنا حلًّا.
+Das Ergebnis|n|النتيجة|داس إيرگيبنيس|Das *Ergebnis* ist positiv.|النتيجة إيجابية.
+Die Innovation|f|الابتكار|دي إنوڤاتسيون|*Innovation* ist wichtig.|الابتكار مهم.
+Die Veränderung|f|التغيير|دي فيريندرونگ|*Veränderung* macht Angst.|التغيير مخيف.
+Die Bevölkerung|f|السكان|دي بيفولكرونگ|Die *Bevölkerung* wächst.|عدد السكان يزداد.
+#B2|أفعال متقدمة 2
+bestätigen||أكّد|بيشتيتيگن|Ich bestätige meine Reservierung.|أؤكّد حجزي.
+annehmen||افترض|آننيمن|Ich nehme an, dass er gegangen ist.|أفترض أنه غادر.
+betonen||شدّد على|بيتونن|Er betont einen wichtigen Punkt.|يشدّد على نقطة مهمة.
+beitragen||ساهم|بايتراگن|Jeder kann etwas beitragen.|يمكن لكل شخص أن يساهم.
+abhängen||توقّف على|آپهينگن|Das hängt vom Wetter ab.|ذلك يتوقّف على الطقس.
+garantieren||ضمن|گارانتيرن|Ich garantiere dir das Ergebnis.|أضمن لك النتيجة.
+verbieten||منع|فيربيتن|Rauchen ist hier verboten.|التدخين ممنوع هنا.
+erlauben||سمح|إيرلاوبن|Meine Eltern erlauben mir auszugehen.|يسمح لي والداي بالخروج.
+sinken||انخفض|زينكن|Die Preise sinken.|الأسعار تنخفض.
+steigen||ارتفع (زاد)|شتايگن|Die Miete steigt jedes Jahr.|يرتفع الإيجار كل سنة.
+lösen||حلّ (مشكلة)|لوزن|Wir müssen dieses Problem lösen.|يجب أن نحلّ هذه المشكلة.
+ausdrücken||عبّر|آوسدروكن|Drück deine Meinung aus.|عبّر عن رأيك.
+#B2|روابط متقدمة
+hingegen||في المقابل|هينگيگن|Er ist reich, hingegen ist er allein.|هو غني، لكنه في المقابل وحيد.
+außerdem||علاوة على ذلك|آوسرديم|Außerdem ist es kostenlos.|علاوة على ذلك، إنه مجاني.
+um … zu||من أجل|أوم … تسو|Ich arbeite, um zu reisen.|أعمل من أجل السفر.
+trotz||رغم|تروتس|Er geht trotz des Regens raus.|يخرج رغم المطر.
+statt||بدلًا من|شتات|Trink Wasser statt Limonade.|اشرب الماء بدلًا من المشروب الغازي.
+tatsächlich||فعلًا|تاتزيشليش|Tatsächlich, du hast recht.|فعلًا، أنت محق.
+übrigens||من جهة أخرى|أوبريگنس|Übrigens spricht er drei Sprachen.|من جهة أخرى، يتكلم ثلاث لغات.
+dennoch||رغم ذلك|دينوخ|Es ist schwierig, dennoch möglich.|إنه صعب، ومع ذلك ممكن.`
+};
+
+var LESSONS={
+fr:[
+ {t:"Le, La, L’ — المذكر والمؤنث",d:"كل اسم في الفرنسية إمّا مذكر أو مؤنث. تُستعمل le مع المذكر، و la مع المؤنث، و l’ قبل الكلمة التي تبدأ بحرف علة (a, e, i, o, u) أو بحرف h. وفي الجمع تصبح الأداتان les. احفظ دائمًا الكلمة مع أداتها.",r:[["le pain","الخبز","m"],["la pomme","التفاحة","f"],["l’eau","الماء","f"],["l’ami","الصديق","m"],["les livres","الكتب",""]]},
+ {t:"Un, Une — أداة النكرة",d:"تُستعمل un مع المذكر و une مع المؤنث، وتعني «واحد» أو تدل على النكرة: un livre = كتاب.",r:[["un livre","كتاب","m"],["une table","طاولة","f"],["un ami","صديق","m"],["une maison","بيت","f"]]},
+ {t:"Les pronoms — الضمائر",d:"الضمائر هي الأساس لبناء أي جملة. تُستعمل vous للجمع أو لمخاطبة شخص واحد باحترام.",r:[["je","أنا"],["tu","أنتَ / أنتِ"],["il / elle","هو / هي"],["nous","نحن"],["vous","أنتم / حضرتك"],["ils / elles","هم / هنّ"]]},
+ {t:"Être — كان / يكون",d:"نستعمل الفعل être للوصف: أنا متعب، هو طويل. احفظ تصريفه لأنك ستستعمله كثيرًا.",r:[["je suis","أنا (أكون)"],["tu es","أنتَ"],["il / elle est","هو / هي"],["nous sommes","نحن"],["vous êtes","أنتم"],["ils / elles sont","هم / هنّ"]]},
+ {t:"Avoir — يملك",d:"الفعل avoir يعني «يملك» أو «لديه»: j’ai un frère = لدي أخ.",r:[["j’ai","لديّ"],["tu as","لديك"],["il / elle a","لديه / لديها"],["nous avons","لدينا"],["vous avez","لديكم"],["ils / elles ont","لديهم"]]},
+ {t:"Ne … pas — النفي",d:"للنفي ضع ne قبل الفعل و pas بعده. وقبل حرف العلة تصبح ne هي n’.",r:[["Je ne comprends pas.","لا أفهم."],["Je ne sais pas.","لا أعرف."],["Il n’est pas là.","ليس هنا."]]}
+],
+de:[
+ {t:"Der, Die, Das — ثلاثة أجناس",d:"في الألمانية ثلاثة أجناس: der للمذكر، و die للمؤنث، و das للمحايد. الجنس لا يتبع المعنى دائمًا، لذلك احفظ كل اسم مع أداته. وفي الجمع تكون الأداة دائمًا die.",r:[["der Tisch","الطاولة","m"],["die Tür","الباب","f"],["das Buch","الكتاب","n"],["die Bücher","الكتب",""]]},
+ {t:"Ein, Eine — أداة النكرة",d:"تُستعمل ein مع der و das، و eine مع die.",r:[["ein Tisch","طاولة","m"],["eine Tür","باب","f"],["ein Buch","كتاب","n"]]},
+ {t:"Die Pronomen — الضمائر",d:"تُكتب Sie بحرف كبير للمخاطبة باحترام، أما sie بحرف صغير فتعني «هي» أو «هم».",r:[["ich","أنا"],["du","أنتَ / أنتِ"],["er / sie / es","هو / هي / (محايد)"],["wir","نحن"],["ihr","أنتم"],["sie / Sie","هم / حضرتك"]]},
+ {t:"Sein — كان / يكون",d:"نستعمل الفعل sein للوصف: Ich bin müde = أنا متعب.",r:[["ich bin","أنا (أكون)"],["du bist","أنتَ"],["er / sie / es ist","هو / هي"],["wir sind","نحن"],["ihr seid","أنتم"],["sie / Sie sind","هم / حضرتك"]]},
+ {t:"Haben — يملك",d:"الفعل haben يعني «يملك» أو «لديه»: Ich habe ein Auto = لدي سيارة.",r:[["ich habe","لديّ"],["du hast","لديك"],["er / sie / es hat","لديه / لديها"],["wir haben","لدينا"],["ihr habt","لديكم"],["sie / Sie haben","لديهم / لديك"]]},
+ {t:"Nicht, Kein — النفي",d:"تنفي nicht الفعل أو الصفة، وتنفي kein الاسم (تأتي مكان ein).",r:[["Ich verstehe nicht.","لا أفهم."],["Das ist nicht schwer.","هذا ليس صعبًا."],["Ich habe kein Geld.","ليس لدي مال."]]}
+]};
+
+var LANG={
+ fr:{name:"الفرنسية",native:"Français",hello:"le français",tts:"fr-FR",art:/^(Le |La |L’)/,arts:[["m","le","مذكر"],["f","la","مؤنث"]],field:"points",xpField:"xp_fr",lessonArt:/^(le |la |l’|les |un |une )/i},
+ de:{name:"الألمانية",native:"Deutsch",hello:"Deutsch",tts:"de-DE",art:/^(Der |Die |Das )/,arts:[["m","der","مذكر"],["f","die","مؤنث"],["n","das","محايد"]],field:"points_de",xpField:"xp_de",lessonArt:/^(der |die |das |ein |eine )/i}
+};
+var GN={m:"مذكر",f:"مؤنث",n:"محايد"};
+var ALL="الكل",GOAL=10,XP_LEVEL=200;
+
+function parse(lang){
+ var cat="",lvl="A1",out=[];
+ RAW[lang].split("\n").forEach(function(line){
+  line=line.trim();if(!line)return;
+  if(line.charAt(0)==="#"){var h=line.slice(1).split("|");if(h.length>1){lvl=h[0];cat=h[1]}else{lvl="A1";cat=h[0]}return}
+  var p=line.split("|");
+  out.push({id:lang==="fr"?p[0]:"de:"+p[0],cat:cat,lvl:lvl,w:p[0],g:p[1]||"",da:p[2],pr:p[3],ex:p[4],exd:p[5]}); /* da = Arabic meaning, exd = Arabic example */
+ });
+ return out;
+}
+var DB={fr:parse("fr"),de:parse("de")};
+var CEFR=["A1","A2","B1","B2"];
+function cats(lang,lv){return[ALL].concat(DB[lang].filter(function(e){return lv===ALL||e.lvl===lv}).map(function(e){return e.cat}).filter(function(v,i,a){return a.indexOf(v)===i}))}
+function lvlStats(lang,lv){var list=DB[lang].filter(function(e){return e.lvl===lv}),k=list.filter(function(e){return ST[lang].learned[e.id]}).length;return{k:k,n:list.length}}
+/* Vocabulary targets are cumulative: reaching A2 means about 1,200 mastered words in total (A1 + A2). */
+var TARGETS={A1:600,A2:1200,B1:2200,B2:3800};
+function vocab(lang){
+ var p=ST[lang],own={},av={},cm=0,ca=0;CEFR.forEach(function(l){own[l]=0;av[l]=0});
+ DB[lang].forEach(function(e){av[e.lvl]++;if(p.mastered[e.id])own[e.lvl]++});
+ return CEFR.map(function(l){cm+=own[l];ca+=av[l];var t=TARGETS[l];return{l:l,t:t,m:cm,own:own[l],avail:ca,rem:Math.max(0,t-cm),pct:pctTxt(cm,t),w:Math.min(100,cm/t*100)}});
+}
+function masteredCount(lang){var n=0,m=ST[lang].mastered;DB[lang].forEach(function(e){if(m[e.id])n++});return n}
+function pctTxt(a,b){var v=Math.round(a/b*1000)/10;return(v%1===0?v.toFixed(0):v.toFixed(1))+"%"}
+function fmtN(n){return Number(n).toLocaleString("en-US")}
+/* A word is mastered only when answered correctly in a quiz. Returns true the first time only. */
+function master(id){var p=P();if(p.mastered[id])return false;p.mastered[id]=Date.now();return true}
+function curLevel(lang){for(var i=0;i<CEFR.length;i++){var s=lvlStats(lang,CEFR[i]);if(s.k<s.n*.8)return CEFR[i]}return"B2"}
+
+/* =========================================================
+   2. STORE — التقدّم محفوظ فالجهاز، ومتزامن مع الحساب ديالك
+   Shape is plain JSON, ready for Firebase/Firestore:
+   { v, nick, fr:{learned,stats,xp,days,quizzes,lessons}, de:{…} }
+   ========================================================= */
+var KEY="lingo:v2";
+function blank(){return{learned:{},mastered:{},stats:{},xp:0,days:{},quizzes:[],lessons:{}}}
+function fix(p){p=p&&typeof p==="object"?p:{};var hadM=!!(p.mastered&&typeof p.mastered==="object"&&!Array.isArray(p.mastered));var b=blank();Object.keys(b).forEach(function(k){if(p[k]==null||typeof p[k]!==typeof b[k]||Array.isArray(p[k])!==Array.isArray(b[k]))p[k]=b[k]});
+ /* First load after this feature: rebuild mastery from real quiz history only (a word answered correctly at least once). Nothing else is assumed. */
+ if(!hadM)Object.keys(p.stats).forEach(function(k){var st=p.stats[k];if(st&&st[0]>0)p.mastered[k]=1});
+ return p}
+var ST={v:2,nick:"",fr:blank(),de:blank()};
+
+var Store={
+ key:KEY,
+ read:function(k){try{var r=localStorage.getItem(k);return r?JSON.parse(r):null}catch(e){return null}},
+ apply:function(s){ST.nick=(s&&s.nick)||"";ST.fr=fix(s&&s.fr);ST.de=fix(s&&s.de)},
+ /* Each signed-in account keeps its own copy on this device ("lingo:u:<id>").
+    Progress made before signing in is handed to the first account that signs in here, once. */
+ useAccount:function(uid){
+  var k="lingo:u:"+uid,s=Store.read(k);
+  if(!s){var claimed=null;try{claimed=localStorage.getItem("lingo:claimed")}catch(e){}
+   if(!claimed){s=JSON.parse(JSON.stringify(ST));try{localStorage.setItem("lingo:claimed",uid)}catch(e){}}
+   else s={nick:"",fr:blank(),de:blank()};}
+  Store.key=k;Store.apply(s);Store.save(true);
+ },
+ load:function(){
+  var s=Store.read(KEY);
+  if(s){Store.apply(s);return}
+  // Migration from the first version: keep every word already learned (date unknown, so it never counts as "today")
+  try{var old=JSON.parse(localStorage.getItem("fr-game")||"null");
+   if(old&&old.learned){Object.keys(old.learned).forEach(function(k){ST.fr.learned[k]=1});ST.fr.xp=Object.keys(old.learned).length*10;ST.nick=old.nick||""}
+  }catch(e){}
+  Store.save(true);
+ },
+ save:function(silent){
+  try{localStorage.setItem(Store.key,JSON.stringify(ST))}catch(e){}
+  if(!silent)Cloud.push();
+ }
+};
+
+function mergeLang(a,b){
+ a=fix(a);b=fix(b);var o=blank();
+ [a,b].forEach(function(p){Object.keys(p.learned).forEach(function(k){var v=p.learned[k];o.learned[k]=o.learned[k]?Math.max(o.learned[k],v):v})});
+ [a,b].forEach(function(p){Object.keys(p.stats).forEach(function(k){var s=p.stats[k]||[0,0],c=o.stats[k]||[0,0];o.stats[k]=[Math.max(c[0],s[0]),Math.max(c[1],s[1])]})});
+ [a,b].forEach(function(p){Object.keys(p.mastered).forEach(function(k){var v=p.mastered[k];o.mastered[k]=o.mastered[k]?Math.min(o.mastered[k],v):v})});
+ o.xp=Math.max(a.xp,b.xp);
+ [a,b].forEach(function(p){Object.keys(p.days).forEach(function(k){var d=p.days[k],c=o.days[k]||{n:0,xp:0,q:0};o.days[k]={n:Math.max(c.n,d.n||0),xp:Math.max(c.xp,d.xp||0),q:Math.max(c.q,d.q||0)}})});
+ var seen={};o.quizzes=a.quizzes.concat(b.quizzes).filter(function(q){if(!q||seen[q.t])return false;seen[q.t]=1;return true}).sort(function(x,y){return x.t-y.t}).slice(-50);
+ [a,b].forEach(function(p){Object.keys(p.lessons).forEach(function(k){o.lessons[k]=1})});
+ return o;
+}
+
+/* Cloud: per-user private progress + shared leaderboard (artifact db) */
+/* Hosting: on claude.ai the platform gives sign-in + db; on your own site (Vercel) the Firebase adapter
+   in the page head provides the same window.claude.use("user"|"db") shape, plus window.LINGO_AUTH for Google sign-in. */
+var FB=!!(window.LINGO_AUTH||window.LINGO_SITE), PLAT=FB?"Google":"claude.ai";
+/* Account = the viewer's own sign-in. status: checking | signed | guest ; sync: ok | saving | local | readonly | error */
+var Acc={status:"checking",uid:null,name:"",sync:"local",last:0};
+var Cloud={db:null,uid:null,timer:null,subs:{},boards:{fr:null,de:null},fail:false,
+ init:function(){
+  var guest=function(){Acc.status="guest";Acc.sync="local";refresh()};
+  if(!window.claude||!window.claude.use){guest();return}
+  Promise.all([claude.use("user"),claude.use("db")]).then(function(r){
+   var user=r[0],db=r[1];
+   if(!user){guest();return}
+   return user.me().then(function(me){
+    if(!me||!me.id){guest();return}
+    Acc.status="signed";Acc.uid=me.id;Acc.name=me.name||"";
+    Store.useAccount(me.id);
+    if(!db){Acc.sync="local";refresh();return}
+    Cloud.db=db;Cloud.uid=me.id;Acc.sync="saving";refresh();
+    var cw;try{cw=Promise.resolve(user.can?user.can("data.write"):null)}catch(e){cw=Promise.resolve(null)}
+    return cw.catch(function(){return null}).then(function(can){
+     return Cloud.ref().get().then(function(snap){
+      if(snap&&snap.exists){var d=snap.data()||{};ST.fr=mergeLang(ST.fr,d.fr);ST.de=mergeLang(ST.de,d.de);if(!ST.nick&&d.nick)ST.nick=d.nick;Store.save(true)}
+      Acc.sync=can===false?"readonly":"ok";Acc.last=Date.now();
+     }).catch(function(){Acc.sync="error"});
+    }).then(function(){refresh();if(Acc.sync!=="readonly")Cloud.push(true);Cloud.score();if(U.lang)Cloud.board(U.lang)});
+   });
+  }).catch(guest);
+ },
+ ref:function(){return Cloud.db.collection("data/users/"+Cloud.uid).doc("lingo")},
+ push:function(){
+  if(!Cloud.db||Acc.sync==="readonly")return;clearTimeout(Cloud.timer);
+  Cloud.timer=setTimeout(function(){
+   Cloud.ref().set({v:2,nick:ST.nick,fr:ST.fr,de:ST.de,updated:Date.now()})
+    .then(function(){Acc.sync="ok";Acc.last=Date.now();if(U.view==="account")renderView();refreshAvatar()})
+    .catch(function(e){Acc.sync=e&&e.code==="invalid_argument"?"readonly":"error";if(U.view==="account")renderView();refreshAvatar()});
+   Cloud.score()},1500);
+ },
+ score:function(){
+  if(!Cloud.db||!ST.nick)return;
+  Cloud.db.collection("scores").doc(Cloud.uid).set({name:ST.nick,points:count("fr"),points_de:count("de"),xp_fr:ST.fr.xp,xp_de:ST.de.xp,updated:Date.now()})
+   .then(function(){Cloud.fail=false}).catch(function(){Cloud.fail=true;if(U.view==="friends")renderView()});
+ },
+ board:function(lang){
+  if(!Cloud.db||Cloud.subs[lang])return;
+  Cloud.subs[lang]=true;
+  var field=LANG[lang].field;
+  var t=setTimeout(function(){if(Cloud.boards[lang]===null){Cloud.boards[lang]=[];if(U.view==="friends")renderView()}},10000);
+  Cloud.db.collection("scores").orderBy(field,"desc").limit(25).onSnapshot(function(sn){
+   clearTimeout(t);
+   Cloud.boards[lang]=sn.docs.map(function(d){var x=d.data()||{};return{id:d.id,name:x.name,pts:x[field]||0}}).filter(function(r){return r.pts>0||r.id===Cloud.uid});
+   if(U.view==="friends"&&U.lang===lang)renderView();
+  },function(){clearTimeout(t);Cloud.boards[lang]=[];if(U.view==="friends")renderView()});
+ }
+};
+
+/* =========================================================
+   3. LOGIC — XP، السلسلة، الهدف اليومي
+   ========================================================= */
+var U={lang:null,view:"home",cefr:ALL,qcefr:ALL,cat:ALL,q:"",wmode:"cards",idx:0,flipped:false,qmode:"a",qlvl:"mid",qcat:ALL,cal:null,lesson:null,resetAsk:false};
+var Q=null;
+
+function P(){return ST[U.lang]}
+function words(){return DB[U.lang]}
+function byId(id){var w=words();for(var i=0;i<w.length;i++)if(w[i].id===id)return w[i];return null}
+function count(lang){var l=ST[lang].learned,ids={};DB[lang].forEach(function(e){ids[e.id]=1});return Object.keys(l).filter(function(k){return ids[k]}).length}
+function pad(n){return(n<10?"0":"")+n}
+function dkey(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function today(){return dkey(new Date())}
+function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
+function day(p,k){k=k||today();if(!p.days[k])p.days[k]={n:0,xp:0,q:0};return p.days[k]}
+function dayN(p,k){return p.days[k]?p.days[k].n:0}
+
+function streak(lang){
+ var p=ST[lang],d=new Date(),cur=0;
+ if(dayN(p,dkey(d))<GOAL)d=addDays(d,-1);
+ while(dayN(p,dkey(d))>=GOAL){cur++;d=addDays(d,-1)}
+ var keys=Object.keys(p.days).filter(function(k){return p.days[k].n>=GOAL}).sort(),best=0,run=0,prev=null;
+ keys.forEach(function(k){var t=new Date(k+"T12:00:00");run=(prev&&Math.round((t-prev)/864e5)===1)?run+1:1;best=Math.max(best,run);prev=t});
+ return{cur:cur,best:Math.max(best,cur),today:dayN(p,today())};
+}
+function level(xp){return{n:Math.floor(xp/XP_LEVEL)+1,into:xp%XP_LEVEL}}
+function accuracy(p){var r=0,w=0;Object.keys(p.stats).forEach(function(k){r+=p.stats[k][0];w+=p.stats[k][1]});return r+w?Math.round(r/(r+w)*100):null}
+
+function addXP(n){var p=P();p.xp+=n;day(p).xp+=n;bump("pxp")}
+function learn(id){
+ var p=P();if(p.learned[id])return false;
+ p.learned[id]=Date.now();var d=day(p);d.n++;addXP(10);
+ if(d.n===GOAL){var s=streak(U.lang);toast("برافو! كمّلتي هدف اليوم 🔥 "+s.cur+" "+(s.cur===1?"نهار":"يام")+" متتابعين",true);bump("pstreak")}
+ Store.save();return true;
+}
+
+/* =========================================================
+   4. HELPERS
+   ========================================================= */
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+function plainEx(e){return e.ex.replace(/\*/g,"")}
+function strip(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"")}
+
+var IC={
+ home:'<path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h12V9.5"/>',
+ book:'<path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/>',
+ target:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6"/>',
+ chart:'<path d="M5 20V11"/><path d="M12 20V5"/><path d="M19 20v-7"/>',
+ users:'<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 5.3a3 3 0 0 1 0 5.4"/><path d="M17.5 14a5 5 0 0 1 3 5"/>',
+ head:'<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3.5" y="14" width="4" height="6" rx="1.5"/><rect x="16.5" y="14" width="4" height="6" rx="1.5"/>',
+ pen:'<path d="M15 5l4 4L9 19H5v-4z"/><path d="M13 7l4 4"/>',
+ layers:'<path d="M12 4l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16l8 4 8-4"/>',
+ spk:'<path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/>',
+ arrow:'<path d="M17 17L7 7"/><path d="M7 16V7h9"/>',
+ left:'<path d="M15 6l-6 6 6 6"/>',right:'<path d="M9 6l6 6-6 6"/>',
+ check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',
+ search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
+ swap:'<path d="M7 7h11l-3-3"/><path d="M17 17H6l3 3"/>',
+ sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
+ cards:'<rect x="4" y="6" width="12" height="14" rx="2"/><path d="M8 4h10a2 2 0 0 1 2 2v12"/>',
+ list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r=".8"/><circle cx="4.5" cy="12" r=".8"/><circle cx="4.5" cy="18" r=".8"/>'
+};
+function ic(n,cls){return'<svg class="ico'+(cls?" "+cls:"")+'" viewBox="0 0 24 24" aria-hidden="true">'+IC[n]+'</svg>'}
+
+function wordHTML(e){
+ var m=e.g?e.w.match(LANG[U.lang].art):null;
+ if(!m)return'<span class="fw">'+esc(e.w)+'</span>';
+ return'<span class="fw"><span class="art g-'+e.g+'">'+esc(m[1])+'</span>'+esc(e.w.slice(m[1].length))+'</span>';
+}
+function gtag(e){return e.g?'<span class="gtag g-'+e.g+'">'+GN[e.g]+'</span>':""}
+function exHTML(e){return esc(e.ex).replace(/\*(.+?)\*/g,function(_,x){return'<mark class="g-'+(e.g||"x")+'">'+x+'</mark>'})}
+function lessonWord(s,g){
+ var m=g?s.match(LANG[U.lang].lessonArt):null;
+ if(!m)return'<span class="fw">'+esc(s)+'</span>';
+ return'<span class="fw"><span class="art g-'+g+'">'+esc(m[1])+'</span>'+esc(s.slice(m[1].length))+'</span>';
+}
+
+var hasTTS="speechSynthesis" in window&&typeof SpeechSynthesisUtterance!=="undefined";
+function speak(text,rate){
+ if(!hasTTS){toast("الصوت ما خدامش فهاد المتصفح");return}
+ try{var u=new SpeechSynthesisUtterance(text);u.lang=LANG[U.lang].tts;u.rate=rate||.85;
+  var v=speechSynthesis.getVoices().filter(function(x){return x.lang&&x.lang.replace("_","-").indexOf(LANG[U.lang].tts.slice(0,2))===0});if(v.length)u.voice=v[0];
+  speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){toast("ما قدرناش نشغلو الصوت")}
+}
+if(hasTTS){try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){}}catch(e){}}
+
+var toastT=null;
+function toast(msg,win){var t=$("toast");t.textContent=msg;t.className="show"+(win?" win":"");clearTimeout(toastT);toastT=setTimeout(function(){t.className=win?"win":""},win?3800:2400)}
+function bump(id){var el=$(id);if(!el)return;el.classList.remove("bump");void el.offsetWidth;el.classList.add("bump")}
+
+/* =========================================================
+   5. WELCOME — اختيار اللغة
+   ========================================================= */
+function renderWelcome(){
+ var feats=["كلمات يومية","القواعد","الاستماع","الكتابة","اختبارات وتمارين","أصوات الكلمات"];
+ var cards=["fr","de"].map(function(l){
+  var L=LANG[l],n=count(l),s=streak(l),p=ST[l];
+  var foot=n||p.xp?'<div class="lang-stats"><span>المستوى <b>'+curLevel(l)+'</b></span><span><b class="num">'+n+'</b> / <span class="num">'+DB[l].length+'</span> كلمة</span><span>🔥 <b class="num">'+s.cur+'</b></span><span><b class="num">'+p.xp+'</b> XP</span></div>'
+   :'<div class="lang-stats"><span>مازال ما بديتيش — ابدا من الصفر</span></div>';
+  return'<button class="lang" data-act="pick" data-lang="'+l+'"><div class="lang-top"><span class="flag lg '+l+'"></span><div><h2>'+L.name+'</h2><span class="fw">'+L.native+'</span></div><span class="lvl-pill">A1 → B2</span></div>'+
+   '<ul class="feat">'+feats.map(function(f){return'<li>'+ic("check")+f+'</li>'}).join("")+'</ul>'+
+   '<div class="lang-foot">'+foot+'<span class="go">'+ic("left")+'</span></div></button>';
+ }).join("");
+ $("welcome").innerHTML='<div class="wel"><div class="wel-top"><div class="brand"><span class="dot">'+ic("sparkle")+'</span>تعلّم بالعربية</div>'+accChip()+'</div>'+
+  '<div class="wel-hero"><h1>شنو بغيتي تتعلّم اليوم؟</h1><p>اختار اللغة. كل لغة عندها الكلمات، السلسلة، و XP ديالها بوحدها، وتقدر تبدّل بيناتهم فأي وقت بلا ما يضيع ليك والو.</p></div>'+
+  '<div class="langs">'+cards+'</div><p class="wel-note">'+DB.fr.length+' كلمة فالفرنسية و '+DB.de.length+' فالألمانية، مقسمين من A1 حتى B2.</p></div>';
+}
+function showWelcome(){
+ if(Q&&!Q.done)Q=null;
+ renderWelcome();$("app").hidden=true;var w=$("welcome");w.hidden=false;w.classList.remove("screen");void w.offsetWidth;w.classList.add("screen");window.scrollTo(0,0);
+}
+function enterLang(l){
+ U.lang=l;U.view="home";U.cefr=ALL;U.qcefr=ALL;U.cat=ALL;U.q="";U.idx=0;U.flipped=false;U.qcat=ALL;U.cal=null;U.lesson=null;U.resetAsk=false;Q=null;
+ try{localStorage.setItem("lingo:last",l)}catch(e){}
+ $("welcome").hidden=true;var a=$("app");a.hidden=false;a.classList.remove("screen");void a.offsetWidth;a.classList.add("screen");
+ renderShell();renderView();
+ if(Cloud.db)Cloud.board(l);
+}
+
+/* =========================================================
+   6. APP SHELL
+   ========================================================= */
+var NAV=[["home","home","الرئيسية"],["words","book","الكلمات"],["quiz","target","الاختبار"],["progress","chart","التقدّم"],["friends","users","الأصحاب"]];
+function renderShell(){
+ var L=LANG[U.lang];
+ $("navflag").outerHTML='<span class="flag sm '+U.lang+'" id="navflag"></span>';
+ $("navname").textContent=L.name;
+ $("navitems").innerHTML=NAV.map(function(n){return'<button class="nav-btn" data-act="nav" data-v="'+n[0]+'"'+(navKey()===n[0]?' aria-current="page"':"")+'>'+ic(n[1])+'<span>'+n[2]+'</span></button>'}).join("");
+ $("switchbtn").innerHTML='<span class="flag sm '+U.lang+'"></span>'+L.name+ic("swap");
+ $("switchbtn").setAttribute("aria-label","بدّل اللغة");
+ refreshPills();
+}
+function navKey(){return U.view==="grammar"?"home":U.view}
+function initial(){var n=(Acc.name||ST.nick||"").trim();return n?esc(n.charAt(0).toUpperCase()):""}
+function accChip(){
+ if(Acc.status==="checking")return'<span class="accchip">كنتأكدو من الحساب…</span>';
+ if(Acc.status==="signed")return'<span class="accchip on"><span class="av sm">'+(initial()||ic("users"))+'</span>'+(Acc.name?esc(Acc.name):"متصل")+'</span>';
+ return FB?'<button class="accchip" data-act="signin">الدخول بـ Google</button>':'<span class="accchip">ضيف · التقدّم فهاد الجهاز</span>';
+}
+function refreshAvatar(){var b=$("avbtn");if(!b)return;b.innerHTML=(initial()||ic("users"))+'<i class="st '+(Acc.status==="signed"&&Acc.sync==="ok"?"ok":Acc.status==="signed"?"warn":"off")+'"></i>'}
+function refreshPills(){refreshAvatar();var s=streak(U.lang);$("pstreak").innerHTML='🔥 <span class="num">'+s.cur+'</span>';$("pxp").innerHTML='<span class="num">'+P().xp+'</span> XP'}
+function refresh(){if(!U.lang||!$("welcome").hidden){renderWelcome();return}refreshPills();if(!(U.view==="quiz"&&Q))renderView()}
+function go(v){U.view=v;U.resetAsk=false;if(v!=="grammar")U.lesson=null;
+ Array.prototype.forEach.call(document.querySelectorAll(".nav-btn"),function(b){if(b.dataset.v===navKey())b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+ renderView(true);window.scrollTo(0,0)}
+function renderView(anim){
+ var v=$("view"),h="";
+ if(U.view==="home")h=vHome();else if(U.view==="words")h=vWords();else if(U.view==="quiz")h=vQuiz();
+ else if(U.view==="progress")h=vProgress();else if(U.view==="account")h=vAccount();else if(U.view==="friends")h=vFriends();else if(U.view==="grammar")h=vGrammar();
+ v.innerHTML=h;refreshPills();
+ if(anim){v.classList.remove("enter");void v.offsetWidth;v.classList.add("enter")}
+ if(U.view==="quiz"&&Q&&!Q.done){var inp=$("wans");if(inp)inp.focus()}
+ if(U.view==="friends"&&Cloud.db)Cloud.board(U.lang);
+ requestAnimationFrame(function(){Array.prototype.forEach.call(v.querySelectorAll("[data-w]"),function(el){el.style.width=el.dataset.w})});
+}
+
+/* ---------- HOME ---------- */
+function vHome(){
+ var p=P(),L=LANG[U.lang],s=streak(U.lang),n=s.today,done=n>=GOAL,learned=count(U.lang),tot=words().length;
+ var msg=done?"برافو! كمّلتي هدف اليوم. رجع غدا باش تزيد السلسلة."
+  :(n===0&&s.cur>0?"تعلّم "+GOAL+" كلمات اليوم باش ما تضيعش السلسلة ديال "+s.cur+" "+(s.cur===1?"نهار":"يام")+"."
+  :n===0?"ابدا ب "+GOAL+" كلمات جداد اليوم وبدا السلسلة ديالك.":"باقي ليك "+(GOAL-n)+" "+(GOAL-n===1?"كلمة":"كلمات")+" باش تكمّل هدف اليوم.");
+ var lessonsDone=LESSONS[U.lang].filter(function(_,i){return p.lessons[i]}).length;
+ var next=words().filter(function(e){return!p.learned[e.id]})[0];
+ var tile=function(act,icon,cls,title,sub,extra){return'<button class="card tile" data-act="'+act+'"'+(extra||"")+'><div class="tile-top"><span class="tile-ic '+cls+'">'+ic(icon)+'</span><span class="arrow">'+ic("arrow")+'</span></div><div><h3>'+title+'</h3><p>'+sub+'</p></div></button>'};
+ var nextCard=next?'<div class="card word-day"><span class="tag" style="align-self:flex-start">الكلمة الجاية · '+esc(next.cat)+'</span><div class="w">'+wordHTML(next)+'</div><p class="muted">'+esc(next.da)+'</p><p class="ex"><span class="fw" style="font-weight:500">'+exHTML(next)+'</span></p></div>'
+  :'<div class="card word-day"><h3>حفظتي كاع الكلمات 🎉</h3><p class="muted">دوز الاختبارات باش تثبّتهم.</p></div>';
+ return'<div class="home"><div class="home-l">'+
+  '<div class="hello"><p class="muted">مرحبا'+((ST.nick||Acc.name)?"، "+esc(ST.nick||Acc.name):"")+'</p><h1>يلا نسهّلو <span class="fw">'+esc(L.hello)+'</span></h1></div>'+
+  '<div class="card plan'+(done?" won":"")+'"><div class="plan-top"><div><h2>هدف اليوم</h2><p class="muted"><b class="num">'+Math.min(n,GOAL)+'</b> / '+GOAL+' كلمات جداد</p></div><div class="flame"><b class="num">🔥 '+s.cur+'</b><span>'+(s.cur===1?"نهار":"يام")+' متتابعين</span></div></div>'+
+  '<div class="bar"><i data-w="'+Math.min(100,n/GOAL*100)+'%"></i></div><p class="plan-msg">'+msg+'</p></div>'+
+  '<button class="btn pri cta" data-act="continue">'+(next?"كمّل التعلّم":"راجع بالاختبار")+'</button>'+
+  '</div><div class="home-r"><div class="tiles">'+
+  tile("nav","book","ic-b","الكلمات",'<span class="num">'+learned+" / "+tot+'</span> محفوظة',' data-v="words"')+
+  tile("qgo","head","ic-v","الاستماع","سمع وختار المعنى",' data-m="c"')+
+  tile("qgo","pen","ic-g","الكتابة","كتب الكلمة بيدك",' data-m="d"')+
+  tile("nav","layers","ic-o","القواعد",'<span class="num">'+lessonsDone+" / "+LESSONS[U.lang].length+'</span> دروس',' data-v="grammar"')+
+  '</div>'+levelsCard()+nextCard+'</div></div>';
+}
+function levelsCard(){
+ var cur=curLevel(U.lang);
+ return'<div class="card box"><h2>تقدّم المفردات <span class="lvl-pill">دابا: '+cur+'</span></h2><div class="lvls">'+vocab(U.lang).map(function(v){
+  return'<button class="lvl-row vrow'+(v.l===cur?" cur":"")+'" data-act="golvl" data-l="'+v.l+'"><b>'+v.l+'</b><div class="bar"><i data-w="'+v.w+'%"></i></div><span class="muted"><span class="num">'+fmtN(v.m)+' / '+fmtN(v.t)+'</span> · <span class="num">'+v.pct+'</span></span></button>'}).join("")+
+  '</div><p class="note" style="margin-top:10px">كلمة متقنة = جاوبتي عليها صحيح فالاختبار.</p></div>';
+}
+function vocabBox(){
+ var vs=vocab(U.lang),tot=masteredCount(U.lang);
+ return'<div class="card box"><h2>تقدّم المفردات <small class="muted" style="font-weight:500;font-size:.78rem"><span class="num">'+fmtN(tot)+'</span> كلمة متقنة</small></h2><div class="vlist">'+vs.map(function(v){
+  return'<div class="vitem"><div class="vtop"><b>'+v.l+'</b><span><span class="num">'+fmtN(v.m)+' / '+fmtN(v.t)+'</span> كلمة <span class="vp num">('+v.pct+')</span></span></div><div class="bar"><i data-w="'+v.w+'%"></i></div>'+
+   '<div class="vmeta"><span>متقنة: <b class="num">'+fmtN(v.m)+'</b></span><span>باقي: <b class="num">'+fmtN(v.rem)+'</b></span><span>منها فـ'+v.l+': <b class="num">'+fmtN(v.own)+'</b></span><span>متوفرة فالتطبيق: <b class="num">'+fmtN(v.avail)+'</b></span></div></div>'}).join("")+
+  '</div><p class="note" style="margin-top:12px">الأهداف تراكمية: هدف A2 كيحسب الكلمات المتقنة ديال A1 و A2 مجموعين. الكلمة كتولي متقنة غير ملي كتجاوب عليها صحيح فالاختبار، وكتحسب مرة وحدة.</p></div>';
+}
+
+/* ---------- WORDS ---------- */
+function deck(){
+ var q=strip(U.q.trim().toLowerCase());
+ return words().filter(function(e){
+  if(U.cefr!==ALL&&e.lvl!==U.cefr)return false;
+  if(U.cat!==ALL&&e.cat!==U.cat)return false;
+  if(!q)return true;
+  return strip(e.w.toLowerCase()).indexOf(q)>-1||e.da.indexOf(U.q.trim())>-1;
+ });
+}
+function vWords(){
+ var L=LANG[U.lang];
+ return'<div class="view-head"><h1>الكلمات</h1><div class="seg" role="group" aria-label="طريقة العرض"><button data-act="wmode" data-m="cards" aria-pressed="'+(U.wmode==="cards")+'">بطاقات</button><button data-act="wmode" data-m="list" aria-pressed="'+(U.wmode==="list")+'">لائحة</button></div></div>'+
+  '<label class="search">'+ic("search")+'<input id="q" type="search" value="'+esc(U.q)+'" placeholder="قلّب على كلمة بـ'+L.name+' ولا بالعربية…" aria-label="قلّب على كلمة" autocomplete="off"></label>'+
+  '<div class="lvrow" role="group" aria-label="المستوى">'+[ALL].concat(CEFR).map(function(l){return'<button class="lvb" data-act="cefr" data-l="'+l+'" aria-pressed="'+(U.cefr===l)+'">'+l+'</button>'}).join("")+'</div>'+
+  '<div class="chips" role="group" aria-label="المواضيع">'+cats(U.lang,U.cefr).map(function(c){return'<button class="chip" data-act="cat" data-c="'+esc(c)+'" aria-pressed="'+(c===U.cat)+'">'+esc(c)+'</button>'}).join("")+'</div>'+
+  '<div class="legend">'+L.arts.map(function(a){return'<span><i style="background:var(--g'+a[0]+')"></i><b class="g-'+a[0]+'">'+a[1]+'</b> = '+a[2]+'</span>'}).join("")+'</div>'+
+  '<div id="wbody">'+wBody()+'</div>';
+}
+function wBody(){
+ var d=deck();
+ if(!d.length)return'<div class="empty">'+ic("search")+'<p>ما لقينا حتى كلمة'+(U.q?" فيها «"+esc(U.q)+"»":"")+'.</p><button class="btn sm" data-act="clearq">مسح البحث</button></div>';
+ if(U.wmode==="list"){var p=P();
+  return'<ul class="list">'+d.map(function(e){return'<li class="wrow"><button class="open" data-act="open" data-id="'+esc(e.id)+'"><span class="gdot g-'+(e.g||"x")+'"></span><span class="t">'+wordHTML(e)+'<small>'+esc(e.da)+'</small></span>'+(p.learned[e.id]?'<span class="chk" title="محفوظة">'+ic("check")+'</span>':"")+'</button><button class="spk" data-act="sayid" data-id="'+esc(e.id)+'" aria-label="سمع">'+ic("spk")+'</button></li>'}).join("")+'</ul>';
+ }
+ if(U.idx>=d.length)U.idx=0;
+ var e=d[U.idx],done=!!P().learned[e.id];
+ var face=U.flipped?
+  '<span class="da">'+esc(e.da)+'</span><span class="pron">'+esc(e.pr)+'</span><div class="exbox"><span class="lbl">مثال</span><span class="exf">'+exHTML(e)+'</span><span class="exd">'+esc(e.exd)+'</span></div><span class="hint">اضغط باش ترجع</span>'
+  :'<span class="big">'+wordHTML(e)+'</span><span class="pron">'+esc(e.pr)+'</span><span class="hint">اضغط باش تشوف المعنى والمثال</span>';
+ return'<div class="study"><button class="fcard'+(U.flipAnim?" flip":"")+'" data-act="flip" aria-live="polite"><span class="tl"><span class="tag lv">'+e.lvl+'</span><span class="tag">'+esc(e.cat)+'</span>'+gtag(e)+'</span>'+(P().mastered[e.id]?'<span class="tr ok-tag">متقنة ★</span>':done?'<span class="tr ok-tag">محفوظة ✓</span>':"")+face+'</button>'+
+  '<div class="stnav"><button class="round" data-act="prev" aria-label="السابقة">'+ic("right")+'</button><span class="muted num">'+(U.idx+1)+' / '+d.length+'</span><button class="round" data-act="next" aria-label="التالية">'+ic("left")+'</button></div>'+
+  '<div class="stact"><button class="btn" data-act="say">'+ic("spk")+'الكلمة</button><button class="btn" data-act="sayex">'+ic("spk")+'المثال</button><button class="btn '+(done?"done":"pri")+'" data-act="learn"'+(done?" disabled":"")+'>'+(done?"محفوظة ✓":"حفظتها ✓")+'</button></div></div>';
+}
+function rerenderWords(){U.flipAnim=false;var b=$("wbody");if(b)b.innerHTML=wBody()}
+
+/* ---------- QUIZ ---------- */
+var MODES={a:{t:"",s:"شوف الكلمة وختار المعنى بالعربية",i:"book"},b:{t:"العربية → ",s:"شوف المعنى وختار الكلمة الصحيحة",i:"swap"},c:{t:"الاستماع",s:"سمع الكلمة بلا ما تشوفها",i:"head"},d:{t:"الكتابة",s:"كتب الكلمة بيدك",i:"pen"}};
+var LV={easy:{n:8,o:3,xp:5,t:"سهل",d:"8 أسئلة، 3 اختيارات. فالكتابة ما كيهمّوش الأكسان والأداة."},mid:{n:10,o:4,xp:8,t:"متوسط",d:"10 أسئلة، 4 اختيارات. فالكتابة الأكسان خاصهم يكونو صحاح."},hard:{n:12,o:6,xp:12,t:"صعيب",d:"12 سؤال، 6 اختيارات من نفس الموضوع. فالكتابة خاص الأداة (le/la، der/die/das) والأكسان."}};
+function modeTitle(m){var n=LANG[U.lang].native;return m==="a"?n+" → العربية":m==="b"?"العربية → "+n:MODES[m].t}
+function writable(e){var m=e.g?e.w.match(LANG[U.lang].art):null,base=m?e.w.slice(m[1].length):e.w;return!/[ …?!]/.test(base.trim())}
+function vQuiz(){
+ if(Q&&Q.done)return vResults();
+ if(Q)return vPlay();
+ var p=P();
+ var hist=p.quizzes.slice(-5).reverse();
+ return'<div class="qset"><div class="view-head"><h1>الاختبار</h1></div>'+
+  '<p class="sec">نوع الاختبار</p><div class="modes">'+["a","b","c","d"].map(function(m){var dis=m==="c"&&!hasTTS;return'<button class="mode" data-act="qmode" data-m="'+m+'" aria-pressed="'+(U.qmode===m)+'"'+(dis?" disabled":"")+'><span class="tile-ic '+(["ic-b","ic-v","ic-o","ic-g"]["abcd".indexOf(m)])+'">'+ic(MODES[m].i)+'</span><b>'+esc(modeTitle(m))+'</b><small>'+(dis?"الصوت ما خدامش فهاد المتصفح":MODES[m].s)+'</small></button>'}).join("")+'</div>'+
+  '<p class="sec">الصعوبة</p><div class="seg" role="group">'+Object.keys(LV).map(function(k){return'<button data-act="qlvl" data-l="'+k+'" aria-pressed="'+(U.qlvl===k)+'">'+LV[k].t+'</button>'}).join("")+'</div><p class="lvl-d">'+LV[U.qlvl].d+'</p>'+
+  '<p class="sec">المستوى</p><div class="lvrow" role="group" aria-label="المستوى">'+[ALL].concat(CEFR).map(function(l){return'<button class="lvb" data-act="qcefr" data-l="'+l+'" aria-pressed="'+(U.qcefr===l)+'">'+l+'</button>'}).join("")+'</div>'+
+  '<p class="sec">الموضوع</p><select class="sel" id="qcat" aria-label="الموضوع">'+cats(U.lang,U.qcefr).map(function(c){return'<option'+(c===U.qcat?" selected":"")+'>'+esc(c)+'</option>'}).join("")+'</select>'+
+  '<div style="margin-top:20px"><button class="btn pri block cta" data-act="qstart">ابدا الاختبار</button></div>'+
+  (hist.length?'<p class="sec">آخر النتائج</p><ul class="hist">'+hist.map(function(h){var d=new Date(h.t);return'<li><span class="tile-ic '+(["ic-b","ic-v","ic-o","ic-g"]["abcd".indexOf(h.m)]||"ic-b")+'" style="width:34px;height:34px;border-radius:10px">'+ic(MODES[h.m]?MODES[h.m].i:"target")+'</span><span>'+esc(modeTitle(h.m))+' · '+(LV[h.l]?LV[h.l].t:"")+'<br><small class="muted">'+d.getDate()+"/"+(d.getMonth()+1)+'</small></span><span class="s num">'+h.s+' / '+h.n+'</span></li>'}).join("")+'</ul>':"")+
+ '</div>';
+}
+function weight(e){var p=P(),s=p.stats[e.id]||[0,0];if(!p.learned[e.id])return 3;if(s[1]>s[0])return 4;if(s[1]>0)return 2;return 1}
+function sample(list,n){var pool=list.slice(),out=[];while(out.length<n&&pool.length){var tot=0;pool.forEach(function(e){tot+=weight(e)});var r=Math.random()*tot,i=0;for(;i<pool.length;i++){r-=weight(pool[i]);if(r<=0)break}out.push(pool.splice(Math.min(i,pool.length-1),1)[0])}return out}
+function startQuiz(mode){
+ if(mode)U.qmode=mode;
+ if(U.qmode==="c"&&!hasTTS){toast("الصوت ما خدامش فهاد المتصفح");return}
+ var lv=LV[U.qlvl],all=words();
+ var pool=all.filter(function(e){return(U.qcefr===ALL||e.lvl===U.qcefr)&&(U.qcat===ALL||e.cat===U.qcat)});
+ if(U.qmode==="d")pool=pool.filter(writable);
+ if(pool.length<2){toast("ما كافياش الكلمات فهاد الموضوع لهاد النوع ديال الاختبار");return}
+ var key=U.qmode==="b"?"w":"da";
+ var items=sample(pool,Math.min(lv.n,pool.length)).map(function(e){
+  if(U.qmode==="d")return{e:e};
+  var src=U.qlvl==="hard"?shuffle(all.filter(function(x){return x.cat===e.cat})).concat(shuffle(all)):shuffle(all);
+  var seen={};seen[e[key]]=1;var dist=[];
+  src.forEach(function(x){if(dist.length<lv.o-1&&!seen[x[key]]){seen[x[key]]=1;dist.push(x)}});
+  return{e:e,opts:shuffle(dist.concat([e]))};
+ });
+ Q={mode:U.qmode,lvl:U.qlvl,items:items,i:0,score:0,xp:0,answered:false,done:false,startXP:P().xp};
+ U.view="quiz";renderView(true);window.scrollTo(0,0);
+ if(Q.mode==="c")setTimeout(function(){speak(items[0].e.w)},350);
+}
+function vPlay(){
+ var it=Q.items[Q.i],e=it.e,n=Q.items.length,lv=LV[Q.lvl];
+ var prompt="";
+ if(Q.mode==="a")prompt='<span class="big">'+wordHTML(e)+'</span><span class="ask">شنو معناها بالعربية؟</span>';
+ else if(Q.mode==="b")prompt='<span class="da">'+esc(e.da)+'</span><span class="ask">شنو هي بـ'+LANG[U.lang].name+'؟</span>';
+ else if(Q.mode==="c")prompt='<button class="listen" data-act="qreplay" aria-label="سمع مرة أخرى">'+ic("spk")+'</button><span class="ask" style="margin-top:18px">شنو سمعتي؟ اضغط باش تعاود تسمع</span>';
+ else{var m=e.g?e.w.match(LANG[U.lang].art):null,base=m?e.w.slice(m[1].length):e.w;
+  prompt='<span class="da">'+esc(e.da)+'</span><span class="ask">كتب الكلمة بـ'+LANG[U.lang].name+(Q.lvl==="hard"&&e.g?" مع الأداة":"")+'</span>'+
+  (Q.lvl==="easy"?'<span class="hintw">'+esc(base.charAt(0))+" "+Array(base.length).join("_ ")+'</span>':"");}
+ var body="";
+ if(Q.mode==="d"){
+  body='<div class="wbox"><input id="wans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="كتب هنا…" aria-label="الجواب"'+(it.given!=null?' value="'+esc(it.given)+'" readonly class="'+(it.ok?"ok":"bad")+'"':"")+'>'+(it.given==null?'<button class="btn pri" data-act="qcheck">تحقّق</button>':"")+'</div>'+
+   (it.given==null?'<button class="link" data-act="qskip" style="align-self:center">ما عرفتش</button>':"");
+ }else{
+  var key=Q.mode==="b"?"w":"da";
+  body='<div class="opts'+(it.opts.length===3?" c3":"")+'">'+it.opts.map(function(o,k){
+   var cls="opt";if(it.given!=null){if(o[key]===e[key])cls+=" ok";else if(k===it.given)cls+=" bad";else cls+=" dim"}
+   return'<button class="'+cls+'" data-act="qopt" data-k="'+k+'"'+(it.given!=null?" disabled":"")+'>'+(Q.mode==="b"?wordHTML(o):esc(o.da))+'</button>'}).join("")+'</div>';
+ }
+ var fb="";
+ if(it.given!=null){
+  fb='<div class="fb '+(it.ok?"ok":"bad")+'"><h3>'+(it.ok?"صحيح! +"+it.gain+" XP"+(it.newM?" · كلمة متقنة جديدة ★":""):"غالط")+'</h3><div class="line">'+wordHTML(e)+gtag(e)+'<span>= '+esc(e.da)+'</span></div><p class="ex"><span class="fw">'+exHTML(e)+'</span> — '+esc(e.exd)+'</p></div>'+
+   '<div class="qfoot"><button class="btn" data-act="sayid" data-id="'+esc(e.id)+'">'+ic("spk")+'سمع</button><button class="btn pri" data-act="qnext" id="qnextbtn">'+(Q.i+1<n?"التالي":"شوف النتيجة")+'</button></div>';
+ }
+ return'<div class="play"><div class="qtop"><button class="x" data-act="qquit" aria-label="خرج من الاختبار">'+ic("x")+'</button><div class="bar"><i data-w="'+((Q.i+(it.given!=null?1:0))/n*100)+'%"></i></div><span class="muted num">'+(Q.i+1)+'/'+n+'</span></div>'+
+  '<div class="card qcard">'+prompt+'</div>'+body+fb+'</div>';
+}
+function norm(s,lvl){
+ s=String(s).toLowerCase().replace(/[’‘`´]/g,"'").replace(/[.…?!,¿¡]/g," ").replace(/\s+/g," ").trim();
+ if(lvl!=="hard")s=s.replace(/ß/g,"ss").replace(/œ/g,"oe").replace(/æ/g,"ae");
+ if(lvl==="easy")s=strip(s);
+ return s;
+}
+function grade(ok,e,given){
+ var it=Q.items[Q.i],p=P();it.given=given;it.ok=ok;
+ var s=p.stats[e.id]||[0,0];s[ok?0:1]++;p.stats[e.id]=s;day(p).q++;
+ it.gain=0;
+ it.newM=false;if(ok){Q.score++;it.gain=LV[Q.lvl].xp+(Q.mode==="d"?4:0);Q.xp+=it.gain;addXP(it.gain);it.newM=master(e.id);if(learn(e.id))it.gain+=10}
+ Store.save();
+ if(Q.mode!=="c")speak(e.w);
+ renderView();
+ var nb=$("qnextbtn");if(nb)nb.focus({preventScroll:true});
+}
+function checkWrite(skip){
+ var it=Q.items[Q.i];if(it.given!=null)return;var e=it.e;
+ var v=skip?"":($("wans").value||"");
+ if(!skip&&!v.trim()){toast("كتب شي جواب ولا اضغط «ما عرفتش»");return}
+ var m=e.g?e.w.match(LANG[U.lang].art):null,forms=[e.w];
+ if(m&&Q.lvl!=="hard")forms.push(e.w.slice(m[1].length));
+ var ok=!skip&&forms.some(function(f){return norm(f,Q.lvl)===norm(v,Q.lvl)});
+ grade(ok,e,skip?"—":v);
+}
+function finishQuiz(){
+ var p=P();Q.done=true;
+ p.quizzes.push({t:Date.now(),m:Q.mode,l:Q.lvl,s:Q.score,n:Q.items.length,x:p.xp-Q.startXP});
+ if(p.quizzes.length>50)p.quizzes=p.quizzes.slice(-50);
+ Store.save();renderView(true);window.scrollTo(0,0);
+}
+function vResults(){
+ var n=Q.items.length,pc=Math.round(Q.score/n*100),miss=Q.items.filter(function(i){return!i.ok}),gained=P().xp-Q.startXP;
+ var title=pc===100?"مزيان بزاف! كلشي صحيح 🎉":pc>=70?"خدمة زوينة!":pc>=40?"مزيان، كمّل التمرين":"ماشي مشكل، عاود وغادي تتحسّن";
+ return'<div class="res"><div class="card res-top"><div class="ring" style="--p:'+pc+'"><div><b class="num">'+pc+'%</b><span>'+Q.score+' / '+n+' صحاح</span></div></div><h2>'+title+'</h2>'+
+  '<div class="res-row"><span class="pill xp">+'+gained+' XP</span><span class="pill">★ +'+Q.items.filter(function(i){return i.newM}).length+' متقنة</span><span class="pill">'+esc(modeTitle(Q.mode))+'</span><span class="pill">'+LV[Q.lvl].t+'</span></div></div>'+
+  (miss.length?'<p class="sec" style="margin:0">راجع هاد الكلمات</p><ul class="mist">'+miss.map(function(i){return'<li><span>'+wordHTML(i.e)+'</span><span class="muted">'+esc(i.e.da)+(Q.mode==="d"&&i.given&&i.given!=="—"?'<br><small>'+esc(i.given)+'</small>':"")+'</span></li>'}).join("")+'</ul>':"")+
+  '<div class="qfoot"><button class="btn" data-act="qhome">رجوع</button><button class="btn pri" data-act="qagain">عاود الاختبار</button></div></div>';
+}
+
+/* ---------- PROGRESS ---------- */
+var MONTHS=["يناير","فبراير","مارس","أبريل","ماي","يونيو","يوليوز","غشت","شتنبر","أكتوبر","نونبر","دجنبر"];
+var WD=["ن","ث","ر","خ","ج","س","ح"];var WDL=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
+function vProgress(){
+ var p=P(),s=streak(U.lang),learned=count(U.lang),tot=words().length,pc=Math.round(learned/tot*100),lv=level(p.xp),acc=accuracy(p);
+ // week
+ var now=new Date(),wk=[],mx=GOAL;
+ for(var i=6;i>=0;i--){var d=addDays(now,-i),k=dkey(d),v=dayN(p,k);wk.push({d:d,k:k,v:v});mx=Math.max(mx,v)}
+ var week='<div class="week"><div class="plot"><div class="goal" style="bottom:'+Math.round(GOAL/mx*100)+'px"><span>الهدف '+GOAL+'</span></div>'+wk.map(function(x){
+  var h=x.v?Math.max(6,Math.round(x.v/mx*100)):0;return'<div class="col" title="'+WDL[x.d.getDay()]+': '+x.v+'"><b class="num">'+(x.v||"")+'</b><i class="'+(x.v>=GOAL?"hit":x.v?"some":"")+'" style="height:'+h+'px"></i></div>'}).join("")+'</div><div class="labels">'+wk.map(function(x,j){return'<span'+(j===6?' class="today"':"")+'>'+(j===6?"اليوم":WD[(x.d.getDay()+6)%7])+'</span>'}).join("")+'</div></div>';
+ // calendar
+ if(!U.cal)U.cal={y:now.getFullYear(),m:now.getMonth()};
+ var first=new Date(U.cal.y,U.cal.m,1),days=new Date(U.cal.y,U.cal.m+1,0).getDate(),off=(first.getDay()+6)%7,tk=today();
+ var cells=WD.map(function(w){return'<span class="dn">'+w+'</span>'}).join("");
+ for(var b=0;b<off;b++)cells+='<span></span>';
+ for(var dd=1;dd<=days;dd++){var key=U.cal.y+"-"+pad(U.cal.m+1)+"-"+pad(dd),nn=dayN(p,key),act=p.days[key]&&(p.days[key].n||p.days[key].q);
+  cells+='<span class="d'+(nn>=GOAL?" hit":act?" some":"")+(key===tk?" today":"")+'" title="'+nn+' كلمات">'+dd+'</span>'}
+ var isNow=U.cal.y===now.getFullYear()&&U.cal.m===now.getMonth();
+ // topics
+ var topics=CEFR.map(function(l){var ls=lvlStats(U.lang,l);return'<p class="tlv"><span>'+l+'</span><b class="num">'+ls.k+'/'+ls.n+'</b></p>'+cats(U.lang,l).slice(1).map(function(c){var list=words().filter(function(e){return e.lvl===l&&e.cat===c}),k=list.filter(function(e){return p.learned[e.id]}).length;
+  return'<div class="trow"><span>'+esc(c)+'</span><div class="bar"><i data-w="'+(k/list.length*100)+'%"></i></div><b class="num">'+k+'/'+list.length+'</b></div>'}).join("")}).join("");
+ var lessonsDone=LESSONS[U.lang].filter(function(_,i){return p.lessons[i]}).length;
+ return'<div class="view-head"><h1>التقدّم ديالك</h1></div><div class="prog"><div class="pcol">'+
+  '<div class="card overview"><div class="ring" style="--p:'+pc+'"><div><b class="num">'+pc+'%</b><span>من الكلمات</span></div></div><div class="ov-t"><h2>المستوى '+lv.n+'</h2><p class="muted"><span class="num">'+learned+' / '+tot+'</span> كلمة محفوظة</p><div class="bar"><i data-w="'+(lv.into/XP_LEVEL*100)+'%"></i></div><p class="muted" style="font-size:.8rem">باقي <span class="num">'+(XP_LEVEL-lv.into)+'</span> XP للمستوى '+(lv.n+1)+'</p></div></div>'+
+  '<div class="stats"><div class="card stat"><span class="e">🔥</span><b class="num">'+s.cur+'</b><span>السلسلة</span></div><div class="card stat"><span class="e">⭐</span><b class="num">'+p.xp+'</b><span>XP</span></div><div class="card stat"><span class="e">🎯</span><b class="num">'+(acc==null?"—":acc+"%")+'</b><span>الدقة</span></div>'+
+  '<div class="card stat"><span class="e">🏆</span><b class="num">'+s.best+'</b><span>أحسن سلسلة</span></div><div class="card stat"><span class="e">📝</span><b class="num">'+p.quizzes.length+'</b><span>اختبارات</span></div><div class="card stat"><span class="e">📘</span><b class="num">'+lessonsDone+'</b><span>دروس</span></div></div>'+
+  vocabBox()+
+  '<div class="card box"><h2>النشاط ديال هاد السيمانة <small class="muted" style="font-weight:500;font-size:.78rem">كلمات جداد</small></h2>'+week+'</div>'+
+  '</div><div class="pcol">'+
+  '<div class="card box"><h2><span>'+MONTHS[U.cal.m]+' '+U.cal.y+'</span><span class="cal-h"><button data-act="calprev" aria-label="الشهر اللي فات">'+ic("right")+'</button><button data-act="calnext" aria-label="الشهر الجاي"'+(isNow?" disabled":"")+'>'+ic("left")+'</button></span></h2><div class="cal">'+cells+'</div>'+
+  '<div class="cal-l"><span><i style="background:var(--grad)"></i>كمّلتي الهدف</span><span><i style="background:var(--soft)"></i>تعلّمتي شوية</span></div></div>'+
+  '<div class="card box"><h2>حسب المستوى والموضوع</h2><div class="topics">'+topics+'</div></div>'+
+  '<div class="danger-zone">'+(U.resetAsk?'<span class="muted">غادي تمسح كاع التقدّم ديال '+LANG[U.lang].name+' فقط. متأكد؟</span><button class="btn sm danger" data-act="resetyes">إيه، مسح</button><button class="btn sm" data-act="resetno">لا</button>'
+   :'<button class="link" data-act="resetask">ابدا '+LANG[U.lang].name+' من جديد</button>')+'</div>'+
+  '</div></div>';
+}
+
+/* ---------- FRIENDS ---------- */
+function vFriends(){
+ var L=LANG[U.lang],board=Cloud.boards[U.lang],note="",list="";
+ if(!Cloud.db)note="الترتيب كيخدم غير إلا كنتي داخل بالحساب ديالك ("+PLAT+"). التقدّم ديالك محفوظ فهاد الجهاز.";
+ else if(board===null)note="كنحمّلو الترتيب…";
+ else if(!board.length)note="مازال حتى واحد ما تسجّل فـ"+L.name+". حفظ كلمة وكتب سميتك باش تكون الأول.";
+ else{
+  note=Cloud.fail?(FB?"ما قدرناش نسجّلو النقط ديالك. عاود جرّب من بعد شوية.":"ما قدرناش نسجّلو النقط ديالك. طلب من صاحب الصفحة يعطيك صلاحية Contributor من Share."):(ST.nick?"صيفط الرابط ديال هاد الصفحة لصحابك باش يتنافسو معاك.":"كتب سميتك باش تبان فالترتيب.");
+  list='<ol class="card board">'+board.map(function(r,k){return'<li'+(r.id===Cloud.uid?' class="me"':"")+'><span class="r num">'+(k+1)+'</span><span class="n">'+esc(r.name||"مجهول")+(r.id===Cloud.uid?"<small>(نتا)</small>":"")+'</span><span class="s num">'+r.pts+' كلمة</span></li>'}).join("")+'</ol>';
+ }
+ return'<div class="fr-wrap"><div class="view-head"><h1>الأصحاب</h1><span class="pill"><span class="flag sm '+U.lang+'"></span>'+L.name+'</span></div>'+
+  '<form class="nick" id="nickf"><input id="nick" maxlength="16" value="'+esc(ST.nick)+'" placeholder="سميتك فالترتيب" aria-label="سميتك فالترتيب" autocomplete="nickname"><button class="btn pri" type="submit">سجّل</button></form>'+
+  list+'<p class="note">'+note+'</p></div>';
+}
+
+/* ---------- ACCOUNT ---------- */
+function vAccount(){
+ var signed=Acc.status==="signed";
+ var SY={ok:["ok","التقدّم محفوظ فالحساب ديالك"+(Acc.last?" · آخر حفظ "+new Date(Acc.last).toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):"")],
+  saving:["warn","كنحفظو التقدّم ديالك…"],
+  readonly:["warn","عندك غير صلاحية المشاهدة، داكشي علاش التقدّم كيتحفظ غير فهاد الجهاز. طلب من مول الصفحة يعطيك Contributor من Share."],
+  error:["bad","ما قدرناش نوصلو للحساب دابا. التقدّم محفوظ فهاد الجهاز وغادي يتحفظ فالحساب ملي يرجع الاتصال."],
+  local:["warn","التقدّم محفوظ غير فهاد الجهاز."]};
+ var sy=signed?(SY[Acc.sync]||SY.local):["off","ماشي داخل بحساب: التقدّم محفوظ غير فهاد المتصفح."];
+ if(Acc.status==="checking")sy=["warn","كنتأكدو من الحساب…"];
+ var langs=["fr","de"].map(function(l){var s=streak(l);return'<div class="acc-l"><span class="flag sm '+l+'"></span><b>'+LANG[l].name+'</b><span class="muted">المستوى '+curLevel(l)+'</span><span class="muted"><span class="num">'+count(l)+'</span> كلمة</span><span class="muted"><span class="num">'+masteredCount(l)+'</span> متقنة</span><span class="muted num">'+ST[l].xp+' XP</span><span class="num">🔥 '+s.cur+'</span></div>'}).join("");
+ return'<div class="fr-wrap"><div class="view-head"><h1>الحساب ديالي</h1></div>'+
+  '<div class="card acc-head"><span class="av lg">'+(initial()||ic("users"))+'</span><div><h2>'+(signed?(Acc.name?esc(Acc.name):"داخل بالحساب ديالك"):Acc.status==="checking"?"…":"ضيف")+'</h2><p class="muted">'+(signed?"داخل بالحساب ديالك فـ "+PLAT:"ماشي داخل بحساب")+'</p></div>'+(FB&&signed?'<button class="btn sm" data-act="signout" style="margin-inline-start:auto">خروج</button>':"")+'</div>'+
+  '<div class="sync '+sy[0]+'"><i></i><span>'+sy[1]+'</span></div>'+
+  (signed||Acc.status==="checking"?"":(FB?'<div class="card box"><h2>دخل بالحساب ديالك</h2><p class="note" style="margin-bottom:12px">دخل بحساب Google باش يتحفظ التقدّم ديالك وتبان فالترتيب مع صحابك.</p><button class="btn pri block" data-act="signin">الدخول بـ Google</button></div>'
+  :'<div class="card box"><h2>كيفاش تدخل؟</h2><p class="note">حل هاد الصفحة وانت داخل بالحساب ديالك فـ claude.ai. من بعد، التقدّم ديالك غادي يتحفظ فالحساب ديالك وتلقاه فأي جهاز.</p></div>'))+
+  '<div class="card box"><h2>التقدّم ديالي</h2><div class="acc-ls">'+langs+'</div></div>'+
+  '<div class="card box"><h2>السمية فالترتيب</h2><form class="nick" id="nickf"><input id="nick" maxlength="16" value="'+esc(ST.nick||Acc.name||"")+'" placeholder="سميتك فالترتيب" aria-label="سميتك فالترتيب" autocomplete="nickname"><button class="btn pri" type="submit">سجّل</button></form><p class="note" style="margin-top:8px">هادي هي السمية الوحيدة اللي كيشوفوها صحابك.</p></div>'+
+  '<div class="card box"><h2>كيفاش كيخدم الحساب</h2><ul class="howto"><li>'+ic("check")+'<span>كل واحد كيدخل بالحساب ديالو فـ '+PLAT+'، والتقدّم ديالو كيبقى بوحدو.</span></li><li>'+ic("check")+'<span>حتى واحد ما كيشوف الكلمات والنقط ديالك، غير السمية اللي سجّلتي فالترتيب.</span></li><li>'+ic("check")+'<span>'+(FB?"صيفط الرابط لصحابك، وكل واحد يدخل بحساب Google ديالو.":"باش يحفظو صحابك التقدّم ديالهم، عطيهم الرابط وصلاحية Contributor من Share.")+'</span></li></ul></div></div>';
+}
+
+/* ---------- GRAMMAR ---------- */
+function vGrammar(){
+ var p=P(),ls=LESSONS[U.lang];
+ if(U.lesson!=null){var l=ls[U.lesson],done=!!p.lessons[U.lesson];
+  return'<div class="lview"><button class="back" data-act="lessons">'+ic("right")+'كاع الدروس</button><span class="tag" style="align-self:flex-start">الدرس '+(U.lesson+1)+' من '+ls.length+'</span><h1>'+lessonWord(l.t.split(" — ")[0],"")+'<br><span class="muted" style="font-size:1.1rem;font-weight:600">'+esc(l.t.split(" — ")[1]||"")+'</span></h1><p class="d">'+esc(l.d)+'</p>'+
+   '<div class="card ltable">'+l.r.map(function(r){return'<div><span class="r">'+lessonWord(r[0],r[2])+(r[2]?gtag({g:r[2]}):"")+'</span><span class="r"><span class="muted">'+esc(r[1])+'</span><button data-act="saytxt" data-t="'+esc(r[0])+'" aria-label="سمع">'+ic("spk")+'</button></span></div>'}).join("")+'</div>'+
+   '<div class="qfoot">'+(U.lesson>0?'<button class="btn" data-act="lesson" data-i="'+(U.lesson-1)+'">السابق</button>':"")+'<button class="btn '+(done?"done":"pri")+'" data-act="lessondone"'+(done?" disabled":"")+'>'+(done?"فهمتو ✓":"فهمت  +20 XP")+'</button>'+(U.lesson<ls.length-1?'<button class="btn" data-act="lesson" data-i="'+(U.lesson+1)+'">التالي</button>':"")+'</div></div>';
+ }
+ return'<div class="view-head"><h1>القواعد</h1></div><p class="muted" style="margin:-6px 0 16px">دروس قصيرة على الأساسيات ديال '+LANG[U.lang].name+'.</p><div class="lessons">'+ls.map(function(l,i){var dn=!!p.lessons[i];
+  return'<button class="card lesson'+(dn?" done":"")+'" data-act="lesson" data-i="'+i+'"><span class="n num">'+(dn?ic("check"):i+1)+'</span><span class="t"><b>'+lessonWord(l.t.split(" — ")[0],"")+'</b><small>'+esc(l.t.split(" — ")[1]||"")+'</small></span>'+ic("left")+'</button>'}).join("")+'</div>';
+}
+
+/* =========================================================
+   7. EVENTS
+   ========================================================= */
+var ACT={
+ pick:function(t){enterLang(t.dataset.lang)},
+ switch:function(){showWelcome()},
+ nav:function(t){go(t.dataset.v)},
+ continue:function(){var p=P(),w=words(),i=-1;for(var k=0;k<w.length;k++)if(!p.learned[w[k].id]){i=k;break}
+  if(i<0){U.qmode="a";go("quiz");return}U.cefr=ALL;U.cat=ALL;U.q="";U.wmode="cards";U.idx=i;U.flipped=false;go("words")},
+ qgo:function(t){Q=null;U.qmode=t.dataset.m;go("quiz")},
+ wmode:function(t){U.wmode=t.dataset.m;renderView()},
+ cat:function(t){U.cat=t.dataset.c;U.idx=0;U.flipped=false;renderView()},
+ clearq:function(){U.q="";U.idx=0;renderView()},
+ flip:function(){U.flipped=!U.flipped;U.flipAnim=true;$("wbody").innerHTML=wBody();U.flipAnim=false},
+ next:function(){var n=deck().length;U.idx=(U.idx+1)%n;U.flipped=false;rerenderWords()},
+ prev:function(){var n=deck().length;U.idx=(U.idx-1+n)%n;U.flipped=false;rerenderWords()},
+ say:function(){var e=deck()[U.idx];if(e)speak(e.w)},
+ sayex:function(){var e=deck()[U.idx];if(e)speak(plainEx(e),.8)},
+ sayid:function(t){var e=byId(t.dataset.id);if(e)speak(e.w)},
+ saytxt:function(t){speak(t.dataset.t)},
+ learn:function(){var e=deck()[U.idx];if(e&&learn(e.id)){toast("+10 XP");rerenderWords();refreshPills()}},
+ open:function(t){var d=deck(),id=t.dataset.id;for(var i=0;i<d.length;i++)if(d[i].id===id){U.idx=i;break}U.wmode="cards";U.flipped=false;renderView();window.scrollTo(0,0)},
+ qmode:function(t){U.qmode=t.dataset.m;renderView()},
+ account:function(){go("account")},
+ signin:function(){if(!window.LINGO_AUTH){toast("الدخول مازال ما مفعّلش: خاص صاحب الموقع يحط الإعدادات ديال Firebase فـ config.js");return}window.LINGO_AUTH.signIn().catch(function(e){toast(e&&e.code==="auth/unauthorized-domain"?"خاص تزيد هاد الدومين فـ Firebase (Authorized domains)":"ما تمّش الدخول، عاود جرّب")})},
+ signout:function(){if(window.LINGO_AUTH)window.LINGO_AUTH.signOut()},
+ cefr:function(t){U.cefr=t.dataset.l;U.cat=ALL;U.idx=0;U.flipped=false;renderView()},
+ qcefr:function(t){U.qcefr=t.dataset.l;U.qcat=ALL;renderView()},
+ golvl:function(t){U.cefr=t.dataset.l;U.cat=ALL;U.q="";U.wmode="cards";U.flipped=false;var p=P(),d=deck();U.idx=0;for(var i=0;i<d.length;i++)if(!p.learned[d[i].id]){U.idx=i;break}go("words")},
+ qlvl:function(t){U.qlvl=t.dataset.l;renderView()},
+ qstart:function(){startQuiz()},
+ qopt:function(t){var it=Q.items[Q.i];if(it.given!=null)return;var k=+t.dataset.k,o=it.opts[k],key=Q.mode==="b"?"w":"da";grade(o[key]===it.e[key],it.e,k)},
+ qcheck:function(){checkWrite(false)},
+ qskip:function(){checkWrite(true)},
+ qreplay:function(){speak(Q.items[Q.i].e.w)},
+ qnext:function(){if(Q.i+1>=Q.items.length){finishQuiz();return}Q.i++;renderView();if(Q.mode==="c")setTimeout(function(){speak(Q.items[Q.i].e.w)},250)},
+ qquit:function(){Q=null;renderView(true)},
+ qagain:function(){var m=Q.mode;Q=null;startQuiz(m)},
+ qhome:function(){Q=null;renderView(true)},
+ calprev:function(){U.cal.m--;if(U.cal.m<0){U.cal.m=11;U.cal.y--}renderView()},
+ calnext:function(){U.cal.m++;if(U.cal.m>11){U.cal.m=0;U.cal.y++}renderView()},
+ resetask:function(){U.resetAsk=true;renderView()},
+ resetno:function(){U.resetAsk=false;renderView()},
+ resetyes:function(){ST[U.lang]=blank();U.resetAsk=false;Store.save();renderView();toast("تمسح التقدّم ديال "+LANG[U.lang].name)},
+ lessons:function(){U.lesson=null;renderView(true)},
+ lesson:function(t){U.lesson=+t.dataset.i;U.view="grammar";renderView(true);window.scrollTo(0,0)},
+ lessondone:function(){var p=P();if(p.lessons[U.lesson])return;p.lessons[U.lesson]=1;addXP(20);Store.save();toast("+20 XP");renderView()}
+};
+document.addEventListener("click",function(ev){var t=ev.target.closest("[data-act]");if(!t||t.disabled)return;var f=ACT[t.dataset.act];if(f){ev.preventDefault();f(t,ev)}});
+document.addEventListener("input",function(ev){if(ev.target.id==="q"){U.q=ev.target.value;U.idx=0;U.flipped=false;rerenderWords()}});
+document.addEventListener("change",function(ev){if(ev.target.id==="qcat")U.qcat=ev.target.value});
+document.addEventListener("submit",function(ev){
+ if(ev.target.id!=="nickf")return;ev.preventDefault();
+ var v=$("nick").value.trim().slice(0,16);if(!v){toast("كتب سميتك أولا");return}
+ ST.nick=v;Store.save();Cloud.score();toast("تسجّلات سميتك: "+v);refreshAvatar();
+});
+document.addEventListener("keydown",function(ev){
+ if(ev.target.id==="wans"&&ev.key==="Enter"){ev.preventDefault();if(Q&&Q.items[Q.i].given!=null)ACT.qnext();else checkWrite(false);return}
+ if(U.view==="words"&&U.wmode==="cards"&&ev.target.tagName!=="INPUT"&&U.lang){
+  if(ev.key==="ArrowLeft"){ACT.next()}else if(ev.key==="ArrowRight"){ACT.prev()}
+ }
+});
+
+/* =========================================================
+   8. BOOT
+   ========================================================= */
+Store.load();
+showWelcome();
+Cloud.init();
+})();
+</script>
+
+</body>
+</html>

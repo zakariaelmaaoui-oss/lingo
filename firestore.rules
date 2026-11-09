@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // الترتيب: كل واحد داخل كيشوف الترتيب، وكيكتب غير النقط ديالو
+    match /scores/{uid} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == uid;
+    }
+    // التقدّم ديال كل واحد: خاص بيه بوحدو
+    match /data/users/{uid}/{doc=**} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}
