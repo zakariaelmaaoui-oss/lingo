@@ -4,7 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>html,body{margin:0;height:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
-<title>تعلّم الفرنسية والألمانية</title>
+<title>طلاقة — تعلّم الفرنسية والألمانية بالعربية</title>
+<meta name="description" content="طلاقة: تعلّم الفرنسية والألمانية بالعربية، من A1 حتى B2، بالكلمات والقواعد والاختبارات والامتحانات.">
+<meta name="theme-color" content="#6E74F5">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235B7BFA'/%3E%3Cstop offset='1' stop-color='%238C6CF0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='18' fill='url(%23g)'/%3E%3Cpath d='M17 18h30a5 5 0 0 1 5 5v15a5 5 0 0 1-5 5H31l-9 7v-7h-5a5 5 0 0 1-5-5V23a5 5 0 0 1 5-5z' fill='none' stroke='%23fff' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M32 23.5l1.9 4.6 4.6 1.9-4.6 1.9L32 36.5l-1.9-4.6-4.6-1.9 4.6-1.9z' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -85,7 +88,7 @@ mark.g-m{color:var(--gm)}mark.g-f{color:var(--gf)}mark.g-n{color:var(--gn)}
 .nav{position:fixed;inset:auto 0 0 0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);
  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
 .nav-brand{display:none}
-.nav-items{display:grid;grid-template-columns:repeat(5,1fr);max-width:560px;margin:0 auto}
+.nav-items{display:grid;grid-template-columns:repeat(6,1fr);max-width:560px;margin:0 auto}
 .nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:12px;font-size:.72rem;font-weight:600;color:var(--faint);transition:color .2s}
 .nav-btn .ico{width:22px;height:22px}
 .nav-btn[aria-current="page"]{color:var(--blue)}
@@ -283,6 +286,52 @@ mark.g-m{color:var(--gm)}mark.g-f{color:var(--gf)}mark.g-n{color:var(--gn)}
 .mist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .mist li{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:var(--r-sm);background:var(--panel)}
 .mist small{color:var(--bad);font-size:.82rem;direction:ltr}
+
+/* ---------- brand + exam ---------- */
+.logo{width:20px;height:20px;flex:none}
+.brand .dot .logo{width:21px;height:21px}
+.bname{display:flex;flex-direction:column;line-height:1.15;font-size:1.15rem;font-weight:800;letter-spacing:-.01em}
+.bname small{font-size:.72rem;font-weight:600;color:var(--muted)}
+#navflag{width:34px;height:34px;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#fff}
+.nav-brand #navname{font-size:1.15rem;font-weight:800}
+.xhome{display:flex;flex-direction:column;gap:16px;max-width:880px}
+.xhero{padding:20px;display:flex;gap:16px;align-items:flex-start;background:linear-gradient(135deg,#F4F6FF,#F6F1FF);border-color:#E2E3FA}
+.xhero h2{font-size:1.15rem;font-weight:700;margin-bottom:8px}
+.xrules{margin:0;padding:0 18px 0 0;display:grid;gap:4px;font-size:.9rem;color:#3B4064}
+.xnote{font-size:.82rem;margin-top:8px}
+.xgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (min-width:900px){.xgrid{grid-template-columns:repeat(4,1fr)}}
+.xlv{padding:16px;display:flex;flex-direction:column;gap:6px}
+.xlv.won{border-color:#CFE9DC;background:linear-gradient(180deg,#F3FBF7,#fff)}
+.xlv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.xbadge{font-weight:800;direction:ltr;font-size:1rem;color:#fff;background:var(--grad);border-radius:12px;padding:6px 10px}
+.xmedal{display:flex;align-items:center;gap:4px;font-size:.78rem;font-weight:700;color:var(--ok)}
+.xmedal .ico{width:16px;height:16px}
+.xlv h3{font-size:1rem;font-weight:700}
+.xlv p{font-size:.82rem}
+.xbest{color:var(--muted);margin-bottom:6px;flex:1}
+.xlv .btn{padding:10px 12px;font-size:.9rem}
+.xclock{display:flex;align-items:center;gap:4px;font-weight:800;padding:5px 10px;border-radius:99px;background:var(--soft);color:var(--blue);font-size:.9rem}
+.xclock.low{background:var(--bad-soft);color:var(--bad);animation:bump 1s ease infinite}
+.xcount{font-size:.85rem;margin-top:-8px}
+.xtag{align-self:center;margin-bottom:6px}
+.xtag.sm{font-size:.7rem;padding:2px 8px;margin:0}
+.xsent{font-size:1.25rem;font-weight:600;line-height:1.5}
+.xsent .gap{color:var(--violet);font-weight:800;letter-spacing:.05em}
+.opt.pick{border-color:var(--violet);background:var(--vsoft)}
+.xwrong{display:flex;flex-direction:column;align-items:flex-end;gap:2px;text-align:end;font-size:.88rem}
+.xwrong s{color:var(--bad);text-decoration-thickness:1.5px}
+.xwrong b{color:var(--ok)}
+.xwin{background:linear-gradient(180deg,#F3FBF7,#fff)}
+.xcerts{display:grid;gap:12px}
+@media (min-width:720px){.xcerts{grid-template-columns:1fr 1fr}}
+.cert{padding:3px;border-radius:22px;background:var(--grad);box-shadow:var(--shadow-lg)}
+.cert-in{background:#fff;border-radius:19px;padding:22px 18px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px}
+.cert-logo{width:44px;height:44px;border-radius:14px;background:var(--grad);color:#fff;display:grid;place-items:center;margin-bottom:6px}
+.cert-logo .logo{width:24px;height:24px}
+.cert-k{font-size:.78rem;font-weight:700;color:var(--violet);letter-spacing:.04em}
+.cert h3{font-size:1.4rem;font-weight:800}
+.cert-n{font-weight:700;font-size:1.05rem}
 
 /* ---------- progress ---------- */
 .prog{display:grid;gap:16px}
@@ -2359,7 +2408,7 @@ function curLevel(lang){for(var i=0;i<CEFR.length;i++){var s=lvlStats(lang,CEFR[
    { v, nick, fr:{learned,stats,xp,days,quizzes,lessons}, de:{…} }
    ========================================================= */
 var KEY="lingo:v2";
-function blank(){return{learned:{},mastered:{},stats:{},xp:0,days:{},quizzes:[],lessons:{}}}
+function blank(){return{learned:{},mastered:{},stats:{},xp:0,days:{},quizzes:[],lessons:{},exams:{}}}
 function fix(p){p=p&&typeof p==="object"?p:{};var hadM=!!(p.mastered&&typeof p.mastered==="object"&&!Array.isArray(p.mastered));var b=blank();Object.keys(b).forEach(function(k){if(p[k]==null||typeof p[k]!==typeof b[k]||Array.isArray(p[k])!==Array.isArray(b[k]))p[k]=b[k]});
  /* First load after this feature: rebuild mastery from real quiz history only (a word answered correctly at least once). Nothing else is assumed. */
  if(!hadM)Object.keys(p.stats).forEach(function(k){var st=p.stats[k];if(st&&st[0]>0)p.mastered[k]=1});
@@ -2403,6 +2452,8 @@ function mergeLang(a,b){
  [a,b].forEach(function(p){Object.keys(p.days).forEach(function(k){var d=p.days[k],c=o.days[k]||{n:0,xp:0,q:0};o.days[k]={n:Math.max(c.n,d.n||0),xp:Math.max(c.xp,d.xp||0),q:Math.max(c.q,d.q||0)}})});
  var seen={};o.quizzes=a.quizzes.concat(b.quizzes).filter(function(q){if(!q||seen[q.t])return false;seen[q.t]=1;return true}).sort(function(x,y){return x.t-y.t}).slice(-50);
  [a,b].forEach(function(p){Object.keys(p.lessons).forEach(function(k){o.lessons[k]=1})});
+ [a,b].forEach(function(p){Object.keys(p.exams).forEach(function(k){var r=p.exams[k]||{},c=o.exams[k]||{best:0,tries:0,pass:0,last:0};
+  o.exams[k]={best:Math.max(c.best,r.best||0),tries:Math.max(c.tries,r.tries||0),pass:c.pass&&r.pass?Math.min(c.pass,r.pass):(c.pass||r.pass||0),last:Math.max(c.last,r.last||0)}})});
  return o;
 }
 
@@ -2524,8 +2575,12 @@ var IC={
  swap:'<path d="M7 7h11l-3-3"/><path d="M17 17H6l3 3"/>',
  sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
  cards:'<rect x="4" y="6" width="12" height="14" rx="2"/><path d="M8 4h10a2 2 0 0 1 2 2v12"/>',
+ award:'<circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 21l5-2.6 5 2.6-1.5-7.5"/>',
  list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r=".8"/><circle cx="4.5" cy="12" r=".8"/><circle cx="4.5" cy="18" r=".8"/>'
 };
+/* Logo: a speech bubble with a spark (speaking fluently). */
+var LOGO='<svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h12a2.5 2.5 0 0 1 2.5 2.5v6.5a2.5 2.5 0 0 1-2.5 2.5h-6l-4 3.2v-3.2H6A2.5 2.5 0 0 1 3.5 14V7.5A2.5 2.5 0 0 1 6 5z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M12 7.6l.85 2.05 2.05.85-2.05.85L12 13.4l-.85-2.05-2.05-.85 2.05-.85z" fill="currentColor"/></svg>';
+var BRAND="طلاقة";
 function ic(n,cls){return'<svg class="ico'+(cls?" "+cls:"")+'" viewBox="0 0 24 24" aria-hidden="true">'+IC[n]+'</svg>'}
 
 function wordHTML(e){
@@ -2567,16 +2622,17 @@ function renderWelcome(){
    '<ul class="feat">'+feats.map(function(f){return'<li>'+ic("check")+f+'</li>'}).join("")+'</ul>'+
    '<div class="lang-foot">'+foot+'<span class="go">'+ic("left")+'</span></div></button>';
  }).join("");
- $("welcome").innerHTML='<div class="wel"><div class="wel-top"><div class="brand"><span class="dot">'+ic("sparkle")+'</span>تعلّم بالعربية</div>'+accChip()+'</div>'+
+ $("welcome").innerHTML='<div class="wel"><div class="wel-top"><div class="brand"><span class="dot">'+LOGO+'</span><span class="bname">'+BRAND+'<small>Talaqa · تعلّم بالعربية</small></span></div>'+accChip()+'</div>'+
   '<div class="wel-hero"><h1>شنو بغيتي تتعلّم اليوم؟</h1><p>اختار اللغة. كل لغة عندها الكلمات، السلسلة، و XP ديالها بوحدها، وتقدر تبدّل بيناتهم فأي وقت بلا ما يضيع ليك والو.</p></div>'+
   '<div class="langs">'+cards+'</div><p class="wel-note">'+DB.fr.length+' كلمة فالفرنسية و '+DB.de.length+' فالألمانية، مقسمين من A1 حتى B2.</p></div>';
 }
 function showWelcome(){
  if(Q&&!Q.done)Q=null;
+ xStop();X=null;
  renderWelcome();$("app").hidden=true;var w=$("welcome");w.hidden=false;w.classList.remove("screen");void w.offsetWidth;w.classList.add("screen");window.scrollTo(0,0);
 }
 function enterLang(l){
- U.lang=l;U.pin=null;U.view="home";U.cefr=ALL;U.qcefr=ALL;U.cat=ALL;U.q="";U.idx=0;U.flipped=false;U.qcat=ALL;U.cal=null;U.lesson=null;U.resetAsk=false;Q=null;
+ U.lang=l;U.pin=null;U.view="home";U.cefr=ALL;U.qcefr=ALL;U.cat=ALL;U.q="";U.idx=0;U.flipped=false;U.qcat=ALL;U.cal=null;U.lesson=null;U.resetAsk=false;Q=null;xStop();X=null;
  try{localStorage.setItem("lingo:last",l)}catch(e){}
  $("welcome").hidden=true;var a=$("app");a.hidden=false;a.classList.remove("screen");void a.offsetWidth;a.classList.add("screen");
  renderShell();renderView();
@@ -2586,11 +2642,11 @@ function enterLang(l){
 /* =========================================================
    6. APP SHELL
    ========================================================= */
-var NAV=[["home","home","الرئيسية"],["words","book","الكلمات"],["quiz","target","الاختبار"],["progress","chart","التقدّم"],["friends","users","الأصحاب"]];
+var NAV=[["home","home","الرئيسية"],["words","book","الكلمات"],["quiz","target","الاختبار"],["exam","award","الامتحان"],["progress","chart","التقدّم"],["friends","users","الأصحاب"]];
 function renderShell(){
  var L=LANG[U.lang];
- $("navflag").outerHTML='<span class="flag sm '+U.lang+'" id="navflag"></span>';
- $("navname").textContent=L.name;
+ $("navflag").innerHTML=LOGO;
+ $("navname").textContent=BRAND;
  $("navitems").innerHTML=NAV.map(function(n){return'<button class="nav-btn" data-act="nav" data-v="'+n[0]+'"'+(navKey()===n[0]?' aria-current="page"':"")+'>'+ic(n[1])+'<span>'+n[2]+'</span></button>'}).join("");
  $("switchbtn").innerHTML='<span class="flag sm '+U.lang+'"></span>'+L.name+ic("swap");
  $("switchbtn").setAttribute("aria-label","بدّل اللغة");
@@ -2605,17 +2661,18 @@ function accChip(){
 }
 function refreshAvatar(){var b=$("avbtn");if(!b)return;b.innerHTML=(initial()||ic("users"))+'<i class="st '+(Acc.status==="signed"&&Acc.sync==="ok"?"ok":Acc.status==="signed"?"warn":"off")+'"></i>'}
 function refreshPills(){refreshAvatar();var s=streak(U.lang);$("pstreak").innerHTML='🔥 <span class="num">'+s.cur+'</span>';$("pxp").innerHTML='<span class="num">'+P().xp+'</span> XP'}
-function refresh(){if(!U.lang||!$("welcome").hidden){renderWelcome();return}refreshPills();if(!(U.view==="quiz"&&Q))renderView()}
+function refresh(){if(!U.lang||!$("welcome").hidden){renderWelcome();return}refreshPills();if(!(U.view==="quiz"&&Q)&&!(U.view==="exam"&&X&&!X.done))renderView()}
 function go(v){U.view=v;U.resetAsk=false;if(v!=="grammar")U.lesson=null;
  Array.prototype.forEach.call(document.querySelectorAll(".nav-btn"),function(b){if(b.dataset.v===navKey())b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
  renderView(true);window.scrollTo(0,0)}
 function renderView(anim){
  var v=$("view"),h="";
  if(U.view==="home")h=vHome();else if(U.view==="words")h=vWords();else if(U.view==="quiz")h=vQuiz();
- else if(U.view==="progress")h=vProgress();else if(U.view==="account")h=vAccount();else if(U.view==="friends")h=vFriends();else if(U.view==="grammar")h=vGrammar();
+ else if(U.view==="progress")h=vProgress();else if(U.view==="account")h=vAccount();else if(U.view==="friends")h=vFriends();else if(U.view==="grammar")h=vGrammar();else if(U.view==="exam")h=vExam();
  v.innerHTML=h;refreshPills();
  if(anim){v.classList.remove("enter");void v.offsetWidth;v.classList.add("enter")}
  if(U.view==="quiz"&&Q&&!Q.done){var inp=$("wans");if(inp)inp.focus()}
+ if(U.view==="exam"&&X&&!X.done){var xi=$("xans");if(xi)xi.focus()}
  if(U.view==="friends"&&Cloud.db)Cloud.board(U.lang);
  requestAnimationFrame(function(){Array.prototype.forEach.call(v.querySelectorAll("[data-w]"),function(el){el.style.width=el.dataset.w})});
 }
@@ -2805,6 +2862,154 @@ function vResults(){
   '<div class="qfoot"><button class="btn" data-act="qhome">رجوع</button><button class="btn pri" data-act="qagain">عاود الاختبار</button></div></div>';
 }
 
+/* ---------- EXAM ----------
+   A real exam per level: 20 mixed questions, one timer for the whole exam, no feedback until the end.
+   80% passes and gives a certificate. Results live in ST[lang].exams[level] = {best, tries, pass, last}. */
+var EXAM={n:20,min:8,pass:80,xp:5,bonus:100};
+var XT={a:"المعنى",b:"الترجمة",g:"الجنس",f:"الجملة",d:"الكتابة",c:"الاستماع"};
+var X=null,XTimer=null;
+function xStop(){if(XTimer){clearInterval(XTimer);XTimer=null}}
+function blankEx(e){var m=e.ex.match(/\*(.+?)\*/);return m?m[1]:null}
+function baseWord(e){var m=e.g?e.w.match(LANG[U.lang].art):null;return m?e.w.slice(m[1].length):e.w}
+function xOk(e,t){
+ if(t==="g")return!!e.g;
+ if(t==="f")return!!(e.g&&blankEx(e));
+ if(t==="d")return writable(e);
+ if(t==="c")return hasTTS;
+ return true;
+}
+function xOpts(e,lvl,key,get){
+ var all=words(),same=shuffle(all.filter(function(x){return x.lvl===lvl&&x.cat===e.cat})),lv=shuffle(all.filter(function(x){return x.lvl===lvl}));
+ var ans=get(e),seen={},out=[];seen[ans]=1;
+ same.concat(lv,shuffle(all)).forEach(function(x){var v=get(x);if(out.length<3&&v&&!seen[v]&&(key!=="f"||x.g)){seen[v]=1;out.push(v)}});
+ return shuffle(out.concat([ans]));
+}
+function xBuild(lvl){
+ var p=P(),pool=words().filter(function(e){return e.lvl===lvl});
+ var known=shuffle(pool.filter(function(e){return p.learned[e.id]})),rest=shuffle(pool.filter(function(e){return!p.learned[e.id]}));
+ var picked=known.concat(rest).slice(0,EXAM.n);
+ /* Each question type appears about equally often, as far as each word allows. */
+ var order=["d","f","g","c","b","a"],used={a:0,b:0,g:0,f:0,d:0,c:0};
+ return shuffle(picked).map(function(e){
+  var t=order.filter(function(k){return xOk(e,k)}).sort(function(x,y){return used[x]-used[y]})[0];used[t]++;
+  var it={e:e,t:t};
+  if(t==="a"||t==="c")it.opts=xOpts(e,lvl,"da",function(x){return x.da});
+  else if(t==="b")it.opts=xOpts(e,lvl,"w",function(x){return x.w});
+  else if(t==="f")it.opts=xOpts(e,lvl,"f",function(x){return x.g?blankEx(x):null});
+  else if(t==="g")it.opts=LANG[U.lang].arts.map(function(a){return a[0]});
+  return it;
+ });
+}
+function xAnswer(it){
+ var e=it.e;
+ if(it.t==="a"||it.t==="c")return e.da;
+ if(it.t==="b")return e.w;
+ if(it.t==="f")return blankEx(e);
+ if(it.t==="g")return e.g;
+ return e.w;
+}
+function xLabel(it,v){
+ if(it.t==="g"){var a=LANG[U.lang].arts.filter(function(x){return x[0]===v})[0];return a?a[1]+" · "+a[2]:v}
+ return v;
+}
+function startExam(lvl){
+ var pool=words().filter(function(e){return e.lvl===lvl});
+ if(pool.length<EXAM.n){toast("ما كافياش الكلمات فهاد المستوى");return}
+ Q=null;xStop();
+ X={lvl:lvl,items:xBuild(lvl),i:0,end:Date.now()+EXAM.min*60000,done:false,startXP:P().xp};
+ U.view="exam";renderView(true);window.scrollTo(0,0);
+ XTimer=setInterval(xTick,500);xTick();
+ xSpeakIfListen();
+}
+function xSpeakIfListen(){var it=X&&!X.done&&X.items[X.i];if(it&&it.t==="c")setTimeout(function(){speak(it.e.w)},300)}
+function xLeft(){return Math.max(0,Math.ceil((X.end-Date.now())/1000))}
+function fmtT(s){var m=Math.floor(s/60),r=s%60;return(m<10?"0":"")+m+":"+(r<10?"0":"")+r}
+function xTick(){
+ if(!X||X.done){xStop();return}
+ var s=xLeft(),el=$("xtime");
+ if(el){el.textContent=fmtT(s);el.parentNode.classList.toggle("low",s<=60)}
+ if(s<=0){toast("سالا الوقت ⏱");finishExam()}
+}
+function xRecord(v){
+ var it=X.items[X.i];if(!it||it.given!=null)return;
+ var ans=xAnswer(it);
+ it.given=v;
+ it.ok=it.t==="d"?(v!==""&&norm(v,"hard")===norm(ans,"hard")):v===ans;
+ var p=P(),s=p.stats[it.e.id]||[0,0];s[it.ok?0:1]++;p.stats[it.e.id]=s;day(p).q++;
+ if(it.ok)master(it.e.id);
+ Store.save(true);
+ if(X.i+1>=X.items.length){finishExam();return}
+ X.i++;renderView();xSpeakIfListen();
+}
+function finishExam(){
+ if(!X||X.done)return;
+ xStop();X.done=true;
+ X.items.forEach(function(it){if(it.given==null){it.given="";it.ok=false}});
+ var p=P(),n=X.items.length,score=X.items.filter(function(it){return it.ok}).length,pc=Math.round(score/n*100);
+ var r=p.exams[X.lvl]||{best:0,tries:0,pass:0,last:0},first=pc>=EXAM.pass&&!r.pass;
+ r.tries++;r.best=Math.max(r.best,pc);r.last=Date.now();if(pc>=EXAM.pass&&!r.pass)r.pass=Date.now();
+ p.exams[X.lvl]=r;
+ X.score=score;X.pc=pc;X.first=first;X.time=Math.max(0,EXAM.min*60-xLeft());
+ addXP(score*EXAM.xp+(first?EXAM.bonus:0));
+ Store.save();renderView(true);window.scrollTo(0,0);
+}
+function vExam(){
+ if(X&&X.done)return vExamResult();
+ if(X)return vExamPlay();
+ var p=P(),L=LANG[U.lang];
+ var cards=CEFR.map(function(l){
+  var r=p.exams[l]||{},ls=lvlStats(U.lang,l),ok=!!r.pass;
+  return'<div class="card xlv'+(ok?" won":"")+'"><div class="xlv-top"><span class="xbadge">'+l+'</span>'+(ok?'<span class="xmedal">'+ic("award")+'ناجح</span>':"")+'</div>'+
+   '<h3>امتحان '+l+'</h3><p class="muted">حفظتي <span class="num">'+ls.k+' / '+ls.n+'</span> كلمة</p>'+
+   '<p class="xbest">'+(r.tries?'أحسن نتيجة: <b class="num">'+r.best+'%</b> · <span class="num">'+r.tries+'</span> '+(r.tries===1?"محاولة":"محاولات"):"مازال ما دوزتيهش")+'</p>'+
+   '<button class="btn '+(ok?"":"pri")+' block" data-act="xstart" data-l="'+l+'">'+(ok?"عاود الامتحان":r.tries?"عاود جرّب":"ابدا الامتحان")+'</button></div>';
+ }).join("");
+ var certs=CEFR.filter(function(l){return p.exams[l]&&p.exams[l].pass});
+ return'<div class="xhome"><div class="view-head"><h1>الامتحانات</h1></div>'+
+  '<div class="card xhero"><span class="tile-ic ic-v">'+ic("award")+'</span><div><h2>امتحن راسك بحال فالامتحان الحقيقي</h2>'+
+  '<ul class="xrules"><li><b class="num">'+EXAM.n+'</b> سؤال من 6 أنواع: المعنى، الترجمة، الجنس، الجملة، الكتابة والاستماع</li>'+
+  '<li><b class="num">'+EXAM.min+'</b> دقايق للامتحان كامل</li><li>ما كاينش التصحيح حتى للآخر، وما تقدرش ترجع للسؤال اللي فات</li>'+
+  '<li>فالكتابة خاص الأداة والأكسان يكونو صحاح</li><li>خاصك <b class="num">'+EXAM.pass+'%</b> باش تنجح وتاخد الشهادة (+'+EXAM.bonus+' XP)</li></ul>'+
+  '<p class="muted xnote">الأسئلة كتجي أولا من الكلمات اللي حفظتي فهاد المستوى.</p></div></div>'+
+  '<div class="xgrid">'+cards+'</div>'+
+  (certs.length?'<p class="sec">الشهادات ديالك</p><div class="xcerts">'+certs.map(function(l){return certHTML(l,p.exams[l])}).join("")+'</div>':"")+
+ '</div>';
+}
+function certHTML(l,r){
+ var d=new Date(r.pass),nm=ST.nick||Acc.name||"";
+ return'<div class="cert"><div class="cert-in"><span class="cert-logo">'+LOGO+'</span><p class="cert-k">شهادة طلاقة</p><h3><span class="fw">'+esc(LANG[U.lang].native)+'</span> · <span class="num">'+l+'</span></h3>'+
+  (nm?'<p class="cert-n">'+esc(nm)+'</p>':"")+'<p class="muted"><span class="num">'+d.getDate()+'</span> '+MONTHS[d.getMonth()]+' <span class="num">'+d.getFullYear()+'</span> · أحسن نتيجة <b class="num">'+r.best+'%</b></p></div></div>';
+}
+function vExamPlay(){
+ var it=X.items[X.i],e=it.e,n=X.items.length,L=LANG[U.lang],s=xLeft(),prompt="",body="";
+ var tag='<span class="tag xtag">'+XT[it.t]+'</span>';
+ if(it.t==="a")prompt='<span class="big">'+wordHTML(e)+'</span><span class="ask">شنو معناها بالعربية؟</span>';
+ else if(it.t==="b")prompt='<span class="da">'+esc(e.da)+'</span><span class="ask">شنو هي بـ'+L.name+'؟</span>';
+ else if(it.t==="g")prompt='<span class="big"><span class="fw">'+esc(baseWord(e))+'</span></span><span class="ask">شنو الجنس ديال هاد الكلمة؟</span>';
+ else if(it.t==="f")prompt='<span class="xsent fw">'+esc(e.ex).replace(/\*(.+?)\*/,'<span class="gap">_____</span>')+'</span><span class="ask">'+esc(e.exd)+'</span><span class="ask">كمّل الجملة بالكلمة الصحيحة</span>';
+ else if(it.t==="c")prompt='<button class="listen" data-act="xreplay" aria-label="سمع مرة أخرى">'+ic("spk")+'</button><span class="ask" style="margin-top:18px">شنو سمعتي؟ اضغط باش تعاود تسمع</span>';
+ else prompt='<span class="da">'+esc(e.da)+'</span><span class="ask">كتب الكلمة بـ'+L.name+(e.g?" مع الأداة":"")+'</span>';
+ if(it.t==="d")body='<div class="wbox"><input id="xans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="كتب هنا…" aria-label="الجواب"><button class="btn pri" data-act="xnext">التالي</button></div><button class="link" data-act="xskip" style="align-self:center">ما عرفتش</button>';
+ else body='<div class="opts'+(it.opts.length===3?" c3":"")+'">'+it.opts.map(function(o,k){
+  var lbl=it.t==="b"?wordHTML({w:o,g:(words().filter(function(x){return x.w===o})[0]||{}).g||""}):it.t==="f"?'<span class="fw">'+esc(o)+'</span>':esc(xLabel(it,o));
+  return'<button class="opt" data-act="xopt" data-k="'+k+'">'+lbl+'</button>'}).join("")+'</div>';
+ return'<div class="play"><div class="qtop"><button class="x" data-act="xquit" aria-label="خرج من الامتحان">'+ic("x")+'</button><div class="bar"><i data-w="'+(X.i/n*100)+'%"></i></div>'+
+  '<span class="xclock'+(s<=60?" low":"")+'">⏱ <span class="num" id="xtime">'+fmtT(s)+'</span></span></div>'+
+  '<p class="muted xcount">امتحان <span class="num">'+X.lvl+'</span> · السؤال <span class="num">'+(X.i+1)+' / '+n+'</span></p>'+
+  '<div class="card qcard">'+tag+prompt+'</div>'+body+'</div>';
+}
+function vExamResult(){
+ var n=X.items.length,pc=X.pc,ok=pc>=EXAM.pass,miss=X.items.filter(function(i){return!i.ok}),gained=P().xp-X.startXP,r=P().exams[X.lvl];
+ var title=ok?(pc===100?"كاملة! نجحتي بلا حتى غلطة 🏆":"مبروك! نجحتي فالامتحان 🎉"):pc>=60?"قريب! خاصك "+EXAM.pass+"% باش تنجح":"ماشي مشكل، راجع الكلمات وعاود";
+ return'<div class="res"><div class="card res-top'+(ok?" xwin":"")+'"><div class="ring" style="--p:'+pc+'"><div><b class="num">'+pc+'%</b><span>'+X.score+' / '+n+' صحاح</span></div></div><h2>'+title+'</h2>'+
+  '<div class="res-row"><span class="pill xp">+'+gained+' XP</span><span class="pill">⏱ <span class="num">'+fmtT(X.time)+'</span></span><span class="pill">امتحان <span class="num">'+X.lvl+'</span></span></div></div>'+
+  (ok&&r&&r.pass?certHTML(X.lvl,r):"")+
+  (miss.length?'<p class="sec" style="margin:0">الأخطاء ديالك</p><ul class="mist">'+miss.map(function(i){
+   var you=i.given===""?"ما جاوبتيش":xLabel(i,i.given),right=xLabel(i,xAnswer(i));
+   return'<li><span><span class="tag xtag sm">'+XT[i.t]+'</span> '+wordHTML(i.e)+'<br><small class="muted">'+esc(i.e.da)+'</small></span><span class="xwrong"><s>'+esc(you)+'</s><b>'+esc(right)+'</b></span></li>'}).join("")+'</ul>':"")+
+  '<div class="qfoot"><button class="btn" data-act="xhome">رجوع</button><button class="btn pri" data-act="xagain">عاود الامتحان</button></div></div>';
+}
+
 /* ---------- PROGRESS ---------- */
 var MONTHS=["يناير","فبراير","مارس","أبريل","ماي","يونيو","يوليوز","غشت","شتنبر","أكتوبر","نونبر","دجنبر"];
 var WD=["ن","ث","ر","خ","ج","س","ح"];var WDL=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
@@ -2934,6 +3139,14 @@ var ACT={
  resetask:function(){U.resetAsk=true;renderView()},
  resetno:function(){U.resetAsk=false;renderView()},
  resetyes:function(){ST[U.lang]=blank();U.resetAsk=false;Store.save();renderView();toast("تمسح التقدّم ديال "+LANG[U.lang].name)},
+ xstart:function(t){startExam(t.dataset.l)},
+ xopt:function(t){var it=X&&X.items[X.i];if(!it||it.given!=null||X.busy)return;X.busy=true;t.classList.add("pick");setTimeout(function(){if(X)X.busy=false;if(X&&!X.done&&X.items[X.i]===it)xRecord(it.opts[+t.dataset.k])},180)},
+ xnext:function(){var i=$("xans"),v=i?i.value.trim():"";if(!v){toast("كتب شي جواب ولا اضغط «ما عرفتش»");return}xRecord(v)},
+ xskip:function(){xRecord("")},
+ xreplay:function(){if(X)speak(X.items[X.i].e.w)},
+ xquit:function(){xStop();X=null;toast("تلغى الامتحان، ما تحسبش هاد المحاولة");renderView(true)},
+ xhome:function(){X=null;renderView(true)},
+ xagain:function(){startExam(X.lvl)},
  lessons:function(){U.lesson=null;renderView(true)},
  lesson:function(t){U.lesson=+t.dataset.i;U.view="grammar";renderView(true);window.scrollTo(0,0)},
  lessondone:function(){var p=P();if(p.lessons[U.lesson])return;p.lessons[U.lesson]=1;addXP(20);Store.save();toast("+20 XP");renderView()}
@@ -2947,6 +3160,7 @@ document.addEventListener("submit",function(ev){
  ST.nick=v;Store.save();Cloud.score();toast("تسجّلات سميتك: "+v);refreshAvatar();
 });
 document.addEventListener("keydown",function(ev){
+ if(ev.target.id==="xans"&&ev.key==="Enter"){ev.preventDefault();ACT.xnext();return}
  if(ev.target.id==="wans"&&ev.key==="Enter"){ev.preventDefault();if(Q&&Q.items[Q.i].given!=null)ACT.qnext();else checkWrite(false);return}
  if(U.view==="words"&&U.wmode==="cards"&&ev.target.tagName!=="INPUT"&&U.lang){
   if(ev.key==="ArrowLeft"){ACT.next()}else if(ev.key==="ArrowRight"){ACT.prev()}

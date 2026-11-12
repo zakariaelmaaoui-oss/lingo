@@ -1,4 +1,7 @@
-# Lingo — learn French and German in Arabic
+# Talaqa (طلاقة) — learn French and German in Arabic
+
+The site's name is **طلاقة (Talaqa)**; its logo is the `LOGO` SVG in index.html (also inlined as the favicon).
+The repository and storage keys still say `lingo` — keep them, renaming them would lose saved progress.
 
 A static website (no build step, no npm) for learning French and German from A1 to B2.
 It is deployed on Vercel from the `main` branch: https://lingo-two-sand.vercel.app
@@ -35,12 +38,14 @@ explain changes simply, and tell him exactly what to click to publish them.
 
 ## Progress model (do not change the shape without a migration)
 
-Per language (`ST.fr`, `ST.de`): `learned`, `mastered`, `stats`, `xp`, `days`, `quizzes`, `lessons`.
+Per language (`ST.fr`, `ST.de`): `learned`, `mastered`, `stats`, `xp`, `days`, `quizzes`, `lessons`, `exams`.
 
 - `learned`: the user pressed «حفظتها». Learned words are hidden from flashcards and come back only in quizzes.
 - `mastered`: answered correctly in a quiz. Counted once per word; wrong answers never count.
 - Saved in localStorage (`lingo:u:<uid>` when signed in) and in Firestore `data/users/{uid}/lingo`.
 - Leaderboard: Firestore `scores/{uid}` with `name`, `points`, `points_de`, `xp_fr`, `xp_de`.
+- `exams`: one entry per level, `{best, tries, pass, last}`. The exam view («الامتحان») gives 20 mixed questions,
+  8 minutes in total, no feedback until the end; 80% passes and shows a certificate (`EXAM` in index.html).
 - Daily goal: 10 new learned words; the streak grows only on days that reach it.
 - French and German statistics must never be mixed.
 
