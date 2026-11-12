@@ -333,6 +333,11 @@ mark.g-m{color:var(--gm)}mark.g-f{color:var(--gf)}mark.g-n{color:var(--gn)}
 .cert h3{font-size:1.4rem;font-weight:800}
 .cert-n{font-weight:700;font-size:1.05rem}
 
+.qnote{display:flex;align-items:center;gap:8px;margin-top:18px;padding:10px 14px;border-radius:var(--r-sm);background:var(--soft);color:#3B4064;font-size:.88rem}
+.qnote .ico{width:16px;height:16px;color:var(--blue);stroke-width:2.4}
+.xlock{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted);margin-bottom:6px}
+.xlock .ico{width:15px;height:15px}
+
 /* ---------- progress ---------- */
 .prog{display:grid;gap:16px}
 @media (min-width:900px){.prog{grid-template-columns:1fr 1fr;align-items:start}}
@@ -2575,6 +2580,7 @@ var IC={
  swap:'<path d="M7 7h11l-3-3"/><path d="M17 17H6l3 3"/>',
  sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
  cards:'<rect x="4" y="6" width="12" height="14" rx="2"/><path d="M8 4h10a2 2 0 0 1 2 2v12"/>',
+ lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
  award:'<circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 21l5-2.6 5 2.6-1.5-7.5"/>',
  list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r=".8"/><circle cx="4.5" cy="12" r=".8"/><circle cx="4.5" cy="18" r=".8"/>'
 };
@@ -2770,7 +2776,8 @@ function vQuiz(){
   '<p class="sec">الصعوبة</p><div class="seg" role="group">'+Object.keys(LV).map(function(k){return'<button data-act="qlvl" data-l="'+k+'" aria-pressed="'+(U.qlvl===k)+'">'+LV[k].t+'</button>'}).join("")+'</div><p class="lvl-d">'+LV[U.qlvl].d+'</p>'+
   '<p class="sec">المستوى</p><div class="lvrow" role="group" aria-label="المستوى">'+[ALL].concat(CEFR).map(function(l){return'<button class="lvb" data-act="qcefr" data-l="'+l+'" aria-pressed="'+(U.qcefr===l)+'">'+l+'</button>'}).join("")+'</div>'+
   '<p class="sec">الموضوع</p><select class="sel" id="qcat" aria-label="الموضوع">'+cats(U.lang,U.qcefr).map(function(c){return'<option'+(c===U.qcat?" selected":"")+'>'+esc(c)+'</option>'}).join("")+'</select>'+
-  '<div style="margin-top:20px"><button class="btn pri block cta" data-act="qstart">ابدا الاختبار</button></div>'+
+  '<p class="qnote">'+ic("check")+'<span>الاختبار كيكون غير على الكلمات اللي حفظتي: <b class="num">'+words().filter(function(e){return p.learned[e.id]&&(U.qcefr===ALL||e.lvl===U.qcefr)}).length+'</b> كلمة'+(U.qcefr===ALL?"":" فـ <span class=\"num\">"+U.qcefr+"</span>")+'</span></p>'+
+  '<div style="margin-top:14px"><button class="btn pri block cta" data-act="qstart">ابدا الاختبار</button></div>'+
   (hist.length?'<p class="sec">آخر النتائج</p><ul class="hist">'+hist.map(function(h){var d=new Date(h.t);return'<li><span class="tile-ic '+(["ic-b","ic-v","ic-o","ic-g"]["abcd".indexOf(h.m)]||"ic-b")+'" style="width:34px;height:34px;border-radius:10px">'+ic(MODES[h.m]?MODES[h.m].i:"target")+'</span><span>'+esc(modeTitle(h.m))+' · '+(LV[h.l]?LV[h.l].t:"")+'<br><small class="muted">'+d.getDate()+"/"+(d.getMonth()+1)+'</small></span><span class="s num">'+h.s+' / '+h.n+'</span></li>'}).join("")+'</ul>':"")+
  '</div>';
 }
@@ -2780,9 +2787,11 @@ function startQuiz(mode){
  if(mode)U.qmode=mode;
  if(U.qmode==="c"&&!hasTTS){toast("الصوت ما خدامش فهاد المتصفح");return}
  var lv=LV[U.qlvl],all=words();
- var pool=all.filter(function(e){return(U.qcefr===ALL||e.lvl===U.qcefr)&&(U.qcat===ALL||e.cat===U.qcat)});
+ /* Quizzes ask only about words already learned («حفظتها»); other words are used only as wrong options. */
+ var known=P().learned,pool=all.filter(function(e){return known[e.id]&&(U.qcefr===ALL||e.lvl===U.qcefr)&&(U.qcat===ALL||e.cat===U.qcat)});
+ if(!pool.length){toast("مازال ما حفظتي حتى كلمة هنا. سير للكلمات وحفظ شي وحدين أولا");return}
  if(U.qmode==="d")pool=pool.filter(writable);
- if(pool.length<2){toast("ما كافياش الكلمات فهاد الموضوع لهاد النوع ديال الاختبار");return}
+ if(pool.length<2){toast("خاصك تحفظ على الأقل جوج كلمات هنا باش تدوز هاد الاختبار");return}
  var key=U.qmode==="b"?"w":"da";
  var items=sample(pool,Math.min(lv.n,pool.length)).map(function(e){
   if(U.qmode==="d")return{e:e};
@@ -2886,8 +2895,8 @@ function xOpts(e,lvl,key,get){
 }
 function xBuild(lvl){
  var p=P(),pool=words().filter(function(e){return e.lvl===lvl});
- var known=shuffle(pool.filter(function(e){return p.learned[e.id]})),rest=shuffle(pool.filter(function(e){return!p.learned[e.id]}));
- var picked=known.concat(rest).slice(0,EXAM.n);
+ /* Exams ask only about words already learned in this level. */
+ var picked=shuffle(pool.filter(function(e){return p.learned[e.id]})).slice(0,EXAM.n);
  /* Each question type appears about equally often, as far as each word allows. */
  var order=["d","f","g","c","b","a"],used={a:0,b:0,g:0,f:0,d:0,c:0};
  return shuffle(picked).map(function(e){
@@ -2914,7 +2923,8 @@ function xLabel(it,v){
 }
 function startExam(lvl){
  var pool=words().filter(function(e){return e.lvl===lvl});
- if(pool.length<EXAM.n){toast("ما كافياش الكلمات فهاد المستوى");return}
+ var k=pool.filter(function(e){return P().learned[e.id]}).length;
+ if(k<EXAM.n){toast("خاصك تحفظ "+(EXAM.n-k)+" كلمة أخرى فـ "+lvl+" باش يتحل هاد الامتحان");return}
  Q=null;xStop();
  X={lvl:lvl,items:xBuild(lvl),i:0,end:Date.now()+EXAM.min*60000,done:false,startXP:P().xp};
  U.view="exam";renderView(true);window.scrollTo(0,0);
@@ -2962,7 +2972,8 @@ function vExam(){
   return'<div class="card xlv'+(ok?" won":"")+'"><div class="xlv-top"><span class="xbadge">'+l+'</span>'+(ok?'<span class="xmedal">'+ic("award")+'ناجح</span>':"")+'</div>'+
    '<h3>امتحان '+l+'</h3><p class="muted">حفظتي <span class="num">'+ls.k+' / '+ls.n+'</span> كلمة</p>'+
    '<p class="xbest">'+(r.tries?'أحسن نتيجة: <b class="num">'+r.best+'%</b> · <span class="num">'+r.tries+'</span> '+(r.tries===1?"محاولة":"محاولات"):"مازال ما دوزتيهش")+'</p>'+
-   '<button class="btn '+(ok?"":"pri")+' block" data-act="xstart" data-l="'+l+'">'+(ok?"عاود الامتحان":r.tries?"عاود جرّب":"ابدا الامتحان")+'</button></div>';
+   (ls.k<EXAM.n?'<p class="xlock">'+ic("lock")+'<span>حفظ <b class="num">'+(EXAM.n-ls.k)+'</b> كلمة أخرى باش يتحل</span></p><button class="btn block" data-act="golvl" data-l="'+l+'">سير حفظ الكلمات</button>'
+   :'<button class="btn '+(ok?"":"pri")+' block" data-act="xstart" data-l="'+l+'">'+(ok?"عاود الامتحان":r.tries?"عاود جرّب":"ابدا الامتحان")+'</button>')+'</div>';
  }).join("");
  var certs=CEFR.filter(function(l){return p.exams[l]&&p.exams[l].pass});
  return'<div class="xhome"><div class="view-head"><h1>الامتحانات</h1></div>'+
@@ -2970,7 +2981,7 @@ function vExam(){
   '<ul class="xrules"><li><b class="num">'+EXAM.n+'</b> سؤال من 6 أنواع: المعنى، الترجمة، الجنس، الجملة، الكتابة والاستماع</li>'+
   '<li><b class="num">'+EXAM.min+'</b> دقايق للامتحان كامل</li><li>ما كاينش التصحيح حتى للآخر، وما تقدرش ترجع للسؤال اللي فات</li>'+
   '<li>فالكتابة خاص الأداة والأكسان يكونو صحاح</li><li>خاصك <b class="num">'+EXAM.pass+'%</b> باش تنجح وتاخد الشهادة (+'+EXAM.bonus+' XP)</li></ul>'+
-  '<p class="muted xnote">الأسئلة كتجي أولا من الكلمات اللي حفظتي فهاد المستوى.</p></div></div>'+
+  '<p class="muted xnote">الأسئلة كتجي غير من الكلمات اللي حفظتي فهاد المستوى، ولهذا خاصك تحفظ على الأقل '+EXAM.n+' كلمة باش يتحل الامتحان.</p></div></div>'+
   '<div class="xgrid">'+cards+'</div>'+
   (certs.length?'<p class="sec">الشهادات ديالك</p><div class="xcerts">'+certs.map(function(l){return certHTML(l,p.exams[l])}).join("")+'</div>':"")+
  '</div>';

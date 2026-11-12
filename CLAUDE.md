@@ -41,6 +41,8 @@ explain changes simply, and tell him exactly what to click to publish them.
 Per language (`ST.fr`, `ST.de`): `learned`, `mastered`, `stats`, `xp`, `days`, `quizzes`, `lessons`, `exams`.
 
 - `learned`: the user pressed «حفظتها». Learned words are hidden from flashcards and come back only in quizzes.
+  Quizzes and exams ask only about learned words (other words are used only as wrong options);
+  an exam opens once 20 words of that level are learned.
 - `mastered`: answered correctly in a quiz. Counted once per word; wrong answers never count.
 - Saved in localStorage (`lingo:u:<uid>` when signed in) and in Firestore `data/users/{uid}/lingo`.
 - Leaderboard: Firestore `scores/{uid}` with `name`, `points`, `points_de`, `xp_fr`, `xp_de`.
