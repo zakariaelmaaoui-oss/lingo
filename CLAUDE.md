@@ -16,6 +16,11 @@ explain changes simply, and tell him exactly what to click to publish them.
   Without it Google sign-in, saving progress and the leaderboard stop working.
 - `firestore.rules` — Firestore security rules. Changing this file does nothing by itself:
   if you change it, tell the owner to paste it in Firebase console → Firestore → Rules → Publish.
+- `api/chat.js` — Vercel serverless function behind the «الدردشة» page: checks the user's Firebase ID token,
+  then asks Google Gemini (free tier) for a reply plus a correction of the learner's last message (JSON).
+  Needs the Vercel environment variable `GEMINI_API_KEY` (free key from aistudio.google.com; never put it in
+  index.html). Optional `GEMINI_MODEL`. Chat history stays in the browser (`lingo:chat:<lang>:<uid>`),
+  not in the progress model.
 - `README.md` — setup guide in Darija.
 
 ## Languages and wording
