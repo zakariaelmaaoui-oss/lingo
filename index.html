@@ -88,7 +88,7 @@ mark.g-m{color:var(--gm)}mark.g-f{color:var(--gf)}mark.g-n{color:var(--gn)}
 .nav{position:fixed;inset:auto 0 0 0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);
  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
 .nav-brand{display:none}
-.nav-items{display:grid;grid-template-columns:repeat(6,1fr);max-width:560px;margin:0 auto}
+.nav-items{display:grid;grid-template-columns:repeat(7,1fr);max-width:560px;margin:0 auto}
 .nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-radius:12px;font-size:.72rem;font-weight:600;color:var(--faint);transition:color .2s}
 .nav-btn .ico{width:22px;height:22px}
 .nav-btn[aria-current="page"]{color:var(--blue)}
@@ -338,6 +338,43 @@ mark.g-m{color:var(--gm)}mark.g-f{color:var(--gf)}mark.g-n{color:var(--gn)}
 .xlock{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--muted);margin-bottom:6px}
 .xlock .ico{width:15px;height:15px}
 
+/* ---------- chat ---------- */
+.chat{max-width:720px;display:flex;flex-direction:column;gap:12px}
+.chat .view-head{margin-bottom:0}
+.btn.sm .ico{width:16px;height:16px}
+.chat-lv{margin:0}
+.chat-gate{padding:24px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.chat-gate h2{font-size:1.2rem}
+.chat-list{display:flex;flex-direction:column;gap:12px;min-height:240px;max-height:calc(100dvh - 370px);overflow-y:auto;padding:14px;border-radius:var(--r);background:var(--panel)}
+@media (min-width:900px){.chat-list{max-height:calc(100vh - 290px)}}
+.msg{display:flex;flex-direction:column;gap:6px;max-width:86%}
+.msg.bot{align-self:flex-end}
+.msg.me{align-self:flex-start;align-items:flex-start}
+.bub{padding:11px 14px;border-radius:18px;line-height:1.5}
+.bub .fw{font-weight:500}
+.msg.bot .bub{background:var(--surface);border:1px solid var(--line);border-top-right-radius:6px}
+.msg.me .bub{background:var(--grad);color:#fff;border-top-left-radius:6px}
+.bub .tr{margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted);font-size:.9rem}
+.mact{display:flex;gap:10px;margin-top:6px}
+.mact button{display:flex;align-items:center;gap:4px;font-size:.78rem;font-weight:600;color:var(--blue)}
+.mact .ico{width:16px;height:16px}
+.fix{background:#FFF6E8;border:1px solid #F8DFB4;border-radius:14px;padding:9px 12px;font-size:.88rem;display:flex;flex-direction:column;gap:3px}
+.fix .lbl{font-size:.72rem;font-weight:700;color:#B26B00}
+.fix .fw{font-weight:600}
+.fix .why{color:#5B4A2A}
+.fix.ok{flex-direction:row;align-items:center;gap:6px;background:var(--ok-soft);border-color:#CDEBDC;color:var(--ok);font-weight:600}
+.fix.ok .ico{width:16px;height:16px;stroke-width:2.4}
+.typing{display:flex;gap:4px;align-items:center;padding:14px 16px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--faint);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{50%{opacity:.3}}
+.chat-in{display:flex;gap:8px}
+.chat-in input{flex:1;min-width:0;padding:13px 16px;border-radius:var(--r-sm);border:1.5px solid var(--line);font-size:1rem;outline:none;background:var(--surface);text-align:left}
+.chat-in input:focus{border-color:var(--blue)}
+.chat-in .btn{padding:12px 14px}
+.chat-in .ico{transform:scaleX(-1)}
+.chat-note{font-size:.76rem;color:var(--faint)}
+
 /* ---------- progress ---------- */
 .prog{display:grid;gap:16px}
 @media (min-width:900px){.prog{grid-template-columns:1fr 1fr;align-items:start}}
@@ -505,7 +542,8 @@ mark.g-m{color:var(--gm)}mark.g-f{color:var(--gf)}mark.g-n{color:var(--gn)}
  var provider=new firebase.auth.GoogleAuthProvider();
  window.LINGO_AUTH={
   signIn:function(){return auth.signInWithPopup(provider).catch(function(e){if(e&&(e.code==="auth/popup-blocked"||e.code==="auth/operation-not-supported-in-this-environment"))return auth.signInWithRedirect(provider);throw e}).then(function(){location.reload()})},
-  signOut:function(){return auth.signOut().then(function(){location.reload()})}
+  signOut:function(){return auth.signOut().then(function(){location.reload()})},
+  token:function(){return ready.then(function(){return auth.currentUser?auth.currentUser.getIdToken():null})}
  };
 })();
 </script>
@@ -2580,6 +2618,8 @@ var IC={
  swap:'<path d="M7 7h11l-3-3"/><path d="M17 17H6l3 3"/>',
  sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',
  cards:'<rect x="4" y="6" width="12" height="14" rx="2"/><path d="M8 4h10a2 2 0 0 1 2 2v12"/>',
+ chat:'<path d="M5 5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-7l-4.5 3.5V17H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M8 10h8M8 13h5"/>',
+ send:'<path d="M20 4L4 11l6.5 2.5L13 20z"/><path d="M20 4l-9.5 9.5"/>',
  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
  award:'<circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 21l5-2.6 5 2.6-1.5-7.5"/>',
  list:'<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r=".8"/><circle cx="4.5" cy="12" r=".8"/><circle cx="4.5" cy="18" r=".8"/>'
@@ -2619,7 +2659,7 @@ function bump(id){var el=$(id);if(!el)return;el.classList.remove("bump");void el
    5. WELCOME — اختيار اللغة
    ========================================================= */
 function renderWelcome(){
- var feats=["كلمات يومية","القواعد","الاستماع","الكتابة","اختبارات وتمارين","أصوات الكلمات"];
+ var feats=["كلمات يومية","القواعد","الاستماع","الكتابة","اختبارات وامتحانات","دردشة مع البوت"];
  var cards=["fr","de"].map(function(l){
   var L=LANG[l],n=count(l),s=streak(l),p=ST[l];
   var foot=n||p.xp?'<div class="lang-stats"><span>المستوى <b>'+curLevel(l)+'</b></span><span><b class="num">'+n+'</b> / <span class="num">'+DB[l].length+'</span> كلمة</span><span>🔥 <b class="num">'+s.cur+'</b></span><span><b class="num">'+p.xp+'</b> XP</span></div>'
@@ -2648,7 +2688,7 @@ function enterLang(l){
 /* =========================================================
    6. APP SHELL
    ========================================================= */
-var NAV=[["home","home","الرئيسية"],["words","book","الكلمات"],["quiz","target","الاختبار"],["exam","award","الامتحان"],["progress","chart","التقدّم"],["friends","users","الأصحاب"]];
+var NAV=[["home","home","الرئيسية"],["words","book","الكلمات"],["quiz","target","الاختبار"],["exam","award","الامتحان"],["chat","chat","الدردشة"],["progress","chart","التقدّم"],["friends","users","الأصحاب"]];
 function renderShell(){
  var L=LANG[U.lang];
  $("navflag").innerHTML=LOGO;
@@ -2674,12 +2714,13 @@ function go(v){U.view=v;U.resetAsk=false;if(v!=="grammar")U.lesson=null;
 function renderView(anim){
  var v=$("view"),h="";
  if(U.view==="home")h=vHome();else if(U.view==="words")h=vWords();else if(U.view==="quiz")h=vQuiz();
- else if(U.view==="progress")h=vProgress();else if(U.view==="account")h=vAccount();else if(U.view==="friends")h=vFriends();else if(U.view==="grammar")h=vGrammar();else if(U.view==="exam")h=vExam();
+ else if(U.view==="progress")h=vProgress();else if(U.view==="account")h=vAccount();else if(U.view==="friends")h=vFriends();else if(U.view==="grammar")h=vGrammar();else if(U.view==="exam")h=vExam();else if(U.view==="chat")h=vChat();
  v.innerHTML=h;refreshPills();
  if(anim){v.classList.remove("enter");void v.offsetWidth;v.classList.add("enter")}
  if(U.view==="quiz"&&Q&&!Q.done){var inp=$("wans");if(inp)inp.focus()}
  if(U.view==="exam"&&X&&!X.done){var xi=$("xans");if(xi)xi.focus()}
  if(U.view==="friends"&&Cloud.db)Cloud.board(U.lang);
+ if(U.view==="chat")chatScroll();
  requestAnimationFrame(function(){Array.prototype.forEach.call(v.querySelectorAll("[data-w]"),function(el){el.style.width=el.dataset.w})});
 }
 
@@ -3021,6 +3062,66 @@ function vExamResult(){
   '<div class="qfoot"><button class="btn" data-act="xhome">رجوع</button><button class="btn pri" data-act="xagain">عاود الامتحان</button></div></div>';
 }
 
+/* ---------- CHAT ----------
+   Talk with an AI partner (Google Gemini, free tier) through /api/chat on the site.
+   Each language keeps its own conversation in this browser only (localStorage "lingo:chat:<lang>"),
+   not in the progress model. Only signed-in users can send messages. */
+var CHAT={max:40,send:20};
+var CHATHI={fr:"Bonjour ! Je suis ton partenaire de conversation. Comment tu vas aujourd’hui ?",de:"Hallo! Ich bin dein Gesprächspartner. Wie geht es dir heute?"};
+var CHATHI_AR={fr:"مرحبًا! أنا شريكك في المحادثة. كيف حالك اليوم؟",de:"مرحبًا! أنا شريكك في المحادثة. كيف حالك اليوم؟"};
+var Chat={busy:false,lvl:{},open:{}};
+function chatKey(l){return"lingo:chat:"+l+":"+(Acc.uid||"guest")}
+function chatLoad(l){var a=null;try{a=JSON.parse(localStorage.getItem(chatKey(l))||"null")}catch(e){}
+ if(!Array.isArray(a)||!a.length)a=[{role:"model",text:CHATHI[l],tr:CHATHI_AR[l]}];return a}
+function chatSave(l,a){try{localStorage.setItem(chatKey(l),JSON.stringify(a.slice(-CHAT.max)))}catch(e){}}
+function chatLvl(){return Chat.lvl[U.lang]||curLevel(U.lang)}
+function vChat(){
+ var L=LANG[U.lang],msgs=chatLoad(U.lang);
+ var head='<div class="view-head"><h1>الدردشة</h1><button class="btn sm" data-act="chatnew">'+ic("swap")+'دردشة جديدة</button></div>'+
+  '<div class="lvrow chat-lv" role="group" aria-label="المستوى">'+CEFR.map(function(l){return'<button class="lvb" data-act="chatlvl" data-l="'+l+'" aria-pressed="'+(chatLvl()===l)+'">'+l+'</button>'}).join("")+'</div>';
+ if(Acc.status!=="signed")return'<div class="chat">'+head+'<div class="card chat-gate"><span class="tile-ic ic-v">'+ic("chat")+'</span><h2>هضر مع شريك بـ'+L.name+'</h2><p class="muted">كتب ليه بـ'+L.name+'، وهو كيجاوبك وكيصحّح ليك الأخطاء ديالك بالعربية. باش تستعمل الدردشة خاصك تدخل بالحساب ديالك.</p>'+
+  (FB?'<button class="btn pri" data-act="signin">الدخول بـ Google</button>':"")+'</div></div>';
+ var list=msgs.map(function(m,i){
+  if(m.role==="model")return'<div class="msg bot"><div class="bub"><p class="fw" dir="ltr">'+esc(m.text)+'</p>'+
+   (Chat.open[i]&&m.tr?'<p class="tr">'+esc(m.tr)+'</p>':"")+
+   '<div class="mact"><button data-act="saytxt" data-t="'+esc(m.text)+'" aria-label="سمع">'+ic("spk")+'</button>'+(m.tr?'<button data-act="chattr" data-i="'+i+'">'+(Chat.open[i]?"خبّي الترجمة":"الترجمة")+'</button>':"")+'</div></div></div>';
+  var fix="";
+  if(m.fix){fix=m.fix.correct?'<div class="fix ok">'+ic("check")+'<span>جملة صحيحة، برافو!</span></div>'
+   :'<div class="fix"><p class="lbl">التصحيح</p><p class="fw" dir="ltr">'+esc(m.fix.corrected)+'</p>'+(m.fix.explanation?'<p class="why">'+esc(m.fix.explanation)+'</p>':"")+'</div>'}
+  return'<div class="msg me"><div class="bub"><p class="fw" dir="ltr">'+esc(m.text)+'</p></div>'+fix+'</div>';
+ }).join("");
+ if(Chat.busy)list+='<div class="msg bot"><div class="bub typing"><i></i><i></i><i></i></div></div>';
+ return'<div class="chat">'+head+'<div class="chat-list" id="chatlist">'+list+'</div>'+
+  '<form class="chat-in" id="chatf"><input id="chatmsg" maxlength="300" autocomplete="off" autocapitalize="sentences" spellcheck="false" dir="ltr" placeholder="Écris en '+(U.lang==="fr"?"français":"allemand")+'…" aria-label="الرسالة"'+(Chat.busy?" disabled":"")+'><button class="btn pri" type="submit" aria-label="صيفط"'+(Chat.busy?" disabled":"")+'>'+ic("send")+'</button></form>'+
+  '<p class="chat-note">الأجوبة كتجي من ذكاء اصطناعي ديال Google ويقدر يغلط أحيانا. ما تكتبش معلومات خاصة.</p></div>';
+}
+function chatScroll(){var l=$("chatlist");if(l)l.scrollTop=l.scrollHeight;var i=$("chatmsg");if(i&&!Chat.busy)i.focus({preventScroll:true})}
+function chatErr(code){
+ return code==="signin"?"خاصك تدخل بالحساب ديالك من جديد":code==="not_configured"?"الدردشة مازال ما مفعّلاش: خاص صاحب الموقع يزيد GEMINI_API_KEY فـ Vercel"
+  :code==="quota"||code==="daily_limit"?"سالا الحد اليومي المجاني ديال الدردشة. عاود جرّب من بعد شوية ولا غدا"
+  :"ما قدرناش نوصلو للبوت. عاود جرّب";
+}
+function chatSend(text){
+ text=text.trim();if(!text||Chat.busy)return;
+ if(!window.LINGO_AUTH||!window.LINGO_AUTH.token){toast(chatErr("signin"));return}
+ var lang=U.lang,msgs=chatLoad(lang);msgs.push({role:"user",text:text.slice(0,300)});chatSave(lang,msgs);
+ Chat.busy=true;renderView();chatScroll();
+ var body={lang:lang,level:chatLvl(),messages:msgs.slice(-CHAT.send).map(function(m){return{role:m.role,text:m.text}})};
+ window.LINGO_AUTH.token().then(function(tok){
+  return fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+(tok||"")},body:JSON.stringify(body)});
+ }).then(function(r){return r.json().catch(function(){return{error:"bad"}}).then(function(d){if(!r.ok||d.error)throw new Error(d.error||"bad");return d})})
+ .then(function(d){
+  var a=chatLoad(lang),me=a[a.length-1];
+  if(me&&me.role==="user")me.fix={correct:d.correct,corrected:d.corrected,explanation:d.explanation};
+  a.push({role:"model",text:d.reply,tr:d.translation});chatSave(lang,a);
+ }).catch(function(e){
+  toast(chatErr(e&&e.message));
+  /* Take the unanswered message back out and put it in the box, so it can be sent again. */
+  var a=chatLoad(lang),last=a[a.length-1];if(last&&last.role==="user"&&last.text===text.slice(0,300)){a.pop();chatSave(lang,a);Chat.retry=text}
+ })
+ .then(function(){Chat.busy=false;if(U.view==="chat"&&U.lang===lang){renderView();var i=$("chatmsg");if(i&&Chat.retry){i.value=Chat.retry}Chat.retry="";chatScroll()}});
+}
+
 /* ---------- PROGRESS ---------- */
 var MONTHS=["يناير","فبراير","مارس","أبريل","ماي","يونيو","يوليوز","غشت","شتنبر","أكتوبر","نونبر","دجنبر"];
 var WD=["ن","ث","ر","خ","ج","س","ح"];var WDL=["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"];
@@ -3158,6 +3259,9 @@ var ACT={
  xquit:function(){xStop();X=null;toast("تلغى الامتحان، ما تحسبش هاد المحاولة");renderView(true)},
  xhome:function(){X=null;renderView(true)},
  xagain:function(){startExam(X.lvl)},
+ chatnew:function(){try{localStorage.removeItem(chatKey(U.lang))}catch(e){}Chat.open={};renderView()},
+ chatlvl:function(t){Chat.lvl[U.lang]=t.dataset.l;renderView()},
+ chattr:function(t){var i=+t.dataset.i;Chat.open[i]=!Chat.open[i];renderView()},
  lessons:function(){U.lesson=null;renderView(true)},
  lesson:function(t){U.lesson=+t.dataset.i;U.view="grammar";renderView(true);window.scrollTo(0,0)},
  lessondone:function(){var p=P();if(p.lessons[U.lesson])return;p.lessons[U.lesson]=1;addXP(20);Store.save();toast("+20 XP");renderView()}
@@ -3166,6 +3270,7 @@ document.addEventListener("click",function(ev){var t=ev.target.closest("[data-ac
 document.addEventListener("input",function(ev){if(ev.target.id==="q"){U.q=ev.target.value;U.pin=null;U.idx=0;U.flipped=false;rerenderWords()}});
 document.addEventListener("change",function(ev){if(ev.target.id==="qcat")U.qcat=ev.target.value});
 document.addEventListener("submit",function(ev){
+ if(ev.target.id==="chatf"){ev.preventDefault();var i=$("chatmsg");if(i)chatSend(i.value);return}
  if(ev.target.id!=="nickf")return;ev.preventDefault();
  var v=$("nick").value.trim().slice(0,16);if(!v){toast("كتب سميتك أولا");return}
  ST.nick=v;Store.save();Cloud.score();toast("تسجّلات سميتك: "+v);refreshAvatar();
