@@ -1,6 +1,7 @@
 // Chat partner for Talaqa (طلاقة): a Vercel serverless function.
 // The browser sends the conversation; this function asks Google Gemini (free tier) for a reply
 // and a correction of the learner's last message, and sends both back as JSON.
+// With body.mode "practice" it instead writes 5 multiple-choice exercises for one grammar lesson.
 //
 // Settings (Vercel → Project → Settings → Environment Variables):
 //   GEMINI_API_KEY  required. Free key from https://aistudio.google.com (never put it in index.html).
@@ -84,6 +85,75 @@ const SCHEMA = {
   required: ["reply", "translation", "correct", "corrected", "explanation"],
 };
 
+// Practice mode: five multiple-choice exercises on one grammar lesson (the lesson text comes from the page).
+function practicePrompt(lang, level, lesson) {
+  const name = LANGS[lang];
+  return [
+    `You write grammar exercises in ${name} for an Arabic-speaking learner (Moroccan) at CEFR level ${level}.`,
+    "Write exactly 5 multiple-choice questions that test ONLY the grammar point of the lesson below.",
+    `Each question is a short ${name} sentence with one gap written as ___ (or a short ${name} question).`,
+    "Give 3 or 4 short options; exactly one is correct. Use simple vocabulary. Vary the questions.",
+    "`answer` is the 0-based index of the correct option. `explain` is one short sentence in Modern Standard Arabic (فصحى) saying why.",
+    "Double-check every answer: it must be the only grammatically correct option.",
+    "Lesson title: " + String(lesson.t || "").slice(0, 200),
+    "Lesson explanation: " + String(lesson.d || "").slice(0, 1500),
+    "Return JSON only, matching the schema.",
+  ].join("\n");
+}
+
+const PRACTICE_SCHEMA = {
+  type: "OBJECT",
+  properties: {
+    questions: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          q: { type: "STRING" },
+          options: { type: "ARRAY", items: { type: "STRING" } },
+          answer: { type: "INTEGER" },
+          explain: { type: "STRING" },
+        },
+        required: ["q", "options", "answer", "explain"],
+      },
+    },
+  },
+  required: ["questions"],
+};
+
+async function callGemini(key, system, contents, schema) {
+  const model = process.env.GEMINI_MODEL || DEFAULT_MODEL;
+  let r;
+  try {
+    r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: system }] },
+        contents,
+        generationConfig: { responseMimeType: "application/json", responseSchema: schema, maxOutputTokens: 1500 },
+      }),
+    });
+  } catch (e) {
+    return { error: "network", status: 502 };
+  }
+  if (r.status === 429) return { error: "quota", status: 429 };
+  if (!r.ok) {
+    let detail = "";
+    try { detail = (await r.json()).error.message; } catch (e) {}
+    console.error("Gemini error", r.status, detail);
+    return { error: "gemini", status: 502 };
+  }
+  try {
+    const data = await r.json();
+    const text = data.candidates[0].content.parts.map((p) => p.text || "").join("");
+    return { out: JSON.parse(text) };
+  } catch (e) {
+    console.error("Gemini parse error", e);
+    return { error: "parse", status: 502 };
+  }
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") return send(res, 405, { error: "method" });
 
@@ -99,8 +169,11 @@ module.exports = async function handler(req, res) {
 
   const lang = LANGS[body.lang] ? body.lang : null;
   const level = LEVELS.includes(body.level) ? body.level : "A1";
+  const practice = body.mode === "practice";
   const msgs = Array.isArray(body.messages) ? body.messages.slice(-MAX_MESSAGES) : [];
-  if (!lang || !msgs.length || msgs[msgs.length - 1].role !== "user") return send(res, 400, { error: "bad_request" });
+  if (!lang) return send(res, 400, { error: "bad_request" });
+  if (practice ? !(body.lesson && body.lesson.t) : !msgs.length || msgs[msgs.length - 1].role !== "user")
+    return send(res, 400, { error: "bad_request" });
 
   const auth = String(req.headers.authorization || "");
   let uid = null;
@@ -112,52 +185,35 @@ module.exports = async function handler(req, res) {
   if (!uid) return send(res, 401, { error: "signin" });
   if (!underLimit(uid)) return send(res, 429, { error: "daily_limit" });
 
+  if (practice) {
+    const g = await callGemini(key, practicePrompt(lang, level, body.lesson), [{ role: "user", parts: [{ text: "Write the 5 exercises." }] }], PRACTICE_SCHEMA);
+    if (g.error) return send(res, g.status, { error: g.error });
+    const questions = (Array.isArray(g.out.questions) ? g.out.questions : [])
+      .map((x) => ({
+        q: String(x.q || ""),
+        options: (Array.isArray(x.options) ? x.options : []).map(String).slice(0, 4),
+        answer: Number(x.answer),
+        explain: String(x.explain || ""),
+      }))
+      .filter((x) => x.q && x.options.length >= 2 && Number.isInteger(x.answer) && x.answer >= 0 && x.answer < x.options.length)
+      .slice(0, 5);
+    if (!questions.length) return send(res, 502, { error: "parse" });
+    return send(res, 200, { questions });
+  }
+
   const contents = msgs
     .filter((m) => m && (m.role === "user" || m.role === "model") && typeof m.text === "string" && m.text.trim())
     .map((m) => ({ role: m.role, parts: [{ text: m.text.slice(0, MAX_CHARS) }] }));
   if (!contents.length || contents[0].role !== "user") contents.unshift({ role: "user", parts: [{ text: "Bonjour" }] });
 
-  const model = process.env.GEMINI_MODEL || DEFAULT_MODEL;
-  let r;
-  try {
-    r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: systemPrompt(lang, level) }] },
-        contents,
-        generationConfig: {
-          responseMimeType: "application/json",
-          responseSchema: SCHEMA,
-          maxOutputTokens: 800,
-        },
-      }),
-    });
-  } catch (e) {
-    return send(res, 502, { error: "network" });
-  }
-
-  if (r.status === 429) return send(res, 429, { error: "quota" });
-  if (!r.ok) {
-    let detail = "";
-    try { detail = (await r.json()).error.message; } catch (e) {}
-    console.error("Gemini error", r.status, detail);
-    return send(res, 502, { error: "gemini", status: r.status });
-  }
-
-  try {
-    const data = await r.json();
-    const text = data.candidates[0].content.parts.map((p) => p.text || "").join("");
-    const out = JSON.parse(text);
-    return send(res, 200, {
-      reply: String(out.reply || ""),
-      translation: String(out.translation || ""),
-      correct: !!out.correct,
-      corrected: String(out.corrected || ""),
-      explanation: String(out.explanation || ""),
-    });
-  } catch (e) {
-    console.error("Gemini parse error", e);
-    return send(res, 502, { error: "parse" });
-  }
+  const g = await callGemini(key, systemPrompt(lang, level), contents, SCHEMA);
+  if (g.error) return send(res, g.status, { error: g.error });
+  const out = g.out;
+  return send(res, 200, {
+    reply: String(out.reply || ""),
+    translation: String(out.translation || ""),
+    correct: !!out.correct,
+    corrected: String(out.corrected || ""),
+    explanation: String(out.explanation || ""),
+  });
 };
