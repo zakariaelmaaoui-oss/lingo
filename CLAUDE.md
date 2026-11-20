@@ -19,7 +19,8 @@ explain changes simply, and tell him exactly what to click to publish them.
 - `api/chat.js` — Vercel serverless function behind the «الدردشة» page: checks the user's Firebase ID token,
   then asks Google Gemini (free tier) for a reply plus a correction of the learner's last message (JSON).
   Needs the Vercel environment variable `GEMINI_API_KEY` (free key from aistudio.google.com; never put it in
-  index.html). Optional `GEMINI_MODEL`. Chat history stays in the browser (`lingo:chat:<lang>:<uid>`),
+  index.html). Optional `GEMINI_MODEL`. With `mode: "practice"` it returns 5 multiple-choice exercises for one
+  grammar lesson instead of a chat reply. Chat history stays in the browser (`lingo:chat:<lang>:<uid>`),
   not in the progress model.
 - `README.md` — setup guide in Darija.
 
@@ -40,6 +41,14 @@ explain changes simply, and tell him exactly what to click to publish them.
 - A word's id is its exact text (French) or `"de:" + text` (German). Progress is stored by id,
   so **never rename, re-case or delete an existing word** — only add new ones. No duplicates.
 - Cumulative vocabulary targets: A1 600, A2 1,200, B1 2,200, B2 3,800 (`TARGETS`).
+
+## Grammar lessons (`var LESSONS = { fr: [...], de: [...] }` in index.html)
+
+- Each lesson: `{lvl, t: "French title — عنوان", d: explanation (MSA), r: [[example, Arabic, gender?]], tip}`.
+  Progress is stored by index (`p.lessons[i]`), so **only append lessons at the end; never reorder or remove**.
+- French is a daily course (`DAILY = {fr:true}`): lesson i opens once lesson i-1 was marked done on an earlier day.
+  `p.lessons[i]` is the time it was marked done (`1` for lessons done before times were kept).
+  German lessons are unchanged and all open.
 
 ## Progress model (do not change the shape without a migration)
 
