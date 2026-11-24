@@ -299,6 +299,11 @@ mark.g-m{color:var(--gm)}mark.g-f{color:var(--gf)}mark.g-n{color:var(--gn)}
 .xhero h2{font-size:1.15rem;font-weight:700;margin-bottom:8px}
 .xrules{margin:0;padding:0 18px 0 0;display:grid;gap:4px;font-size:.9rem;color:#3B4064}
 .xnote{font-size:.82rem;margin-top:8px}
+.xreview{padding:18px;display:flex;flex-direction:column;gap:10px;border-color:#F6DDB4;background:linear-gradient(135deg,#FFF9EF,#fff)}
+.xr-top{display:flex;gap:14px;align-items:center}
+.xr-top h2{font-size:1.15rem}
+.xr-top p{font-size:.86rem}
+.xreview .btn{align-self:flex-start}
 .xgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media (min-width:900px){.xgrid{grid-template-columns:repeat(4,1fr)}}
 .xlv{padding:16px;display:flex;flex-direction:column;gap:6px}
@@ -3025,7 +3030,15 @@ fr:[
  {lvl:"B1",t:"Le subjonctif présent — صيغة الشك والضرورة",d:"يُستعمل subjonctif بعد التعبير عن الضرورة (il faut que)، والرغبة (je veux que)، والشعور (je suis content que)، والشك، وبعد بعض أدوات الربط مثل bien que و pour que و avant que. نأخذ جذر ils في الحاضر ونضيف: e، es، e، ions، iez، ent. وبعض الأفعال شاذة: être ← que je sois، avoir ← que j’aie، faire ← que je fasse، aller ← que j’aille.",r:[["Il faut que tu viennes.","يجب أن تأتي."],["Je veux que tu sois heureux.","أريد أن تكون سعيدًا."],["Je suis content que tu sois là.","أنا مسرور لأنك هنا."],["Bien qu’il pleuve, je sors.","رغم أنها تمطر سأخرج."],["Je parle lentement pour que tu comprennes.","أتكلم ببطء لكي تفهم."]],tip:"إذا كان الفاعل نفسه في الجملتين نستعمل المصدر وليس subjonctif: je veux partir، وليس je veux que je parte."},
  {lvl:"B1",t:"Exprimer son opinion — التعبير عن الرأي",d:"للتعبير عن الرأي نستعمل عبارات مثل je pense que، je crois que، je trouve que، à mon avis، selon moi، d’après moi. وللموافقة: je suis d’accord، tu as raison. وللمعارضة: je ne suis pas d’accord، je ne pense pas que (ويأتي بعدها subjonctif).",r:[["Je pense que c’est une bonne idée.","أظن أنها فكرة جيدة."],["À mon avis, il a tort.","في رأيي هو مخطئ."],["Je trouve que ce film est trop long.","أرى أن هذا الفيلم طويل جدًا."],["Selon moi, l’éducation est essentielle.","حسب رأيي، التعليم أساسي."],["Je suis d’accord avec toi.","أنا موافق معك."],["Je ne pense pas que ce soit vrai.","لا أظن أن هذا صحيح."]],tip:"je pense que في الإثبات يأتي بعدها indicatif، وفي النفي (je ne pense pas que) يأتي بعدها subjonctif."},
  {lvl:"B1",t:"Exprimer le but — التعبير عن الهدف",d:"للتعبير عن الهدف نستعمل pour أو afin de + مصدر إذا كان الفاعل نفسه: Je travaille pour gagner de l’argent. وإذا تغيّر الفاعل نستعمل pour que أو afin que + subjonctif: Je parle lentement pour que tu comprennes. ولتجنّب شيء: pour ne pas، de peur de.",r:[["J’étudie pour réussir.","أدرس لكي أنجح."],["Il économise afin d’acheter une voiture.","يدّخر من أجل شراء سيارة."],["Je t’explique pour que tu comprennes.","أشرح لك لكي تفهم."],["Je pars tôt pour ne pas être en retard.","أغادر باكرًا لكي لا أتأخر."],["Parle fort afin que tout le monde entende.","تكلّم بصوت عالٍ لكي يسمع الجميع."]],tip:"pour + مصدر = نفس الفاعل. pour que + subjonctif = فاعل آخر."},
- {lvl:"B1",t:"La voix passive — المبني للمجهول",d:"نستعمل المبني للمجهول عندما نريد التركيز على من وقع عليه الفعل. يتكوّن من être في الزمن المطلوب + اسم المفعول، ويتبع اسم المفعول الفاعل في الجنس والعدد. ولذكر من قام بالفعل نستعمل par. وفي الكلام اليومي نفضّل غالبًا on: on parle français ici.",r:[["La maison est construite en pierre.","البيت مبني بالحجر."],["Le voleur a été arrêté.","قُبض على اللص."],["La lettre sera envoyée demain.","سترسل الرسالة غدًا."],["Ce livre a été écrit par Victor Hugo.","كُتب هذا الكتاب من طرف فيكتور هوغو."],["On parle français ici.","يُتكلَّم بالفرنسية هنا."]],tip:"زمن الجملة يظهر في فعل être: est construite (حاضر)، a été construite (ماضٍ)، sera construite (مستقبل)."}
+ {lvl:"B1",t:"La voix passive — المبني للمجهول",d:"نستعمل المبني للمجهول عندما نريد التركيز على من وقع عليه الفعل. يتكوّن من être في الزمن المطلوب + اسم المفعول، ويتبع اسم المفعول الفاعل في الجنس والعدد. ولذكر من قام بالفعل نستعمل par. وفي الكلام اليومي نفضّل غالبًا on: on parle français ici.",r:[["La maison est construite en pierre.","البيت مبني بالحجر."],["Le voleur a été arrêté.","قُبض على اللص."],["La lettre sera envoyée demain.","سترسل الرسالة غدًا."],["Ce livre a été écrit par Victor Hugo.","كُتب هذا الكتاب من طرف فيكتور هوغو."],["On parle français ici.","يُتكلَّم بالفرنسية هنا."]],tip:"زمن الجملة يظهر في فعل être: est construite (حاضر)، a été construite (ماضٍ)، sera construite (مستقبل)."},
+ {lvl:"A1",t:"Les accents — العلامات فوق الحروف",d:"في الفرنسية علامات توضع فوق بعض الحروف وتغيّر نطقها أو معناها. é (accent aigu) تُنطق «إي» مغلقة: été. و è و ê تُنطقان «إي» مفتوحة: mère، fête. و à و ù لا تغيّران النطق لكنهما تفرّقان بين كلمتين: a (يملك) و à (إلى)، ou (أو) و où (أين). و ç تُنطق «س» قبل a و o و u: ça، garçon. و ë و ï تعني أن الحرف يُنطق منفصلًا: Noël، naïf.",r:[["été","إيتي — الصيف"],["mère","مير — الأم"],["fête","فيت — الحفلة"],["Il a un livre. / Il va à Rabat.","يملك كتابًا / يذهب إلى الرباط"],["ou / où","أو / أين"],["garçon, ça va","گارسون، سا ڤا"]],tip:"العلامات جزء من الكتابة الصحيحة: فالامتحان فالكتابة خاصها تكون صحيحة."},
+ {lvl:"A1",t:"L’élision — حذف حرف العلة",d:"عندما تأتي كلمة قصيرة تنتهي بـ e أو a قبل كلمة تبدأ بحرف علة أو h صامت، نحذف حرف العلة ونضع مكانه فاصلة عليا ’. يحدث هذا مع: le و la ← l’، و je ← j’، و me و te و se ← m’ و t’ و s’، و ne ← n’، و de ← d’، و que ← qu’. و si تصبح s’ قبل il و ils فقط.",r:[["le ami → l’ami","الصديق"],["la école → l’école","المدرسة"],["je aime → j’aime","أحب"],["je ne ai pas → je n’ai pas","ليس لدي"],["parce que il → parce qu’il","لأنه"],["si il pleut → s’il pleut","إذا أمطرت"]],tip:"الحذف إجباري في الفرنسية: لا تكتب أبدًا le ami أو je aime."},
+ {lvl:"A1",t:"La liaison — الوصل",d:"أغلب الحروف الأخيرة في الفرنسية لا تُنطق. لكن عندما تأتي بعدها كلمة تبدأ بحرف علة أو h صامت، يُنطق الحرف الأخير ويلتصق بالكلمة التالية. هذا اسمه liaison. الـ s و x تُنطقان «ز»، و t و d تُنطقان «ت»، و n تُنطق «ن». الوصل إجباري بعد الأدوات (les، des، un، mon)، وبعد الضمائر (nous، vous، ils، elles)، وبعد الكلمات القصيرة (très، chez، dans، en).",r:[["les amis","لي زامي"],["des enfants","دي زونفون"],["nous avons","نو زاڤون"],["un ami","أن نامي"],["ils arrivent","إيل زاريڤ"],["très important","تري زامپورتون"]],tip:"الوصل ممنوع بعد et: «un garçon et une fille» نقول «إيه أن» بدون t. وممنوع قبل h aspiré: les héros."},
+ {lvl:"A1",t:"L’enchaînement — ربط الكلمات",d:"في الكلام، الحرف الساكن الذي يُنطق في آخر الكلمة يلتصق بحرف العلة في أول الكلمة التالية، فتُسمع الجملة كأنها كلمة واحدة. هذا اسمه enchaînement، وهو يختلف عن liaison لأن الحرف هنا يُنطق دائمًا، حتى وحده. لهذا يبدو الكلام الفرنسي سريعًا ومتصلًا.",r:[["il a","إي لا"],["elle arrive","إي لاريڤ"],["une amie","أو نامي"],["avec elle","آڤي كيل"],["pour aller","پو رالي"],["quatre enfants","كا ترونفون"]],tip:"لفهم الكلام الفرنسي، تعوّد على سماع الجملة كاملة وليس كلمة بكلمة."},
+ {lvl:"A1",t:"Les lettres muettes — الحروف التي لا تُنطق",d:"كثير من الحروف الأخيرة في الفرنسية لا تُنطق: s و t و d و x و z و p غالبًا صامتة: petit، grand، deux، beaucoup. و e في آخر الكلمة لا تُنطق: table، homme. ونهاية الفعل ent في الجمع لا تُنطق أيضًا: ils parlent. أما c و r و f و l فتُنطق غالبًا في آخر الكلمة (تذكّر كلمة careful): sac، mer، neuf، sel.",r:[["petit","پوتي — صغير"],["grand","گرون — كبير"],["deux","دو — اثنان"],["ils parlent","إيل پارل — يتكلمون"],["le sac","لو ساك — الحقيبة"],["la mer","لا مير — البحر"]],tip:"قاعدة careful ليست مطلقة: r لا تُنطق في نهاية أفعال er (parler ← پارلي)."},
+ {lvl:"A1",t:"Les sons nasaux — الأصوات الأنفية",d:"في الفرنسية أصوات تخرج من الأنف عندما يأتي n أو m بعد حرف علة في نفس المقطع، ولا يُنطق الـ n كاملًا. أهمها ثلاثة: an / en / am / em تُنطق تقريبًا «أون» من الأنف: enfant، temps. و on / om تُنطق «أون» مغلقة: bonjour، nom. و in / ain / ein / un تُنطق «أَن»: vin، pain، lundi. وإذا جاء بعد n حرف علة أو n ثانية فلا يكون الصوت أنفيًا: bonne، une.",r:[["un enfant","أن نونفون — طفل"],["le temps","لو تون — الطقس"],["bonjour","بونجور — صباح الخير"],["le pain","لو پان — الخبز"],["bon / bonne","بون / بون — جيد / جيدة"],["un / une","أن / يون — واحد / واحدة"]],tip:"قارن: bon (أنفي) و bonne (n تُنطق عادية). الفرق مهم بين المذكر والمؤنث."},
+ {lvl:"A1",t:"Les sons u, ou, eu — أصوات العلة الخاصة",d:"بعض أصوات العلة الفرنسية لا توجد في العربية. ou تُنطق «و» عادية: vous، tout. أما u فصوت بين «و» و«ي»: قل «ي» ثم ضمّ شفتيك كأنك ستقول «و»: tu، rue. و eu و œu تُنطق مثل «و» مع شفتين مستديرتين وفم أكثر انفتاحًا: deux، sœur. و oi تُنطق «وا»: moi، trois.",r:[["vous / vu","ڤو / ڤو(ي) — أنتم / رأى"],["tout / tu","تو / تو(ي) — كل / أنت"],["la rue / la roue","لا رو(ي) / لا رو — الشارع / العجلة"],["deux","دو — اثنان"],["la sœur","لا سور — الأخت"],["moi, trois","موا، تروا — أنا، ثلاثة"]],tip:"تمرّن على الفرق بين tu و tout: الفرق في الشفتين فقط، ويغيّر المعنى."},
+ {lvl:"A1",t:"H muet et h aspiré — الحرف h",d:"الحرف h لا يُنطق أبدًا في الفرنسية. لكن هناك نوعان: h muet يتصرّف كأن الكلمة تبدأ بحرف علة، فيقع معه الحذف والوصل: l’homme، les hommes (لي زوم). و h aspiré (يُشار إليه في القاموس بعلامة *) يمنع الحذف والوصل رغم أنه لا يُنطق: le héros، les haricots (لي أريكو بدون ز). الكلمات ذات h aspiré قليلة ويجب حفظها.",r:[["l’homme","لوم — الرجل"],["les hommes","لي زوم — الرجال"],["l’hôtel","لوتيل — الفندق"],["le héros","لو إيرو — البطل"],["les haricots","لي أريكو — الفاصوليا"],["la honte","لا ونت — الخجل"]],tip:"من كلمات h aspiré الشائعة: le haut، la honte، le héros، les haricots، le hasard، la Hollande."}
 ],
 de:[
  {t:"Der, Die, Das — ثلاثة أجناس",d:"في الألمانية ثلاثة أجناس: der للمذكر، و die للمؤنث، و das للمحايد. الجنس لا يتبع المعنى دائمًا، لذلك احفظ كل اسم مع أداته. وفي الجمع تكون الأداة دائمًا die.",r:[["der Tisch","الطاولة","m"],["die Tür","الباب","f"],["das Buch","الكتاب","n"],["die Bücher","الكتب",""]]},
@@ -3546,6 +3559,10 @@ function vResults(){
    A real exam per level: 20 mixed questions, one timer for the whole exam, no feedback until the end.
    80% passes and gives a certificate. Results live in ST[lang].exams[level] = {best, tries, pass, last}. */
 var EXAM={n:20,min:8,pass:80,xp:5,bonus:100};
+/* Full review («المراجعة الشاملة»): questions on every learned word of every level, stored as exams.all (no certificate). */
+var REVIEW={n:30,min:12,need:20};
+function xName(l){return l==="all"?"المراجعة الشاملة":"امتحان "+l}
+function xPool(l){return words().filter(function(e){return l==="all"||e.lvl===l})}
 var XT={a:"المعنى",b:"الترجمة",g:"الجنس",f:"الجملة",d:"الكتابة",c:"الاستماع"};
 var X=null,XTimer=null;
 function xStop(){if(XTimer){clearInterval(XTimer);XTimer=null}}
@@ -3559,15 +3576,15 @@ function xOk(e,t){
  return true;
 }
 function xOpts(e,lvl,key,get){
- var all=words(),same=shuffle(all.filter(function(x){return x.lvl===lvl&&x.cat===e.cat})),lv=shuffle(all.filter(function(x){return x.lvl===lvl}));
+ lvl=e.lvl;var all=words(),same=shuffle(all.filter(function(x){return x.lvl===lvl&&x.cat===e.cat})),lv=shuffle(all.filter(function(x){return x.lvl===lvl}));
  var ans=get(e),seen={},out=[];seen[ans]=1;
  same.concat(lv,shuffle(all)).forEach(function(x){var v=get(x);if(out.length<3&&v&&!seen[v]&&(key!=="f"||x.g)){seen[v]=1;out.push(v)}});
  return shuffle(out.concat([ans]));
 }
 function xBuild(lvl){
- var p=P(),pool=words().filter(function(e){return e.lvl===lvl});
- /* Exams ask only about words already learned in this level. */
- var picked=shuffle(pool.filter(function(e){return p.learned[e.id]})).slice(0,EXAM.n);
+ var p=P(),pool=xPool(lvl);
+ /* Exams ask only about words already learned (in this level, or in every level for the full review). */
+ var picked=shuffle(pool.filter(function(e){return p.learned[e.id]})).slice(0,lvl==="all"?REVIEW.n:EXAM.n);
  /* Each question type appears about equally often, as far as each word allows. */
  var order=["d","f","g","c","b","a"],used={a:0,b:0,g:0,f:0,d:0,c:0};
  return shuffle(picked).map(function(e){
@@ -3593,11 +3610,11 @@ function xLabel(it,v){
  return v;
 }
 function startExam(lvl){
- var pool=words().filter(function(e){return e.lvl===lvl});
- var k=pool.filter(function(e){return P().learned[e.id]}).length;
- if(k<EXAM.n){toast("خاصك تحفظ "+(EXAM.n-k)+" كلمة أخرى فـ "+lvl+" باش يتحل هاد الامتحان");return}
+ var all=lvl==="all",need=all?REVIEW.need:EXAM.n,mins=all?REVIEW.min:EXAM.min;
+ var k=xPool(lvl).filter(function(e){return P().learned[e.id]}).length;
+ if(k<need){toast("خاصك تحفظ "+(need-k)+" كلمة أخرى"+(all?"":" فـ "+lvl)+" باش يتحل هاد الامتحان");return}
  Q=null;xStop();
- X={lvl:lvl,items:xBuild(lvl),i:0,end:Date.now()+EXAM.min*60000,done:false,startXP:P().xp};
+ X={lvl:lvl,items:xBuild(lvl),i:0,min:mins,end:Date.now()+mins*60000,done:false,startXP:P().xp};
  U.view="exam";renderView(true);window.scrollTo(0,0);
  XTimer=setInterval(xTick,500);xTick();
  xSpeakIfListen();
@@ -3627,10 +3644,10 @@ function finishExam(){
  xStop();X.done=true;
  X.items.forEach(function(it){if(it.given==null){it.given="";it.ok=false}});
  var p=P(),n=X.items.length,score=X.items.filter(function(it){return it.ok}).length,pc=Math.round(score/n*100);
- var r=p.exams[X.lvl]||{best:0,tries:0,pass:0,last:0},first=pc>=EXAM.pass&&!r.pass;
- r.tries++;r.best=Math.max(r.best,pc);r.last=Date.now();if(pc>=EXAM.pass&&!r.pass)r.pass=Date.now();
+ var r=p.exams[X.lvl]||{best:0,tries:0,pass:0,last:0},cert=X.lvl!=="all",first=cert&&pc>=EXAM.pass&&!r.pass;
+ r.tries++;r.best=Math.max(r.best,pc);r.last=Date.now();if(first)r.pass=Date.now();
  p.exams[X.lvl]=r;
- X.score=score;X.pc=pc;X.first=first;X.time=Math.max(0,EXAM.min*60-xLeft());
+ X.score=score;X.pc=pc;X.first=first;X.time=Math.max(0,X.min*60-xLeft());
  addXP(score*EXAM.xp+(first?EXAM.bonus:0));
  Store.save();renderView(true);window.scrollTo(0,0);
 }
@@ -3653,9 +3670,17 @@ function vExam(){
   '<li><b class="num">'+EXAM.min+'</b> دقايق للامتحان كامل</li><li>ما كاينش التصحيح حتى للآخر، وما تقدرش ترجع للسؤال اللي فات</li>'+
   '<li>فالكتابة خاص الأداة والأكسان يكونو صحاح</li><li>خاصك <b class="num">'+EXAM.pass+'%</b> باش تنجح وتاخد الشهادة (+'+EXAM.bonus+' XP)</li></ul>'+
   '<p class="muted xnote">الأسئلة كتجي غير من الكلمات اللي حفظتي فهاد المستوى، ولهذا خاصك تحفظ على الأقل '+EXAM.n+' كلمة باش يتحل الامتحان.</p></div></div>'+
+  reviewCard()+
   '<div class="xgrid">'+cards+'</div>'+
   (certs.length?'<p class="sec">الشهادات ديالك</p><div class="xcerts">'+certs.map(function(l){return certHTML(l,p.exams[l])}).join("")+'</div>':"")+
  '</div>';
+}
+function reviewCard(){
+ var p=P(),r=p.exams.all||{},k=words().filter(function(e){return p.learned[e.id]}).length,n=Math.min(REVIEW.n,k);
+ return'<div class="card xreview"><div class="xr-top"><span class="tile-ic ic-o">'+ic("layers")+'</span><div><h2>المراجعة الشاملة</h2><p class="muted">أسئلة على كاع الكلمات اللي حفظتي، من كاع المستويات (<span class="num">'+k+'</span> كلمة).</p></div></div>'+
+  '<p class="xbest"><span class="num">'+(k<REVIEW.need?REVIEW.n:n)+'</span> سؤال · <span class="num">'+REVIEW.min+'</span> دقيقة'+(r.tries?' · أحسن نتيجة: <b class="num">'+r.best+'%</b> · <span class="num">'+r.tries+'</span> '+(r.tries===1?"محاولة":"محاولات"):"")+'</p>'+
+  (k<REVIEW.need?'<p class="xlock">'+ic("lock")+'<span>حفظ <b class="num">'+(REVIEW.need-k)+'</b> كلمة أخرى باش تتحل</span></p>'
+   :'<button class="btn pri" data-act="xstart" data-l="all">'+(r.tries?"عاود المراجعة":"ابدا المراجعة")+'</button>')+'</div>';
 }
 function certHTML(l,r){
  var d=new Date(r.pass),nm=ST.nick||Acc.name||"";
@@ -3677,15 +3702,16 @@ function vExamPlay(){
   return'<button class="opt" data-act="xopt" data-k="'+k+'">'+lbl+'</button>'}).join("")+'</div>';
  return'<div class="play"><div class="qtop"><button class="x" data-act="xquit" aria-label="خرج من الامتحان">'+ic("x")+'</button><div class="bar"><i data-w="'+(X.i/n*100)+'%"></i></div>'+
   '<span class="xclock'+(s<=60?" low":"")+'">⏱ <span class="num" id="xtime">'+fmtT(s)+'</span></span></div>'+
-  '<p class="muted xcount">امتحان <span class="num">'+X.lvl+'</span> · السؤال <span class="num">'+(X.i+1)+' / '+n+'</span></p>'+
+  '<p class="muted xcount">'+esc(xName(X.lvl))+' · السؤال <span class="num">'+(X.i+1)+' / '+n+'</span></p>'+
   '<div class="card qcard">'+tag+prompt+'</div>'+body+'</div>';
 }
 function vExamResult(){
  var n=X.items.length,pc=X.pc,ok=pc>=EXAM.pass,miss=X.items.filter(function(i){return!i.ok}),gained=P().xp-X.startXP,r=P().exams[X.lvl];
  var title=ok?(pc===100?"كاملة! نجحتي بلا حتى غلطة 🏆":"مبروك! نجحتي فالامتحان 🎉"):pc>=60?"قريب! خاصك "+EXAM.pass+"% باش تنجح":"ماشي مشكل، راجع الكلمات وعاود";
+ if(X.lvl==="all")title=pc===100?"كاملة! كاع الكلمات ثابتين عندك 🏆":pc>=EXAM.pass?"مزيان بزاف! الكلمات ديالك ثابتين 🎉":"راجع الكلمات اللي غلطتي فيهم وعاود";
  return'<div class="res"><div class="card res-top'+(ok?" xwin":"")+'"><div class="ring" style="--p:'+pc+'"><div><b class="num">'+pc+'%</b><span>'+X.score+' / '+n+' صحاح</span></div></div><h2>'+title+'</h2>'+
-  '<div class="res-row"><span class="pill xp">+'+gained+' XP</span><span class="pill">⏱ <span class="num">'+fmtT(X.time)+'</span></span><span class="pill">امتحان <span class="num">'+X.lvl+'</span></span></div></div>'+
-  (ok&&r&&r.pass?certHTML(X.lvl,r):"")+
+  '<div class="res-row"><span class="pill xp">+'+gained+' XP</span><span class="pill">⏱ <span class="num">'+fmtT(X.time)+'</span></span><span class="pill">'+esc(xName(X.lvl))+'</span></div></div>'+
+  (ok&&X.lvl!=="all"&&r&&r.pass?certHTML(X.lvl,r):"")+
   (miss.length?'<p class="sec" style="margin:0">الأخطاء ديالك</p><ul class="mist">'+miss.map(function(i){
    var you=i.given===""?"ما جاوبتيش":xLabel(i,i.given),right=xLabel(i,xAnswer(i));
    return'<li><span><span class="tag xtag sm">'+XT[i.t]+'</span> '+wordHTML(i.e)+'<br><small class="muted">'+esc(i.e.da)+'</small></span><span class="xwrong"><s>'+esc(you)+'</s><b>'+esc(right)+'</b></span></li>'}).join("")+'</ul>':"")+
@@ -3829,37 +3855,43 @@ function vAccount(){
 function vGrammar(){
  var p=P(),ls=LESSONS[U.lang];
  if(U.lesson!=null&&!lessonOpen(U.lesson))U.lesson=null;
- if(U.lesson!=null){var i=U.lesson,l=ls[i],done=!!p.lessons[i],nextOpen=i<ls.length-1&&lessonOpen(i+1);
-  return'<div class="lview"><button class="back" data-act="lessons">'+ic("right")+'كاع الدروس</button><div class="ltags"><span class="tag lv">'+(l.lvl||"A1")+'</span><span class="tag">الدرس '+(i+1)+' من '+ls.length+'</span></div><h1>'+lessonWord(l.t.split(" — ")[0],"")+'<br><span class="muted" style="font-size:1.1rem;font-weight:600">'+esc(l.t.split(" — ")[1]||"")+'</span></h1><p class="d">'+mixHTML(l.d)+'</p>'+
-   '<div class="card ltable">'+l.r.map(function(r){return'<div><span class="r">'+lessonWord(r[0],r[2])+(r[2]?gtag({g:r[2]}):"")+'</span><span class="r"><span class="muted">'+esc(r[1])+'</span><button data-act="saytxt" data-t="'+esc(r[0].split(" → ")[0])+'" aria-label="سمع">'+ic("spk")+'</button></span></div>'}).join("")+'</div>'+
+ if(U.lesson!=null){var i=U.lesson,l=ls[i],done=!!p.lessons[i],o=lorder(),pos=o.indexOf(i),prevI=pos>0?o[pos-1]:null,nextI=pos<o.length-1?o[pos+1]:null,nextOpen=nextI!=null&&lessonOpen(nextI);
+  return'<div class="lview"><button class="back" data-act="lessons">'+ic("right")+'كاع الدروس</button><div class="ltags"><span class="tag lv">'+(l.lvl||"A1")+'</span><span class="tag">الدرس '+(pos+1)+' من '+ls.length+'</span></div><h1>'+lessonWord(l.t.split(" — ")[0],"")+'<br><span class="muted" style="font-size:1.1rem;font-weight:600">'+esc(l.t.split(" — ")[1]||"")+'</span></h1><p class="d">'+mixHTML(l.d)+'</p>'+
+   '<div class="card ltable">'+l.r.map(function(r){return'<div><span class="r">'+lessonWord(r[0],r[2])+(r[2]?gtag({g:r[2]}):"")+'</span><span class="r"><span class="muted">'+esc(r[1])+'</span><button data-act="saytxt" data-t="'+esc(r[0].split(" → ").pop())+'" aria-label="سمع">'+ic("spk")+'</button></span></div>'}).join("")+'</div>'+
    (l.tip?'<div class="ltip">'+ic("sparkle")+'<p>'+mixHTML(l.tip)+'</p></div>':"")+
    (DAILY[U.lang]?practiceHTML(i):"")+
-   '<div class="qfoot">'+(i>0?'<button class="btn" data-act="lesson" data-i="'+(i-1)+'">السابق</button>':"")+'<button class="btn '+(done?"done":"pri")+'" data-act="lessondone"'+(done?" disabled":"")+'>'+(done?"فهمتو ✓":"فهمت  +20 XP")+'</button>'+(nextOpen?'<button class="btn" data-act="lesson" data-i="'+(i+1)+'">التالي</button>':"")+'</div>'+
-   (done&&i<ls.length-1&&!nextOpen?'<p class="muted lnext">'+ic("lock")+'الدرس الجاي كيتحل غدا. رجع غدا باش تتعلّم درس جديد.</p>':"")+'</div>';
+   '<div class="qfoot">'+(prevI!=null?'<button class="btn" data-act="lesson" data-i="'+prevI+'">السابق</button>':"")+'<button class="btn '+(done?"done":"pri")+'" data-act="lessondone"'+(done?" disabled":"")+'>'+(done?"فهمتو ✓":"فهمت  +20 XP")+'</button>'+(nextOpen?'<button class="btn" data-act="lesson" data-i="'+nextI+'">التالي</button>':"")+'</div>'+
+   (done&&nextI!=null&&!nextOpen?'<p class="muted lnext">'+ic("lock")+'كمّلتي '+DAILY[U.lang]+' دروس اليوم. الدرس الجاي كيتحل غدا.</p>':"")+'</div>';
  }
  var lv=[],cur=null;
- ls.forEach(function(l,i){var k=l.lvl||"A1";if(k!==cur&&DAILY[U.lang]){cur=k;lv.push('<p class="sec ltitle">'+k+'</p>')}
+ lorder().forEach(function(i,pos){var l=ls[i],k=l.lvl||"A1";if(k!==cur&&DAILY[U.lang]){cur=k;lv.push('<p class="sec ltitle">'+k+'</p>')}
   var dn=!!p.lessons[i],op=lessonOpen(i);
-  lv.push('<button class="card lesson'+(dn?" done":"")+(op?"":" locked")+'" data-act="lesson" data-i="'+i+'"'+(op?"":" disabled")+'><span class="n num">'+(dn?ic("check"):op?i+1:ic("lock"))+'</span><span class="t"><b>'+lessonWord(l.t.split(" — ")[0],"")+'</b><small>'+esc(l.t.split(" — ")[1]||"")+'</small></span>'+(op?ic("left"):"")+'</button>');
+  lv.push('<button class="card lesson'+(dn?" done":"")+(op?"":" locked")+'" data-act="lesson" data-i="'+i+'"'+(op?"":" disabled")+'><span class="n num">'+(dn?ic("check"):op?pos+1:ic("lock"))+'</span><span class="t"><b>'+lessonWord(l.t.split(" — ")[0],"")+'</b><small>'+esc(l.t.split(" — ")[1]||"")+'</small></span>'+(op?ic("left"):"")+'</button>');
  });
  var n=nextLesson();
- return'<div class="view-head"><h1>القواعد</h1></div><p class="muted" style="margin:-6px 0 16px">'+(DAILY[U.lang]?"كل نهار كيتحل ليك درس جديد. كمّل درس اليوم باش يتحل الجاي غدا.":"دروس قصيرة على الأساسيات ديال "+LANG[U.lang].name+".")+'</p>'+
+ return'<div class="view-head"><h1>القواعد</h1></div><p class="muted" style="margin:-6px 0 16px">'+(DAILY[U.lang]?"كل نهار كيتحلّو ليك "+DAILY[U.lang]+" دروس جداد. كمّلهم والجداد كيتحلّو غدا.":"دروس قصيرة على الأساسيات ديال "+LANG[U.lang].name+".")+'</p>'+
   (DAILY[U.lang]&&n>=0?todayLessonCard(n):"")+
   '<div class="lessons">'+lv.join("")+'</div>';
 }
-/* Daily lessons: lesson i opens once lesson i-1 is done on an earlier day (one new lesson per day).
-   p.lessons[i] holds the time it was marked done (1 = done before dates were kept). */
-var DAILY={fr:true};
+/* Daily lessons: DAILY[lang] new lessons a day, in the order lorder() gives.
+   A lesson opens once the one before it (in that order) is done, while fewer than DAILY[lang] lessons were done today.
+   p.lessons[i] holds the time it was marked done (1 = done before dates were kept). Indexes never change. */
+var DAILY={fr:3};
+/* French order: the 6 basics, then the pronunciation lessons (stored at 54-61), then the rest. */
+var FR_ORDER=(function(){var o=[0,1,2,3,4,5],k;for(k=54;k<62;k++)o.push(k);for(k=6;k<54;k++)o.push(k);for(k=62;k<LESSONS.fr.length;k++)o.push(k);return o})();
+function lorder(){return U.lang==="fr"?FR_ORDER:LESSONS[U.lang].map(function(_,i){return i})}
+function doneToday(){var p=P(),t=today(),n=0;Object.keys(p.lessons).forEach(function(k){var v=p.lessons[k];if(v>1&&dkey(new Date(v))===t)n++});return n}
 function lessonOpen(i){
- if(!DAILY[U.lang]||i===0)return true;
- var prev=P().lessons[i-1];if(!prev)return false;
- return prev===1||dkey(new Date(prev))!==today();
+ if(!DAILY[U.lang])return true;
+ var p=P();if(p.lessons[i])return true;
+ var o=lorder(),pos=o.indexOf(i);if(pos<=0)return true;
+ return !!p.lessons[o[pos-1]]&&doneToday()<DAILY[U.lang];
 }
-function nextLesson(){var p=P(),ls=LESSONS[U.lang];for(var i=0;i<ls.length;i++)if(!p.lessons[i])return i;return -1}
+function nextLesson(){var p=P(),o=lorder();for(var k=0;k<o.length;k++)if(!p.lessons[o[k]])return o[k];return -1}
 function todayLessonCard(n){
- var l=LESSONS[U.lang][n],op=lessonOpen(n);
- if(!op)return'<div class="card tday wait"><span class="tile-ic ic-g">'+ic("check")+'</span><div><h3>كمّلتي درس اليوم ✓</h3><p class="muted">الدرس الجاي: <span class="fw">'+esc(l.t.split(" — ")[0])+'</span>، كيتحل غدا.</p></div></div>';
- return'<button class="card tday" data-act="lesson" data-i="'+n+'"><span class="tile-ic ic-o">'+ic("layers")+'</span><div><span class="tag lv">'+(l.lvl||"A1")+'</span><h3>درس اليوم: <span class="fw">'+esc(l.t.split(" — ")[0])+'</span></h3><p class="muted">'+esc(l.t.split(" — ")[1]||"")+'</p></div>'+ic("left")+'</button>';
+ var l=LESSONS[U.lang][n],op=lessonOpen(n),d=doneToday(),max=DAILY[U.lang];
+ if(!op)return'<div class="card tday wait"><span class="tile-ic ic-g">'+ic("check")+'</span><div><h3>كمّلتي دروس اليوم ✓</h3><p class="muted">الدرس الجاي: <span class="fw">'+esc(l.t.split(" — ")[0])+'</span>، كيتحل غدا.</p></div></div>';
+ return'<button class="card tday" data-act="lesson" data-i="'+n+'"><span class="tile-ic ic-o">'+ic("layers")+'</span><div><span class="tag lv">'+(l.lvl||"A1")+' · دروس اليوم <span class="num">'+Math.min(d,max)+' / '+max+'</span></span><h3>الدرس الجاي: <span class="fw">'+esc(l.t.split(" — ")[0])+'</span></h3><p class="muted">'+esc(l.t.split(" — ")[1]||"")+'</p></div>'+ic("left")+'</button>';
 }
 
 /* AI practice on a lesson: five multiple-choice questions from /api/chat (mode "practice"). Kept in memory only. */

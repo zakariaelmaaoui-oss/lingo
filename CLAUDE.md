@@ -46,7 +46,9 @@ explain changes simply, and tell him exactly what to click to publish them.
 
 - Each lesson: `{lvl, t: "French title — عنوان", d: explanation (MSA), r: [[example, Arabic, gender?]], tip}`.
   Progress is stored by index (`p.lessons[i]`), so **only append lessons at the end; never reorder or remove**.
-- French is a daily course (`DAILY = {fr:true}`): lesson i opens once lesson i-1 was marked done on an earlier day.
+- French is a daily course (`DAILY = {fr:3}`, 3 new lessons a day), followed in the order `FR_ORDER`
+  (6 basics, then the pronunciation lessons stored at 54-61, then the rest). A lesson opens once the one before it
+  in that order is done, while fewer than 3 lessons were done today. Display order can change; stored indexes cannot.
   `p.lessons[i]` is the time it was marked done (`1` for lessons done before times were kept).
   German lessons are unchanged and all open.
 
@@ -62,6 +64,8 @@ Per language (`ST.fr`, `ST.de`): `learned`, `mastered`, `stats`, `xp`, `days`, `
 - Leaderboard: Firestore `scores/{uid}` with `name`, `points`, `points_de`, `xp_fr`, `xp_de`.
 - `exams`: one entry per level, `{best, tries, pass, last}`. The exam view («الامتحان») gives 20 mixed questions,
   8 minutes in total, no feedback until the end; 80% passes and shows a certificate (`EXAM` in index.html).
+  `exams.all` is the full review («المراجعة الشاملة»): up to 30 questions on every learned word of every level,
+  12 minutes, opens at 20 learned words, no certificate (`REVIEW`).
 - Daily goal: 10 new learned words; the streak grows only on days that reach it.
 - French and German statistics must never be mixed.
 
